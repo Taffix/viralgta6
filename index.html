@@ -691,7 +691,7 @@ function renderHero(it) {
   p.hidden = false;
   p.innerHTML = `<div class="meta">${pfTag(it.platform)}<span>${num(it.views)} views</span>${it.published ? `<span>${esc(ago(it.published))}</span>` : ''}</div>
     <div class="t" style="margin-top:10px">${esc(it.title)}</div>
-    <div class="creator c">${avatar(it.creator)}<div><div class="n">${esc(it.creator.name)}</div><div class="h">${esc([handle(it.creator), it.creator.followers ? num(it.creator.followers) + ' subscribers' : ''].filter(Boolean).join(' · '))}</div></div></div>`;
+    <div class="creator c">${avatar(it.creator)}<div><div class="n">${esc(it.creator.name)}</div><div class="h">${esc([handle(it.creator), it.creator.followers ? num(it.creator.followers) + (it.platform === 'youtube' ? ' subscribers' : ' followers') : ''].filter(Boolean).join(' · '))}</div></div></div>`;
 }
 
 /* ---------- player ---------- */
