@@ -3,3 +3,10 @@ RewriteEngine On
 RewriteCond %{HTTP:X-Forwarded-Proto} !=https [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://viralgta6.com%{REQUEST_URI} [L,R=301]
+
+# index.php adds the search-engine extras to index.html
+DirectoryIndex index.php index.html
+
+# a page per video, and the sitemap
+RewriteRule ^v/([^/]+)/?$ index.php?v=$1 [L,QSA,B]
+RewriteRule ^sitemap\.xml$ sitemap.php [L]

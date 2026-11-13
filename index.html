@@ -370,6 +370,16 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
   .card.tall .media img{object-fit:cover}
   .card.tall.ig .media{inset:0;transform:none;width:auto;height:auto;max-width:none;border-radius:0}
 }
+/* server-rendered list (shown until the page script builds the feed) + about */
+.seo-list{list-style:decimal;padding:0 0 0 22px;display:grid;gap:8px;color:var(--muted)}
+.seo-list a{color:#fff;font-weight:600}
+.about{max-width:900px;margin:72px auto 0;display:grid;gap:14px;color:var(--muted);line-height:1.6}
+.about h2{font-family:var(--cond);font-weight:700;font-size:28px;letter-spacing:.4px;text-transform:uppercase;color:#fff;line-height:1.1}
+.faq{display:grid;gap:8px;margin-top:8px}
+.faq details{border:1px solid var(--line);border-radius:10px;padding:12px 16px;background:rgba(255,255,255,.02)}
+.faq summary{cursor:pointer;font-weight:600;color:#fff}
+.faq details p{margin-top:8px}
+@media (max-width:760px){.about{display:none}}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
@@ -427,7 +437,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
     <svg class="palm l2" viewBox="0 0 300 420"><use href="#palm"/></svg>
     <svg class="palm r" viewBox="0 0 300 420"><use href="#palm"/></svg>
     <div class="hero-copy">
-      <h1><span class="s">Viral</span><span class="c chr" data-t="today">today</span></h1>
+      <h1><span class="s">Viral</span><span class="c chr" data-t="today">today</span><span class="sr">: the most viral GTA 6 videos on YouTube, TikTok and Instagram</span></h1>
       <p class="today" id="today"></p>
       <div class="hero-pick" id="heroPick" hidden></div>
       <div class="hero-btns">
@@ -447,6 +457,17 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
       <div class="status" id="status"></div>
     </div>
     <div class="grid" id="grid"></div>
+  </section>
+  <section class="about" aria-labelledby="aboutT">
+    <h2 id="aboutT">GTA 6 videos going viral, updated every hour</h2>
+    <p>ViralGTA6 collects the GTA 6 videos that are blowing up right now on YouTube, TikTok and Instagram: trailer breakdowns, gameplay, leaks, map theories, memes and reactions. Every video is ranked by how fast it is gaining views, so the list always shows what is hot today, not what was popular months ago.</p>
+    <p>Every clip comes with full credit to its creator: name, handle, followers and a link to their channel. Watch right here, or open the original on YouTube, TikTok or Instagram to like, comment and follow.</p>
+    <div class="faq">
+      <details><summary>How often is the list updated?</summary><p>YouTube videos are refreshed every hour. TikTok and Instagram videos are added once a day.</p></details>
+      <details><summary>How are the videos ranked?</summary><p>By views per hour since upload. A new video that is taking off ranks above an older video with more total views.</p></details>
+      <details><summary>Can my GTA 6 video be featured?</summary><p>Yes. Viral GTA 6 videos show up automatically. Want a guaranteed spot at the top? Use the "Get featured" button.</p></details>
+      <details><summary>Is ViralGTA6 made by Rockstar Games?</summary><p>No. It is a fan-made site and not affiliated with Rockstar Games or Take-Two Interactive. All videos belong to their creators.</p></details>
+    </div>
   </section>
 </main>
 
@@ -853,7 +874,7 @@ function find(uid) { return [...(S.sponsor ? [S.sponsor] : []), ...S.yt, ...S.ma
 /* share a video: phone share sheet, otherwise copy the link. The link opens that video on viralgta6.com. */
 async function shareIt(it, btn) {
   if (!it) return;
-  const url = 'https://viralgta6.com/#v=' + encodeURIComponent(it.uid);
+  const url = 'https://viralgta6.com/' + (it.sponsored ? '' : 'v/' + encodeURIComponent(it.uid));
   const who = handle(it.creator) || it.creator.name || '';
   const text = (it.title || 'GTA 6 video') + (who ? ' by ' + who : '') + ' · going viral on ViralGTA6';
   if (navigator.share) { try { await navigator.share({title: 'ViralGTA6', text, url}); } catch {} return; }
@@ -865,10 +886,10 @@ async function shareIt(it, btn) {
   setTimeout(() => { label.textContent = old; }, 2200);
 }
 function openFromLink() {
-  const m = /^#v=(.+)$/.exec(location.hash); if (!m) return;
+  const m = /^#v=(.+)$/.exec(location.hash) || /^\/v\/([^/]+)\/?$/.exec(location.pathname); if (!m) return;
   const it = find(decodeURIComponent(m[1]));
   if (it) openPlayer(it); else toast('That video is no longer in today’s list');
-  history.replaceState(null, '', location.pathname);
+  if (location.hash) history.replaceState(null, '', location.pathname);
 }
 function openPlayer(it) {
   const src = it.embeddable === false ? null : embedUrl(it);
