@@ -363,6 +363,13 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
 .promo-in h3{font-family:var(--display);font-weight:400;font-style:italic;font-size:clamp(32px,9.5vw,44px);line-height:1;text-transform:uppercase;--sh:3px;padding:0 .12em;overflow:visible!important;display:block!important}
 .promo-in p{color:var(--muted);font-size:16px;line-height:1.45}
 .promo-in .tbtn{margin-top:6px;font-size:17px;padding:13px 22px}
+@media (max-width:760px){
+  .card.tall .media{inset:auto;top:62px;left:calc((100% - 76px) / 2);transform:translateX(-50%);height:calc(100% - 268px);aspect-ratio:9/16;width:auto;max-width:calc(100% - 96px);border-radius:14px;overflow:hidden;box-shadow:0 14px 44px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.12)}
+  .card.tall .shade{display:none}
+  .card.tall::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;z-index:-1;background:linear-gradient(180deg,rgba(14,8,18,0),rgba(14,8,18,.85))}
+  .card.tall .media img{object-fit:cover}
+  .card.tall.ig .media{inset:0;transform:none;width:auto;height:auto;max-width:none;border-radius:0}
+}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
@@ -608,7 +615,7 @@ const embedUrl = (it, opts = {}) => {
     if (opts.muted) { p.set('mute', 1); p.set('controls', 0); p.set('loop', 1); p.set('playlist', it.vid); }
     return `https://www.youtube-nocookie.com/embed/${it.vid}?${p}`;
   }
-  if (it.platform === 'tiktok' && it.vid) return `https://www.tiktok.com/player/v1/${it.vid}?autoplay=1&loop=1${opts.muted ? '&muted=1&controls=0' : ''}&rel=0`;
+  if (it.platform === 'tiktok' && it.vid) return `https://www.tiktok.com/player/v1/${it.vid}?autoplay=1&loop=1${opts.muted ? '&muted=1&controls=0&progress_bar=0&play_button=0&volume_control=0&fullscreen_button=0&timestamp=0&music_info=0&description=0&native_context_menu=0&closed_caption=0' : ''}&rel=0`;
   if (it.platform === 'instagram') return `https://www.instagram.com/${it.kind || 'reel'}/${it.vid}/embed/`;
   return null;
 };
@@ -712,8 +719,8 @@ function render() {
     g.innerHTML = shelves(list);
   } else {
     g.innerHTML = list.map((it, i) => `
-      <article class="card${fill(i, list.length)}${it.vertical ? '' : ' wide'}" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
-        ${!it.vertical && it.thumb ? `<div class="blur" style="background-image:url('${esc(it.thumb)}')"></div>` : ''}<div class="media">${media(it)}<div class="slot"></div><div class="shade"></div></div>
+      <article class="card${fill(i, list.length)}${it.vertical ? ' tall' : ' wide'}" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
+        ${it.thumb ? `<div class="blur" style="background-image:url('${esc(it.thumb)}')"></div>` : ''}<div class="media">${media(it)}<div class="slot"></div><div class="shade"></div></div>
         <div class="rank${it.sponsored ? ' feat' : ''}">${rkLabel(it, i, list)}</div><div class="hint">Tap for sound</div>
         <div class="body">
           <div class="meta">${pfTag(it.platform)}<span>${num(it.views)} views</span>${it.published ? `<span>${esc(ago(it.published))}</span>` : ''}<span class="hype" title="Hype: views per hour">${stars(it)}</span></div>
