@@ -335,6 +335,14 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
 .brand .chr{--sh:2px}
 .brand .chr::after{background:linear-gradient(180deg,#fff 0%,#e3f7ff 40%,#a58cf0 50%,#ffc6e6 57%,#fff 92%);-webkit-background-clip:text;background-clip:text}
 .hero h1 .chr::before{text-shadow:0 0 14px rgba(47,243,224,.45)}
+@media (max-width:760px){
+  .hint{position:absolute;right:12px;top:16px;display:none;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(14,8,18,.7);font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;pointer-events:none}
+  .card.playing:not(.unmuted):not(.ig) .hint{display:flex}
+  .card.paused .slot::after{content:"";position:absolute;inset:0;margin:auto;width:84px;height:84px;border-radius:50%;background:rgba(14,8,18,.55) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='white' d='M8 5l12 7-12 7z'/%3E%3C/svg%3E") 54% 50%/38px no-repeat}
+  .card.ig .slot{pointer-events:auto;background:#fff;z-index:3}
+  .card.ig .slot iframe{opacity:1}
+  .card.ig .body,.card.ig .rank{display:none}
+}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
@@ -680,15 +688,14 @@ function render() {
     g.innerHTML = list.map((it, i) => `
       <article class="card${fill(i, list.length)}${it.vertical ? '' : ' wide'}" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
         ${!it.vertical && it.thumb ? `<div class="blur" style="background-image:url('${esc(it.thumb)}')"></div>` : ''}<div class="media">${media(it)}<div class="slot"></div><div class="shade"></div></div>
-        <div class="rank">#${i + 1}</div>
+        <div class="rank">#${i + 1}</div><div class="hint">Tap for sound</div>
         <div class="body">
           <div class="meta">${pfTag(it.platform)}<span>${num(it.views)} views</span>${it.published ? `<span>${esc(ago(it.published))}</span>` : ''}<span class="hype" title="Hype: views per hour">${stars(it)}</span></div>
           <h3>${esc(it.title || 'Untitled')}</h3>
           <div class="creator">${avatar(it.creator)}<div><div class="n">${esc(it.creator.name || 'Unknown creator')}</div><div class="h">${esc([handle(it.creator), it.creator.followers ? num(it.creator.followers) + (it.platform === 'youtube' ? ' subscribers' : ' followers') : ''].filter(Boolean).join(' · '))}</div></div></div>
         </div>
         <div class="acts">
-          <button data-act="play"><i class="hot"><svg><use href="#i-play"/></svg></i>Watch</button>
-          ${it.platform === 'youtube' ? `<button data-act="sound"><i><svg><use href="#i-sound"/></svg></i>Sound</button>` : ''}
+          <button data-act="sound"><i class="hot"><svg><use href="#i-${it.platform === 'instagram' ? 'play' : 'sound'}"/></svg></i>${it.platform === 'instagram' ? 'Play' : 'Sound'}</button>
           <button data-act="info"><i><svg><use href="#i-user"/></svg></i>Creator</button>
           <button data-share="${esc(it.uid)}"><i><svg><use href="#i-share"/></svg></i>Share</button>
         </div>
@@ -820,16 +827,27 @@ $('#player').addEventListener('close', () => { $('#plBox').innerHTML = ''; obser
 /* ---------- mobile feed autoplay ---------- */
 const phone = matchMedia('(max-width:760px)');
 let io;
-function stopFeed() { $$('.card.playing').forEach(c => { c.classList.remove('playing'); $('.slot', c).innerHTML = ''; }); }
+function stopFeed() { $$('.card').forEach(c => { if (!$('.slot iframe', c)) return; c.classList.remove('playing', 'unmuted', 'paused', 'ig'); $('.slot', c).innerHTML = ''; }); }
 function observeFeed() {
   io?.disconnect();
   if (!phone.matches || $('#player').open) return;
   io = new IntersectionObserver(es => es.forEach(e => {
     const card = e.target, it = find(card.dataset.uid); if (!it) return;
     if (e.isIntersecting && e.intersectionRatio > .7) {
-      if ($('.slot iframe', card) || it.embeddable === false || it.platform === 'instagram' || (it.platform === 'tiktok' && !it.vid)) return;
-      if (location.protocol === 'file:' && it.platform === 'youtube') return;
+      if ($('.slot iframe', card) || it.platform === 'instagram') return;
+      startCard(card, it);
+    } else if (!e.isIntersecting || e.intersectionRatio < .3) {
+      card.classList.remove('playing', 'unmuted', 'paused', 'ig'); $('.slot', card).innerHTML = '';
+    }
+  }), {root: $('#feed'), threshold:[0, .3, .75]});
+  $$('.card').forEach(c => io.observe(c));
+}
+/* start the muted, looping player inside a feed card */
+function startCard(card, it) {
+      if (it.embeddable === false || (it.platform === 'tiktok' && !it.vid)) return false;
+      if (location.protocol === 'file:' && it.platform === 'youtube') return false;
       stopFeed();
+      card.classList.remove('unmuted', 'paused');
       const fr = document.createElement('iframe');
       fr.src = embedUrl(it, {muted:true}); fr.allow = 'autoplay; encrypted-media'; fr.title = it.title || '';
       fr.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -841,11 +859,29 @@ function observeFeed() {
         fr.addEventListener('load', () => setTimeout(() => fr.isConnected && card.classList.add('playing'), 900));
       }
       $('.slot', card).replaceChildren(fr);
-    } else if (!e.isIntersecting || e.intersectionRatio < .3) {
-      card.classList.remove('playing'); $('.slot', card).innerHTML = '';
+      return true;
+}
+/* phone: a tap plays in place. 1st tap = sound on, next taps = pause / play. Never opens a popup. */
+function sendPlayer(card, it, what) {
+  const w = $('.slot iframe', card)?.contentWindow; if (!w) return;
+  if (it.platform === 'youtube') w.postMessage(JSON.stringify({event:'command', func:{unMute:'unMute', play:'playVideo', pause:'pauseVideo'}[what], args:[]}), '*');
+  else if (it.platform === 'tiktok') w.postMessage({'x-tiktok-player': true, type: what}, '*');
+}
+function tapCard(card, it) {
+  if (it.platform === 'instagram') {
+    if (!$('.slot iframe', card)) {
+      stopFeed();
+      const fr = document.createElement('iframe');
+      fr.src = embedUrl(it); fr.allow = 'autoplay; encrypted-media'; fr.title = it.title || ''; fr.setAttribute('scrolling', 'no');
+      $('.slot', card).replaceChildren(fr); card.classList.add('playing', 'ig');
     }
-  }), {root: $('#feed'), threshold:[0, .3, .75]});
-  $$('.card').forEach(c => io.observe(c));
+    return;
+  }
+  const fr = $('.slot iframe', card);
+  if (!fr) { if (!startCard(card, it)) window.open(it.url, '_blank', 'noopener'); return; }
+  if (!card.classList.contains('unmuted')) { sendPlayer(card, it, 'unMute'); sendPlayer(card, it, 'play'); card.classList.add('unmuted', 'playing'); card.classList.remove('paused'); return; }
+  const paused = card.classList.toggle('paused');
+  sendPlayer(card, it, paused ? 'pause' : 'play');
 }
 phone.addEventListener?.('change', () => { stopFeed(); render(); });
 window.addEventListener('message', e => {
@@ -878,13 +914,9 @@ document.addEventListener('click', e => {
   const card = t.closest('.card, .v, .s');
   if (card) {
     if (t.closest('[data-act="out"]')) return;
-    const it = find(card.dataset.uid);
-    const sound = t.closest('[data-act="sound"]');
-    if (sound && card.classList.contains('playing')) {
-      $('.slot iframe', card)?.contentWindow.postMessage(JSON.stringify({event:'command', func:'unMute', args:[]}), '*');
-      toast('Sound on'); return;
-    }
-    if (it) openPlayer(it);
+    const it = find(card.dataset.uid); if (!it) return;
+    if (card.classList.contains('card') && phone.matches && !t.closest('[data-act="info"]')) { tapCard(card, it); return; }
+    openPlayer(it);
   }
 });
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches?.('.card, .v, .s')) e.target.click(); });
