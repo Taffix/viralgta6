@@ -1,0 +1,5 @@
+# Always https, and www.viralgta6.com -> viralgta6.com (https arrives via the proxy header)
+RewriteEngine On
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://viralgta6.com%{REQUEST_URI} [L,R=301]
