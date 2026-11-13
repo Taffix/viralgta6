@@ -1,0 +1,35 @@
+name: Daily viral videos
+
+on:
+  schedule:
+    - cron: '0 5 * * *'   # every day at 05:00 UTC (06:00 / 07:00 Dutch time)
+  workflow_dispatch:       # "Run workflow" button for a manual update
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-videos
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Fetch today's videos
+        env:
+          YT_KEY: ${{ secrets.YT_KEY }}
+          APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+        run: node scripts/fetch.mjs
+      - name: Save the list
+        run: |
+          git config user.name "viralgta6-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/videos.json
+          git diff --cached --quiet || git commit -m "Daily videos $(date -u +%Y-%m-%d)"
+          git push
