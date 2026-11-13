@@ -312,7 +312,6 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
   .f{grid-template-columns:1fr}
 }
 @media (max-width:760px){
-  .brand b{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#fff;-webkit-text-fill-color:#fff;filter:none;text-shadow:2px 2px 0 var(--purple),0 0 10px rgba(47,243,224,.7)}
   .brand{font-size:24px!important}
   .blur{position:absolute;inset:-30px;z-index:-2;background-size:cover;background-position:center;filter:blur(28px) brightness(.38) saturate(1.3);transform:translateZ(0)}
   .card.wide .media{inset:auto 0;top:max(64px,calc(34% - 28vw));aspect-ratio:16/9;height:auto;box-shadow:0 10px 40px rgba(0,0,0,.6)}
@@ -328,6 +327,14 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
   .acts i{width:46px;height:46px}
 }
 @media (max-width:760px){.live{bottom:auto;top:calc(env(safe-area-inset-top) + 12px);right:12px;padding:6px 11px 6px 10px;font-size:12.5px;z-index:60}}
+/* chrome letters drawn in two layers (shadow + chrome) instead of filter on clipped text: that combination makes text vanish on iPhone */
+.chr{position:relative;color:transparent!important;background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;filter:none!important}
+.chr::before,.chr::after{content:attr(data-t);position:absolute;left:0;top:0;right:0;pointer-events:none}
+.chr::before{color:var(--purple);transform:translate(var(--sh,3px),var(--sh,3px))}
+.chr::after{background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .chr{--sh:2px}
+.brand .chr::after{background:linear-gradient(180deg,#fff 0%,#e3f7ff 40%,#a58cf0 50%,#ffc6e6 57%,#fff 92%);-webkit-background-clip:text;background-clip:text}
+.hero h1 .chr::before{text-shadow:0 0 14px rgba(47,243,224,.45)}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
@@ -364,7 +371,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 </svg>
 
 <header class="top">
-  <a class="brand" href="#" aria-label="viralgta6.com, back to top"><i>Viral</i><b>GTA6</b><small>.com</small></a>
+  <a class="brand" href="#" aria-label="viralgta6.com, back to top"><i>Viral</i><b class="chr" data-t="GTA6">GTA6</b><small>.com</small></a>
   <nav class="tabs" aria-label="Platform">
     <button data-f="all" aria-pressed="true"><svg><use href="#i-all"/></svg><span>All</span></button>
     <button data-f="youtube" aria-pressed="false"><svg><use href="#i-yt"/></svg><span>YouTube</span></button>
@@ -384,7 +391,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
     <svg class="palm l2" viewBox="0 0 300 420"><use href="#palm"/></svg>
     <svg class="palm r" viewBox="0 0 300 420"><use href="#palm"/></svg>
     <div class="hero-copy">
-      <h1><span class="s">Viral</span><span class="c">today</span></h1>
+      <h1><span class="s">Viral</span><span class="c chr" data-t="today">today</span></h1>
       <p class="today" id="today"></p>
       <div class="hero-pick" id="heroPick" hidden></div>
       <div class="hero-btns">
@@ -398,7 +405,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <section class="wrap" id="feed">
     <div class="head">
       <div>
-        <h2 id="feedTitle">GTA 6 going viral now</h2>
+        <h2 id="feedTitle" class="chr" data-t="GTA 6 going viral now">GTA 6 going viral now</h2>
         <p>The hottest GTA 6 videos from YouTube, TikTok and Instagram, ranked by views per hour since upload. Click a video for the big player and everything about the creator.</p>
       </div>
       <div class="status" id="status"></div>
@@ -409,7 +416,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 
 <footer>
   <div class="f-row">
-    <a class="brand" href="#" aria-label="viralgta6.com, back to top"><i>Viral</i><b>GTA6</b><small>.com</small></a>
+    <a class="brand" href="#" aria-label="viralgta6.com, back to top"><i>Viral</i><b class="chr" data-t="GTA6">GTA6</b><small>.com</small></a>
     <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="#">Back to top ↑</a></nav>
   </div>
   <div class="f-row f-small">
@@ -658,7 +665,7 @@ function render() {
   const list = items();
   const g = $('#grid');
   const names = {all:'GTA 6 going viral now', youtube:'GTA 6 on YouTube', tiktok:'GTA 6 on TikTok', instagram:'GTA 6 on Instagram'};
-  $('#feedTitle').textContent = names[S.filter];
+  $('#feedTitle').textContent = $('#feedTitle').dataset.t = names[S.filter];
   if (S.key && S.updated) setStatus(`YouTube ${regionName(S.region)} · updated ${new Date(S.updated).toLocaleString('en-US', {weekday:'short', hour:'2-digit', minute:'2-digit'})}`);
   else if (S.key && S.error) setStatus('YouTube unreachable');
   else setStatus('YouTube not connected yet');
