@@ -87,5 +87,5 @@ foreach (array_slice($items, 0, 30) as $n => $i)
 if ($li) $html = preg_replace('#(<div[^>]*id="grid"[^>]*>)#', '$1<ol class="seo-list">' . $li . '</ol>', $html, 1);
 
 header('Content-Type: text/html; charset=utf-8');
-header('Cache-Control: public, max-age=300');
+header('Cache-Control: no-cache, must-revalidate');
 echo $html;
