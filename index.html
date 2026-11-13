@@ -343,6 +343,25 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
   .card.ig .slot iframe{opacity:1}
   .card.ig .body,.card.ig .rank{display:none}
 }
+/* featured + deals */
+.rk.feat,.rank.feat{font-family:var(--cond)!important;font-style:normal;font-weight:700;font-size:13px!important;letter-spacing:1px;text-transform:uppercase;line-height:1;padding:6px 10px;border-radius:999px;background:var(--yellow);color:#1a0820;text-shadow:none!important;top:12px}
+.deals{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.deal{display:grid;gap:6px;align-content:start;padding:18px;border-radius:14px;background:linear-gradient(160deg,rgba(255,63,164,.16),rgba(47,243,224,.07));border:1px solid rgba(255,255,255,.1);text-decoration:none;transition:border-color .2s}
+.deal:hover{border-color:var(--teal)}
+.deal svg{width:28px;height:28px;color:var(--pink);margin-bottom:6px}
+.deal b{font-family:var(--cond);font-weight:700;font-size:21px;text-transform:uppercase;letter-spacing:.4px;line-height:1.05}
+.deal span{font-size:14px;color:var(--muted)}
+.deal em{font-style:normal;font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);margin-top:6px}
+.deal.cta{background:rgba(255,214,90,.07);border-style:dashed;border-color:rgba(255,214,90,.45)}
+.deal.cta svg{color:var(--yellow)}
+.shelf-t small{margin-left:auto;font-family:var(--body);font-weight:500;font-size:12.5px;letter-spacing:.3px;text-transform:none;color:var(--dim)}
+.card.promo{display:grid;place-items:center;cursor:default;background:radial-gradient(70% 45% at 50% 105%,rgba(255,122,77,.55),transparent 70%),linear-gradient(180deg,#0c0424 0%,#2a0b5c 45%,#7a1a8c 100%)}
+.promo-in{display:grid;justify-items:center;gap:14px;text-align:center;padding:24px 28px;max-width:420px}
+.promo-in .ad{font-family:var(--cond);font-weight:700;font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--dim);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:4px 10px}
+.promo-ic{width:64px;height:64px;color:var(--pink);filter:drop-shadow(0 0 14px rgba(255,63,164,.6))}
+.promo-in h3{font-family:var(--display);font-weight:400;font-style:italic;font-size:clamp(32px,9.5vw,44px);line-height:1;text-transform:uppercase;--sh:3px;padding:0 .12em;overflow:visible!important;display:block!important}
+.promo-in p{color:var(--muted);font-size:16px;line-height:1.45}
+.promo-in .tbtn{margin-top:6px;font-size:17px;padding:13px 22px}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
@@ -365,6 +384,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
   <symbol id="i-out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
   <symbol id="i-share" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 15V3M7 8l5-5 5 5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
+  <symbol id="i-pad" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5 7h9a5.5 5.5 0 0 1 5.3 7l-1 3.6a2.6 2.6 0 0 1-4.4 1.1L14.6 17H9.4l-1.8 1.7a2.6 2.6 0 0 1-4.4-1.1l-1-3.6A5.5 5.5 0 0 1 7.5 7zM8 10v1.5H6.5v1.5H8v1.5h1.5V13H11v-1.5H9.5V10zm8.3.2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></symbol>
   <symbol id="i-sound" viewBox="0 0 24 24"><path fill="currentColor" d="M4 9h4l5-4v14l-5-4H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9c1.3 1.6 1.3 4.4 0 6M18.5 6.5c2.7 3 2.7 8 0 11"/></symbol>
   <symbol id="palm" viewBox="0 0 300 420">
     <path d="M150 420c6-90 2-170-14-250l12-2c18 82 22 164 16 252z"/>
@@ -429,7 +449,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   </div>
   <div class="f-row f-small">
     <span>© 2026 viralgta6.com · Updated every hour</span>
-    <span>Fan-made. Not affiliated with Rockstar Games or Take-Two Interactive. All videos belong to their creators.</span>
+    <span>Fan-made. Not affiliated with Rockstar Games or Take-Two Interactive. All videos belong to their creators. As an Amazon Associate, ViralGTA6 earns from qualifying purchases.</span>
   </div>
   <span class="f-own"><button id="exportBtn">Export my videos</button> · <button id="importBtn">import</button><input type="file" id="importFile" accept="application/json" hidden></span>
 </footer>
@@ -656,8 +676,13 @@ function items() {
   const recent = S.manual.filter(m => !m.published || (Date.now() - new Date(m.published)) < 14 * 864e5);
   let all = [...S.yt, ...recent];
   if (S.filter !== 'all') all = all.filter(i => i.platform === S.filter);
-  return all.sort((a, b) => perHour(b) - perHour(a));
+  all.sort((a, b) => perHour(b) - perHour(a));
+  const sp = S.sponsor;
+  if (sp && (S.filter === 'all' || S.filter === sp.platform)) all = [sp, ...all.filter(i => i.uid !== sp.uid)];
+  return all;
 }
+/* rank label: the sponsored video says "Sponsored" and does not count */
+const rkLabel = (it, i, list) => it.sponsored ? 'Sponsored' : '#' + (i + 1 - (list[0]?.sponsored ? 1 : 0));
 const avatar = c => c.avatar ? `<img class="av" src="${esc(c.avatar)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.outerHTML='<span class=av>${esc((c.name||'?')[0])}</span>'">` : `<span class="av">${esc((c.name || '?')[0])}</span>`;
 const media = it => it.thumb
   ? `<img src="${esc(it.thumb)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'art',innerHTML:'<span>${PF[it.platform].name}</span>'}))">`
@@ -688,7 +713,7 @@ function render() {
     g.innerHTML = list.map((it, i) => `
       <article class="card${fill(i, list.length)}${it.vertical ? '' : ' wide'}" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
         ${!it.vertical && it.thumb ? `<div class="blur" style="background-image:url('${esc(it.thumb)}')"></div>` : ''}<div class="media">${media(it)}<div class="slot"></div><div class="shade"></div></div>
-        <div class="rank">#${i + 1}</div><div class="hint">Tap for sound</div>
+        <div class="rank${it.sponsored ? ' feat' : ''}">${rkLabel(it, i, list)}</div><div class="hint">Tap for sound</div>
         <div class="body">
           <div class="meta">${pfTag(it.platform)}<span>${num(it.views)} views</span>${it.published ? `<span>${esc(ago(it.published))}</span>` : ''}<span class="hype" title="Hype: views per hour">${stars(it)}</span></div>
           <h3>${esc(it.title || 'Untitled')}</h3>
@@ -699,19 +724,19 @@ function render() {
           <button data-act="info"><i><svg><use href="#i-user"/></svg></i>Creator</button>
           <button data-share="${esc(it.uid)}"><i><svg><use href="#i-share"/></svg></i>Share</button>
         </div>
-      </article>`).join('');
+      </article>${promoAfter(i)}`).join('');
   }
   renderHero(list[0]);
   observeFeed();
 }
 /* desktop: YouTube-style video grid + TikTok-style shorts grid */
 function shelves(list) {
-  const rank = new Map(list.map((it, i) => [it.uid, i + 1]));
+  const rank = new Map(list.map((it, i) => [it.uid, rkLabel(it, i, list)])), pos = new Map(list.map((it, i) => [it.uid, i]));
   const wide = list.filter(i => !i.vertical), tall = list.filter(i => i.vertical);
   const unit = it => it.platform === 'youtube' ? ' subscribers' : ' followers';
   const vcard = it => `
     <article class="v" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
-      <div class="thumb">${media(it)}<span class="rk">#${rank.get(it.uid)}</span>${it.duration ? `<span class="dur">${esc(it.duration)}</span>` : ''}</div>
+      <div class="thumb">${media(it)}<span class="rk${it.sponsored ? ' feat' : ''}">${rank.get(it.uid)}</span>${it.duration ? `<span class="dur">${esc(it.duration)}</span>` : ''}</div>
       <div class="info">${avatar(it.creator)}<div>
         <h3>${esc(it.title || 'Untitled')}</h3>
         <p class="who"><svg class="pi ${it.platform}"><use href="${PF[it.platform].icon}"/></svg>${esc(it.creator.name || 'Unknown creator')}${it.creator.followers ? ` · ${num(it.creator.followers)}${unit(it)}` : ''}</p>
@@ -720,14 +745,17 @@ function shelves(list) {
     </article>`;
   const scard = it => `
     <article class="s" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
-      <div class="thumb9">${media(it)}<span class="rk">#${rank.get(it.uid)}</span><span class="pi-badge ${it.platform}"><svg><use href="${PF[it.platform].icon}"/></svg></span><span class="plays"><svg><use href="#i-play"/></svg>${num(it.views)}</span></div>
+      <div class="thumb9">${media(it)}<span class="rk${it.sponsored ? ' feat' : ''}">${rank.get(it.uid)}</span><span class="pi-badge ${it.platform}"><svg><use href="${PF[it.platform].icon}"/></svg></span><span class="plays"><svg><use href="#i-play"/></svg>${num(it.views)}</span></div>
       <h3>${esc(it.title || 'Untitled')}</h3>
       <p>${avatar(it.creator)}<span>${esc(handle(it.creator) || it.creator.name || '')}</span></p>
     </article>`;
   const parts = [];
   if (wide.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-yt"/></svg>Trending GTA 6 videos</h3><div class="yt-grid">${wide.map(vcard).join('')}</div></section>`);
   if (tall.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-tt"/></svg>Viral GTA 6 shorts</h3><div class="short-grid">${tall.map(scard).join('')}</div></section>`);
-  return wide.length && tall.length && rank.get(tall[0].uid) < rank.get(wide[0].uid) ? parts.reverse().join('') : parts.join('');
+  if (wide.length && tall.length && pos.get(tall[0].uid) < pos.get(wide[0].uid)) parts.reverse();
+  const strip = dealsStrip();
+  if (strip) parts.splice(Math.min(1, parts.length), 0, strip);
+  return parts.join('');
 }
 
 /* make the last row of the collage always full */
@@ -764,7 +792,56 @@ function renderHero(it) {
 }
 
 /* ---------- player ---------- */
-function find(uid) { return [...S.yt, ...S.manual].find(i => i.uid === uid); }
+/* ---------- affiliate deals + featured spot (settings in promo.json) ---------- */
+const P = {deals: [], amazonTag: '', contact: ''};
+const dealUrl = d => d.url || ('https://www.amazon.com/s?k=' + encodeURIComponent(d.q || d.title) + (P.amazonTag ? '&tag=' + encodeURIComponent(P.amazonTag) : ''));
+const featureMail = () => P.contact ? 'mailto:' + P.contact + '?subject=' + encodeURIComponent('Feature my GTA 6 video on ViralGTA6') : '';
+function promoAfter(i) {
+  if (!S.public || (i + 1) % 7) return '';
+  const n = (i + 1) / 7 - 1;
+  const cta = !S.sponsor && featureMail() && n % 3 === 2;
+  if (cta) return `
+      <article class="card promo cta"><div class="promo-in">
+        <span class="ad">For creators</span>
+        <h3 class="chr" data-t="Get featured here">Get featured here</h3>
+        <p>Your GTA 6 video at the top of the feed, seen by every visitor. Fans watch it right here and tap through to your channel.</p>
+        <a class="tbtn hot" href="${esc(featureMail())}">Feature my video</a>
+      </div></article>`;
+  if (!P.deals.length) return '';
+  const d = P.deals[(n - Math.floor(n / 3)) % P.deals.length];
+  return `
+      <article class="card promo"><div class="promo-in">
+        <span class="ad">Ad · affiliate link</span>
+        <svg class="promo-ic"><use href="#i-pad"/></svg>
+        <h3 class="chr" data-t="${esc(d.title)}">${esc(d.title)}</h3>
+        <p>${esc(d.sub || '')}</p>
+        <a class="tbtn hot" href="${esc(dealUrl(d))}" target="_blank" rel="sponsored noopener">Check price on Amazon</a>
+      </div></article>`;
+}
+function dealsStrip() {
+  if (!S.public || !P.deals.length) return '';
+  const tiles = P.deals.map(d => `<a class="deal" href="${esc(dealUrl(d))}" target="_blank" rel="sponsored noopener"><svg><use href="#i-pad"/></svg><b>${esc(d.title)}</b><span>${esc(d.sub || '')}</span><em>Check price →</em></a>`).join('');
+  const cta = !S.sponsor && featureMail() ? `<a class="deal cta" href="${esc(featureMail())}"><svg><use href="#i-plus"/></svg><b>Get your video featured</b><span>Top of the list for creators</span><em>Contact us →</em></a>` : '';
+  return `<section class="shelf deals-shelf"><h3 class="shelf-t"><svg><use href="#i-pad"/></svg>Gear up for GTA 6<small>Ad · affiliate links</small></h3><div class="deals">${tiles}${cta}</div></section>`;
+}
+/* sponsor in promo.json: {"url": "youtube / tiktok / instagram link", "title": "...", "creator": "@name", "followers": 120000, "thumb": "optional image"} */
+function makeSponsor(sp) {
+  const p = sp && sp.url && parseUrl(sp.url); if (!p) return null;
+  return {uid: 'sp-' + p.platform + '-' + (p.id || p.handle), platform: p.platform, vid: p.id, kind: p.kind, vertical: !!p.vertical, url: sp.url, title: sp.title || 'Featured GTA 6 video',
+    thumb: sp.thumb || (p.platform === 'youtube' ? 'https://i.ytimg.com/vi/' + p.id + '/hqdefault.jpg' : ''), views: sp.views || 0, published: sp.published || '', sponsored: true, embeddable: true,
+    creator: {name: (sp.creator || '').replace(/^@/, ''), handle: sp.creator || '', followers: sp.followers || 0, url: sp.creatorUrl || ''}};
+}
+async function loadPromo() {
+  try {
+    let r = await fetch('promo.json?d=' + today(), {cache:'no-cache'}).catch(() => null);
+    if (!r || !r.ok) r = await fetch('https://raw.githubusercontent.com/Taffix/viralgta6/main/promo.json', {cache:'no-cache'});
+    if (!r.ok) return;
+    const j = await r.json();
+    P.deals = Array.isArray(j.deals) ? j.deals : []; P.amazonTag = j.amazonTag || ''; P.contact = j.contact || '';
+    S.sponsor = makeSponsor(j.sponsor);
+  } catch {}
+}
+function find(uid) { return [...(S.sponsor ? [S.sponsor] : []), ...S.yt, ...S.manual].find(i => i.uid === uid); }
 /* share a video: phone share sheet, otherwise copy the link. The link opens that video on viralgta6.com. */
 async function shareIt(it, btn) {
   if (!it) return;
@@ -1027,7 +1104,7 @@ async function loadDaily() {
     return true;
   } catch { return false; }
 }
-loadDaily().then(ok => { render(); if (!ok) loadYT(); openFromLink(); });
+Promise.all([loadDaily(), /^https?:$/.test(location.protocol) ? loadPromo() : null]).then(([ok]) => { render(); if (!ok) loadYT(); openFromLink(); });
 })();
 </script>
 <script>
