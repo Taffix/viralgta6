@@ -85,8 +85,24 @@ async function youtube() {
 }
 
 /* ---------------- Apify (free $5 credit per month) ---------------- */
+// Free-only guard: never start a paid run when less than MIN_FREE_USD of the monthly free credit is left.
+// (The account has no payment method, so Apify can't charge anyway; this just stops it before the limit.)
+const MIN_FREE_USD = +env.MIN_FREE_USD || 0.5;
+let budget;
+function apifyBudget() {
+  return budget ??= getJSON(`https://api.apify.com/v2/users/me/limits?token=${APIFY_TOKEN}`).then(j => {
+    const max = +j?.data?.limits?.maxMonthlyUsageUsd, used = +j?.data?.current?.monthlyUsageUsd;
+    if (!isFinite(max) || !isFinite(used)) { log('apify credit unknown, free plan without card'); return; }
+    log(`apify credit used $${used.toFixed(2)} of $${max.toFixed(2)}`);
+    if (max - used < MIN_FREE_USD) throw new Error(`free Apify credit almost used ($${used.toFixed(2)} of $${max.toFixed(2)}), skipped to stay free`);
+  }).catch(e => {
+    if (String(e.message).startsWith('free Apify')) throw e;
+    log('could not read apify credit (free plan without card, continuing):', e.message);
+  });
+}
 async function apify(actor, input) {
   if (!APIFY_TOKEN) throw new Error('no APIFY_TOKEN secret');
+  await apifyBudget();
   // run-sync waits for the run (max 300 s) and returns the dataset items
   return getJSON(`https://api.apify.com/v2/acts/${actor}/run-sync-get-dataset-items?timeout=280&token=${APIFY_TOKEN}`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(input)
