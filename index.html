@@ -895,7 +895,9 @@ $('#today').textContent = todayLine();
 async function loadDaily() {
   if (!/^https?:$/.test(location.protocol)) return false;
   try {
-    const r = await fetch('data/videos.json?d=' + today(), {cache:'no-cache'});
+    // own folder first (GitHub Pages / preview), otherwise the list the daily GitHub job writes
+    let r = await fetch('data/videos.json?d=' + today(), {cache:'no-cache'}).catch(() => null);
+    if (!r || !r.ok) r = await fetch('https://raw.githubusercontent.com/Taffix/viralgta6/main/data/videos.json', {cache:'no-cache'});
     if (!r.ok) return false;
     const j = await r.json();
     S.public = true;
