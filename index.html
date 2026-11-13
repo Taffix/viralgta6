@@ -332,8 +332,8 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
 .chr::before,.chr::after{content:attr(data-t);position:absolute;left:0;top:0;right:0;pointer-events:none}
 .chr::before{color:var(--purple);transform:translate(var(--sh,3px),var(--sh,3px))}
 .chr::after{background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand .chr{--sh:2px;font-size:1.06em}
-.brand .chr::before{color:#240a4d;text-shadow:0 0 10px rgba(47,243,224,.55)}
+.brand .chr{--sh:0px;font-size:1.06em}
+.brand .chr::before{color:#240a4d;-webkit-text-stroke:4px #240a4d;text-shadow:0 0 12px rgba(255,63,164,.55)}
 .brand .chr::after{background:linear-gradient(180deg,#fff 0%,#eafcff 47%,#ff4fae 50%,#ff9fd2 56%,#ffe6f4 78%,#fff 100%);-webkit-background-clip:text;background-clip:text}
 .hero h1 .chr::before{text-shadow:0 0 14px rgba(47,243,224,.45)}
 @media (max-width:760px){
