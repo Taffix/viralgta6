@@ -87,7 +87,7 @@ const cover = shell('cover', `
   <div class="wrap">
     <span class="s script">Viral</span><span class="c chrome">Today</span>
     <div class="d teal">${esc(dateLine)}</div>
-    <div class="k">Top ${items.length} going viral now</div>
+    <div class="k">Top ${items.length} GTA 6 videos going viral</div>
   </div>`);
 
 const slide = (it, i) => {
@@ -108,14 +108,14 @@ const slide = (it, i) => {
 };
 
 /* caption with full credits */
-const tags = ['#viral', '#trending', '#viralvideos', '#fyp', '#explorepage', '#reels', '#tiktokviral', '#youtube', '#gta6', '#vicecity', '#retrowave', '#80s'];
+const tags = ['#gta6', '#gtavi', '#grandtheftauto6', '#gta6trailer', '#gta6news', '#rockstargames', '#vicecity', '#leonida', '#gaming', '#viral', '#fyp', '#retrowave'];
 const caption = [
-  `Top ${items.length} going viral today 🌴🔥 ${dateLine}`,
+  `Top ${items.length} GTA 6 videos going viral today 🌴🔥 ${dateLine}`,
   '',
   ...items.map((it, i) => `${i + 1}. ${clip(it.title, 70)} — by ${handle(it.creator)} on ${PF[it.platform]} (${num(it.views)} views)`),
   '',
   'All videos belong to their creators. Go show them some love and follow them! 🙌',
-  'Watch every video + the full daily list at viralgta6.com (link in bio)',
+  'Watch every video + the full daily GTA 6 list at viralgta6.com (link in bio)',
   '',
   'Want your video removed or credited differently? DM us.',
   '',

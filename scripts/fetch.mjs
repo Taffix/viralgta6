@@ -10,15 +10,19 @@ const env = process.env;
 const YT_KEY = env.YT_KEY || '';
 const APIFY_TOKEN = env.APIFY_TOKEN || '';
 
-// Keep these small to stay inside Apify's free $5 per month.
-const YT_REGIONS = (env.YT_REGIONS || 'US,GB').split(',').map(s => s.trim()).filter(Boolean);
-const YT_PER_REGION = +env.YT_PER_REGION || 25;
-const TT_HASHTAGS = (env.TT_HASHTAGS || 'fyp,viral').split(',').map(s => s.trim()).filter(Boolean);
+// The site is all about GTA 6: every source only collects GTA 6 videos.
+// Keep Apify numbers small to stay inside the free $5 per month.
+const list = (v, d) => (v || d).split(',').map(s => s.trim()).filter(Boolean);
+const YT_QUERIES = list(env.YT_QUERIES, 'GTA 6,GTA VI,Grand Theft Auto VI');   // 100 quota units per query (10,000 free per day)
+const YT_PER_QUERY = +env.YT_PER_QUERY || 25;
+const TT_HASHTAGS = list(env.TT_HASHTAGS, 'gta6,gtavi,gta6trailer');
 const TT_PER_HASHTAG = +env.TT_PER_HASHTAG || 10;
-const IG_HASHTAGS = (env.IG_HASHTAGS || 'viral,reels').split(',').map(s => s.trim()).filter(Boolean);
-const IG_PER_HASHTAG = +env.IG_PER_HASHTAG || 5;
-const MAX_AGE_DAYS = +env.MAX_AGE_DAYS || 7;   // older posts are not "viral now"
+const IG_HASHTAGS = list(env.IG_HASHTAGS, 'gta6,gtavi');
+const IG_PER_HASHTAG = +env.IG_PER_HASHTAG || 6;
+const MAX_AGE_DAYS = +env.MAX_AGE_DAYS || 10;  // older posts are not "viral now"
 const KEEP_PER_PLATFORM = 30;
+// a video only counts when its title/caption/tags are really about GTA 6
+const isGTA6 = (...texts) => /\bgta\s*-?\s*(6|vi)\b|grand\s*theft\s*auto\s*(6|vi)\b|#gta6|#gtavi|\bleonida\b/i.test(texts.filter(Boolean).join(' '));
 
 const log = (...a) => console.log('[viralgta6]', ...a);
 const num = v => (v == null || v === '' || isNaN(+v) || +v < 0) ? null : +v;
@@ -37,10 +41,18 @@ async function getJSON(url, opts) {
 async function youtube() {
   if (!YT_KEY) throw new Error('no YT_KEY secret');
   const yt = (path, params) => getJSON(`https://www.googleapis.com/youtube/v3/${path}?` + new URLSearchParams({ ...params, key: YT_KEY }));
+  // search the most viewed GTA 6 videos of the last days, then fetch their full stats
+  const after = new Date(Date.now() - MAX_AGE_DAYS * 864e5).toISOString();
+  const found = new Set();
+  for (const q of YT_QUERIES) {
+    const j = await yt('search', { part: 'snippet', type: 'video', q, order: 'viewCount', publishedAfter: after, maxResults: YT_PER_QUERY, relevanceLanguage: 'en', safeSearch: 'moderate' });
+    for (const s of j.items || []) if (s.id?.videoId) found.add(s.id.videoId);
+  }
   const vids = new Map();
-  for (const region of YT_REGIONS) {
-    const j = await yt('videos', { part: 'snippet,statistics,contentDetails,status', chart: 'mostPopular', regionCode: region, maxResults: YT_PER_REGION });
-    for (const v of j.items || []) if (!vids.has(v.id)) vids.set(v.id, v);
+  const ids0 = [...found];
+  for (let i = 0; i < ids0.length; i += 50) {
+    const j = await yt('videos', { part: 'snippet,statistics,contentDetails,status', id: ids0.slice(i, i + 50).join(','), maxResults: 50 });
+    for (const v of j.items || []) if (isGTA6(v.snippet.title, v.snippet.description?.slice(0, 500), (v.snippet.tags || []).join(' '))) vids.set(v.id, v);
   }
   const ids = [...new Set([...vids.values()].map(v => v.snippet.channelId))];
   const chans = {};
@@ -86,7 +98,7 @@ async function tiktok() {
     hashtags: TT_HASHTAGS, resultsPerPage: TT_PER_HASHTAG,
     shouldDownloadVideos: false, shouldDownloadCovers: false, shouldDownloadSubtitles: false, shouldDownloadSlideshowImages: false
   });
-  return (Array.isArray(rows) ? rows : []).filter(r => r && r.id && !r.error).map(r => {
+  return (Array.isArray(rows) ? rows : []).filter(r => r && r.id && !r.error && isGTA6(r.text, (r.hashtags || []).map(h => '#' + (h.name || h)).join(' '))).map(r => {
     const a = r.authorMeta || {};
     return {
       uid: 'tt-' + r.id, platform: 'tiktok', vid: String(r.id), url: r.webVideoUrl || `https://www.tiktok.com/@${a.name}/video/${r.id}`, source: 'live',
@@ -107,7 +119,7 @@ async function instagram() {
   const rows = await apify('apify~instagram-hashtag-scraper', {
     hashtags: IG_HASHTAGS, resultsLimit: IG_PER_HASHTAG, resultsType: 'reels'
   });
-  return (Array.isArray(rows) ? rows : []).filter(r => r && r.shortCode && !r.error && (r.type === 'Video' || r.videoUrl || r.videoPlayCount != null)).map(r => ({
+  return (Array.isArray(rows) ? rows : []).filter(r => r && r.shortCode && !r.error && isGTA6(r.caption, (r.hashtags || []).map(h => '#' + h).join(' ')) && (r.type === 'Video' || r.videoUrl || r.videoPlayCount != null)).map(r => ({
     uid: 'ig-' + r.shortCode, platform: 'instagram', vid: r.shortCode, kind: 'reel', url: r.url || `https://www.instagram.com/reel/${r.shortCode}/`, source: 'live',
     title: (r.caption || '').slice(0, 220), thumb: r.displayUrl || '',
     views: num(r.videoPlayCount ?? r.igPlayCount ?? r.videoViewCount), likes: num(r.likesCount), comments: num(r.commentsCount),
@@ -123,7 +135,7 @@ async function instagram() {
 /* ---------------- main ---------------- */
 let old = { items: [] };
 try { old = JSON.parse(await readFile(OUT, 'utf8')); } catch {}
-const keepOld = p => (old.items || []).filter(i => i.platform === p && fresh(i.published));
+const keepOld = p => (old.items || []).filter(i => i.platform === p && fresh(i.published) && isGTA6(i.title));
 
 const sources = { youtube, tiktok, instagram };
 const result = { updated: new Date().toISOString(), sources: {}, items: [] };

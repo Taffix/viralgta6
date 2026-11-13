@@ -9,7 +9,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="ViralGTA6">
 <meta name="robots" content="noindex">
-<title>ViralGTA6</title>
+<title>ViralGTA6 · The most viral GTA 6 videos today</title>
+<meta name="description" content="Every day the most viral GTA 6 videos from YouTube, TikTok and Instagram, with full credit to every creator.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Yellowtail&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -352,8 +353,8 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <section class="wrap" id="feed">
     <div class="head">
       <div>
-        <h2 id="feedTitle">Everything going viral now</h2>
-        <p>Ranked by views per hour since upload. Click a video for the big player and everything about the creator.</p>
+        <h2 id="feedTitle">GTA 6 going viral now</h2>
+        <p>The hottest GTA 6 videos from YouTube, TikTok and Instagram, ranked by views per hour since upload. Click a video for the big player and everything about the creator.</p>
       </div>
       <div class="status" id="status"></div>
     </div>
@@ -362,7 +363,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 </main>
 
 <footer>
-  <span>viralgta6.com · YouTube trending is fetched automatically every day. Fan-made site, not affiliated with Rockstar Games or Take-Two Interactive.</span>
+  <span>viralgta6.com · The most viral GTA 6 videos, refreshed automatically every morning. All videos belong to their creators. Fan-made site, not affiliated with Rockstar Games or Take-Two Interactive.</span>
   <span><button id="exportBtn">Export my videos</button> · <button id="importBtn">import</button><input type="file" id="importFile" accept="application/json" hidden></span>
 </footer>
 
@@ -602,7 +603,7 @@ function setStatus(txt) {
 function render() {
   const list = items();
   const g = $('#grid');
-  const names = {all:'Everything going viral now', youtube:'Trending on YouTube', tiktok:'Viral on TikTok', instagram:'Viral on Instagram'};
+  const names = {all:'GTA 6 going viral now', youtube:'GTA 6 on YouTube', tiktok:'GTA 6 on TikTok', instagram:'GTA 6 on Instagram'};
   $('#feedTitle').textContent = names[S.filter];
   if (S.key && S.updated) setStatus(`YouTube ${regionName(S.region)} · updated ${new Date(S.updated).toLocaleString('en-US', {weekday:'short', hour:'2-digit', minute:'2-digit'})}`);
   else if (S.key && S.error) setStatus('YouTube unreachable');
@@ -656,8 +657,8 @@ function shelves(list) {
       <p>${avatar(it.creator)}<span>${esc(handle(it.creator) || it.creator.name || '')}</span></p>
     </article>`;
   const parts = [];
-  if (wide.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-yt"/></svg>Trending videos</h3><div class="yt-grid">${wide.map(vcard).join('')}</div></section>`);
-  if (tall.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-tt"/></svg>Viral shorts</h3><div class="short-grid">${tall.map(scard).join('')}</div></section>`);
+  if (wide.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-yt"/></svg>Trending GTA 6 videos</h3><div class="yt-grid">${wide.map(vcard).join('')}</div></section>`);
+  if (tall.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-tt"/></svg>Viral GTA 6 shorts</h3><div class="short-grid">${tall.map(scard).join('')}</div></section>`);
   return wide.length && tall.length && rank.get(tall[0].uid) < rank.get(wide[0].uid) ? parts.reverse().join('') : parts.join('');
 }
 
@@ -670,7 +671,7 @@ function fill(i, n) {
   return '';
 }
 function emptyState() {
-  if (S.public) return `<div class="empty"><div><h3>${S.filter === 'all' ? "Today's list is on its way" : 'Nothing here yet'}</h3><p>The list refreshes every morning with the most viral videos from YouTube, TikTok and Instagram. Check back soon.</p></div></div>`;
+  if (S.public) return `<div class="empty"><div><h3>${S.filter === 'all' ? "Today's list is on its way" : 'Nothing here yet'}</h3><p>The list refreshes every morning with the most viral GTA 6 videos from YouTube, TikTok and Instagram. Check back soon.</p></div></div>`;
   const noKey = !S.key;
   const label = S.filter === 'all' ? '' : PF[S.filter].name + ' ';
   return `<div class="empty">
@@ -905,7 +906,7 @@ async function loadDaily() {
     S.manual = [];
     S.updated = j.updated;
     S.yt = (j.items || []).map(it => ({...it, creator: {...it.creator, country: /^[A-Z]{2}$/.test(it.creator?.country || '') ? regionName(it.creator.country) : (it.creator?.country || '')}}));
-    $('#today').textContent = new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'}) + ' · YouTube, TikTok & Instagram';
+    $('#today').textContent = new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'}) + ' · GTA 6 on YouTube, TikTok & Instagram';
     return true;
   } catch { return false; }
 }
