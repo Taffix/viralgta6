@@ -329,12 +329,12 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
 @media (max-width:760px){.live{bottom:auto;top:calc(env(safe-area-inset-top) + 12px);right:12px;padding:6px 11px 6px 10px;font-size:12.5px;z-index:60}}
 /* chrome letters drawn in two layers (shadow + chrome) instead of filter on clipped text: that combination makes text vanish on iPhone */
 .chr{position:relative;color:transparent!important;background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;filter:none!important}
-.chr::before,.chr::after{content:attr(data-t);position:absolute;left:0;top:0;right:0;pointer-events:none}
+.chr::before,.chr::after{content:attr(data-t);position:absolute;left:0;top:0;right:-.3em;padding-right:.3em;pointer-events:none}
 .chr::before{color:var(--purple);transform:translate(var(--sh,3px),var(--sh,3px))}
 .chr::after{background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand .chr{--sh:0px;font-size:1.06em}
-.brand .chr::before{color:#240a4d;-webkit-text-stroke:4px #240a4d;text-shadow:0 0 12px rgba(255,63,164,.55)}
-.brand .chr::after{background:linear-gradient(180deg,#fff 0%,#eafcff 47%,#ff4fae 50%,#ff9fd2 56%,#ffe6f4 78%,#fff 100%);-webkit-background-clip:text;background-clip:text}
+.brand .chr{--sh:0px;font-size:1.2em;margin-left:2px}
+.brand .chr::before{color:#1b0636;-webkit-text-stroke:4px #1b0636;text-shadow:0 0 6px rgba(47,243,224,.95),0 0 16px rgba(47,243,224,.75),0 0 34px rgba(47,243,224,.45)}
+.brand .chr::after{background:linear-gradient(180deg,#fff 0%,#e6fdff 46%,#ff3fa4 50%,#ffb3dc 60%,#fff 100%);-webkit-background-clip:text;background-clip:text}
 .hero h1 .chr::before{text-shadow:0 0 14px rgba(47,243,224,.45)}
 @media (max-width:760px){
   .hint{position:absolute;right:12px;top:16px;display:none;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(14,8,18,.7);font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.5px;text-transform:uppercase;pointer-events:none}
