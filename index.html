@@ -67,7 +67,48 @@ a{color:inherit}
 .water{position:absolute;left:-50%;right:-50%;top:79.3%;height:60%;z-index:-1;transform-origin:50% 0;transform:perspective(320px) rotateX(62deg);
   background:linear-gradient(90deg,rgba(255,63,164,.9) 1.5px,transparent 1.5px) 50% 0/64px 100%,linear-gradient(180deg,rgba(255,63,164,.9) 1.5px,transparent 1.5px) 0 0/100% 40px;
   filter:drop-shadow(0 0 4px var(--pink));-webkit-mask:linear-gradient(180deg,rgba(0,0,0,.25),#000 40%);mask:linear-gradient(180deg,rgba(0,0,0,.25),#000 40%)}
-.palm{position:absolute;bottom:20.7%;z-index:-1;fill:#0c0424;pointer-events:none;filter:drop-shadow(0 0 1px rgba(255,63,164,.6))}
+.palm{position:absolute;bottom:20.7%;z-index:-1;fill:#0c0424;pointer-events:none;filter:drop-shadow(0 0 1px rgba(255,63,164,.6));transform-origin:50% 100%;animation:sway 7s ease-in-out infinite alternate}
+.palm.l2{animation-duration:5.5s;animation-delay:-2s}
+.palm.r{animation-duration:8s;animation-delay:-4s}
+@keyframes sway{from{rotate:-1.6deg}to{rotate:2deg}}
+@keyframes gridmove{to{background-position:50% 0,0 40px}}
+.water{animation:gridmove 1.4s linear infinite}
+@media (prefers-reduced-motion:reduce){.palm,.water{animation:none}}
+
+/* ---------- clean YouTube / TikTok blocks (desktop) ---------- */
+.shelves{display:grid;gap:56px}
+.shelf-t{display:flex;align-items:center;gap:10px;font-family:var(--cond);font-weight:700;font-size:24px;letter-spacing:.4px;text-transform:uppercase;margin-bottom:18px}
+.shelf-t svg{width:26px;height:26px;color:var(--pink)}
+.yt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:32px 20px}
+.short-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:28px 16px}
+.v,.s{cursor:pointer;min-width:0;border-radius:14px;outline-offset:6px}
+.v:focus-visible,.s:focus-visible{outline:2px solid var(--teal)}
+.thumb,.thumb9{position:relative;overflow:hidden;border-radius:14px;background:var(--ink3)}
+.thumb{aspect-ratio:16/9}
+.thumb9{aspect-ratio:9/16}
+.thumb img,.thumb9 img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.v:hover img,.s:hover img{transform:scale(1.03)}
+.rk{position:absolute;left:10px;top:8px;font-family:var(--display);font-style:italic;font-size:30px;line-height:1;color:#fff;text-shadow:2px 2px 0 var(--pink)}
+.dur{position:absolute;right:8px;bottom:8px;background:rgba(0,0,0,.8);padding:2px 6px;border-radius:5px;font-size:13px;font-weight:600}
+.info{display:flex;gap:12px;margin-top:12px;min-width:0}
+.info > div{min-width:0}
+.info .av{width:38px;height:38px;border-width:0}
+.v h3{font-weight:600;font-size:16.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.v p{font-size:14px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.v .who{display:flex;align-items:center;gap:6px}
+.pi{width:15px;height:15px;flex:none}
+.pi.youtube{color:var(--yt)}.pi.tiktok{color:var(--tt)}.pi.instagram{color:var(--ig)}
+.plays{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:5px;font-weight:700;font-size:15px;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+.plays svg{width:14px;height:14px}
+.thumb9::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,rgba(0,0,0,.6));pointer-events:none}
+.plays,.pi-badge{z-index:1}
+.pi-badge{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.55)}
+.pi-badge svg{width:16px;height:16px}
+.pi-badge.youtube{color:var(--yt)}.pi-badge.tiktok{color:var(--tt)}.pi-badge.instagram{color:var(--ig)}
+.s h3{font-weight:600;font-size:15px;line-height:1.3;margin-top:10px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.s p{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:13.5px;color:var(--muted);min-width:0}
+.s p span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s .av{width:24px;height:24px;font-size:12px;border-width:0}
 .palm.l{left:-40px;width:min(30vw,380px)}
 .palm.l2{left:14%;width:min(14vw,170px)}
 .palm.r{right:-30px;width:min(26vw,330px);transform:scaleX(-1)}
@@ -112,8 +153,8 @@ a{color:inherit}
 .card.w12{grid-column:1/-1;aspect-ratio:21/8}
 .media{position:absolute;inset:0;z-index:-1}
 .media img{width:100%;height:100%;object-fit:cover}
-.media .art{position:absolute;inset:0;background:linear-gradient(140deg,var(--purple),var(--pink) 60%,var(--orange))}
-.media .art span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:clamp(28px,4vw,56px);text-transform:uppercase;opacity:.35}
+.media .art,.thumb .art,.thumb9 .art{position:absolute;inset:0;background:linear-gradient(140deg,var(--purple),var(--pink) 60%,var(--orange))}
+.media .art span,.thumb .art span,.thumb9 .art span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:clamp(28px,4vw,56px);text-transform:uppercase;opacity:.35}
 .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(13,7,22,.15) 0%,rgba(13,7,22,0) 30%,rgba(13,7,22,.55) 62%,rgba(13,7,22,.95) 100%)}
 .slot{position:absolute;inset:0}
 .slot iframe{width:100%;height:100%;border:0;opacity:0}
@@ -568,8 +609,11 @@ function render() {
   else setStatus('YouTube not connected yet');
   if (S.public) setStatus(S.updated ? 'Updated ' + new Date(S.updated).toLocaleString('en-US', {weekday:'short', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) : 'First update coming soon');
 
+  g.className = !list.length || phone.matches ? 'grid' : 'shelves';
   if (!list.length) {
     g.innerHTML = emptyState();
+  } else if (!phone.matches) {
+    g.innerHTML = shelves(list);
   } else {
     g.innerHTML = list.map((it, i) => `
       <article class="card${fill(i, list.length)}" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
@@ -591,6 +635,32 @@ function render() {
   renderHero(list[0]);
   observeFeed();
 }
+/* desktop: YouTube-style video grid + TikTok-style shorts grid */
+function shelves(list) {
+  const rank = new Map(list.map((it, i) => [it.uid, i + 1]));
+  const wide = list.filter(i => !i.vertical), tall = list.filter(i => i.vertical);
+  const unit = it => it.platform === 'youtube' ? ' subscribers' : ' followers';
+  const vcard = it => `
+    <article class="v" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
+      <div class="thumb">${media(it)}<span class="rk">#${rank.get(it.uid)}</span>${it.duration ? `<span class="dur">${esc(it.duration)}</span>` : ''}</div>
+      <div class="info">${avatar(it.creator)}<div>
+        <h3>${esc(it.title || 'Untitled')}</h3>
+        <p class="who"><svg class="pi ${it.platform}"><use href="${PF[it.platform].icon}"/></svg>${esc(it.creator.name || 'Unknown creator')}${it.creator.followers ? ` · ${num(it.creator.followers)}${unit(it)}` : ''}</p>
+        <p>${num(it.views)} views${it.published ? ' · ' + esc(ago(it.published)) : ''}</p>
+      </div></div>
+    </article>`;
+  const scard = it => `
+    <article class="s" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
+      <div class="thumb9">${media(it)}<span class="rk">#${rank.get(it.uid)}</span><span class="pi-badge ${it.platform}"><svg><use href="${PF[it.platform].icon}"/></svg></span><span class="plays"><svg><use href="#i-play"/></svg>${num(it.views)}</span></div>
+      <h3>${esc(it.title || 'Untitled')}</h3>
+      <p>${avatar(it.creator)}<span>${esc(handle(it.creator) || it.creator.name || '')}</span></p>
+    </article>`;
+  const parts = [];
+  if (wide.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-yt"/></svg>Trending videos</h3><div class="yt-grid">${wide.map(vcard).join('')}</div></section>`);
+  if (tall.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-tt"/></svg>Viral shorts</h3><div class="short-grid">${tall.map(scard).join('')}</div></section>`);
+  return wide.length && tall.length && rank.get(tall[0].uid) < rank.get(wide[0].uid) ? parts.reverse().join('') : parts.join('');
+}
+
 /* make the last row of the collage always full */
 function fill(i, n) {
   if (n <= 5) return (n === 4 && i === 3) || (n === 2 && i === 1) ? ' w12' : '';
@@ -694,7 +764,7 @@ function observeFeed() {
   }), {root: $('#feed'), threshold:[0, .3, .75]});
   $$('.card').forEach(c => io.observe(c));
 }
-phone.addEventListener?.('change', () => { stopFeed(); observeFeed(); });
+phone.addEventListener?.('change', () => { stopFeed(); render(); });
 window.addEventListener('message', e => {
   if (!/youtube(-nocookie)?\.com$/.test(new URL(e.origin).hostname)) return;
   let d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch { return; }
@@ -720,7 +790,7 @@ document.addEventListener('click', e => {
     else if (it) openPlayer(it);
     return;
   }
-  const card = t.closest('.card');
+  const card = t.closest('.card, .v, .s');
   if (card) {
     if (t.closest('[data-act="out"]')) return;
     const it = find(card.dataset.uid);
@@ -732,7 +802,7 @@ document.addEventListener('click', e => {
     if (it) openPlayer(it);
   }
 });
-document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.classList?.contains('card')) e.target.click(); });
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches?.('.card, .v, .s')) e.target.click(); });
 $$('dialog').forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
 
 function openSheet(id) {
