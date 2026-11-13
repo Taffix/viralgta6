@@ -2,8 +2,8 @@ name: Daily viral videos
 
 on:
   schedule:
-    - cron: '0 5 * * *'   # every day at 05:00 UTC (06:00 / 07:00 Dutch time)
-  workflow_dispatch:       # "Run workflow" button for a manual update
+    - cron: '7 * * * *'   # every hour: YouTube (free). At 05:07 UTC also TikTok + Instagram + the Instagram post.
+  workflow_dispatch:       # "Run workflow" button = full update (also uses Apify credit)
 
 permissions:
   contents: write
@@ -21,15 +21,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Fetch today's videos
+      - name: Morning run or manual run?
+        id: mode
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%H)" = "05" ]; then echo "full=1" >> "$GITHUB_OUTPUT"; else echo "full=0" >> "$GITHUB_OUTPUT"; fi
+      - name: Fetch the GTA 6 videos
         env:
           YT_KEY: ${{ secrets.YT_KEY }}
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
+          FULL: ${{ steps.mode.outputs.full }}
         run: node scripts/fetch.mjs
       - name: Make today's Instagram post
+        if: steps.mode.outputs.full == '1'
         continue-on-error: true
         run: node scripts/post.mjs out/post
       - name: Keep the post for download
+        if: steps.mode.outputs.full == '1'
         uses: actions/upload-artifact@v4
         with:
           name: instagram-post
@@ -41,5 +48,6 @@ jobs:
           git config user.name "viralgta6-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/videos.json
-          git diff --cached --quiet || git commit -m "Daily videos $(date -u +%Y-%m-%d)"
-          git push
+          git diff --cached --quiet && exit 0
+          git commit -m "GTA 6 videos $(date -u +'%Y-%m-%d %H:%M')"
+          git pull --rebase -q && git push

@@ -135,18 +135,28 @@ async function instagram() {
 /* ---------------- main ---------------- */
 let old = { items: [] };
 try { old = JSON.parse(await readFile(OUT, 'utf8')); } catch {}
-const keepOld = p => (old.items || []).filter(i => i.platform === p && fresh(i.published) && isGTA6(i.title));
+const keepOld = p => (old.items || []).filter(i => i.platform === p && fresh(i.published));
 
+// YouTube is free, so it refreshes every hour. TikTok + Instagram cost Apify credit,
+// so they only refresh on the morning run (FULL=1) and are kept the rest of the day.
+const FULL = env.FULL === '1';
 const sources = { youtube, tiktok, instagram };
 const result = { updated: new Date().toISOString(), sources: {}, items: [] };
 for (const [name, fn] of Object.entries(sources)) {
+  if (!FULL && name !== 'youtube') {
+    const prev = keepOld(name);
+    result.items.push(...prev);
+    result.sources[name] = { ...(old.sources?.[name] || {}), kept: prev.length, refreshed: old.sources?.[name]?.refreshed || old.updated };
+    log(name, 'kept', prev.length, 'from the morning run');
+    continue;
+  }
   try {
     const items = (await fn()).filter(i => fresh(i.published) && i.views);
     items.sort((a, b) => perHour(b) - perHour(a));
     const unique = [...new Map(items.map(i => [i.uid, i])).values()].slice(0, KEEP_PER_PLATFORM);
     if (!unique.length) throw new Error('0 usable videos');
     result.items.push(...unique);
-    result.sources[name] = { ok: true, count: unique.length };
+    result.sources[name] = { ok: true, count: unique.length, refreshed: result.updated };
     log(name, 'ok', unique.length);
   } catch (e) {
     const prev = keepOld(name);
