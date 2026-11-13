@@ -292,6 +292,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 </style>
 </head>
 <body>
+<script>if (/^https?:$/.test(location.protocol)) document.body.classList.add("public")</script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="M10 9l5 3-5 3z" fill="#fff"/></symbol>
@@ -894,6 +895,7 @@ $('#today').textContent = todayLine();
 /* Online: the daily list (data/videos.json, written every morning by GitHub). Opened as a file: own key + manual mode. */
 async function loadDaily() {
   if (!/^https?:$/.test(location.protocol)) return false;
+  S.public = true;
   try {
     // own folder first (GitHub Pages / preview), otherwise the list the daily GitHub job writes
     let r = await fetch('data/videos.json?d=' + today(), {cache:'no-cache'}).catch(() => null);
