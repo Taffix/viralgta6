@@ -71,3 +71,11 @@ Repository → **Actions** → **Daily viral videos** → **Run workflow**. Na �
 ## Lokaal openen
 
 `index.html` dubbelklikken werkt ook: dan zie je Settings en Add video en kun je met je eigen YouTube-sleutel testen. Online zijn die knoppen verborgen en ziet iedereen de dagelijkse lijst.
+
+## Instagram-post van de dag
+
+Elke ochtend maakt GitHub ook een carrousel in de stijl van de site: 1 omslag + de top 5 (1080×1350 px) en `caption.txt` met alle credits en hashtags.
+
+Ophalen: repository → **Actions** → bovenste run **Daily viral videos** → onderaan bij *Artifacts* **instagram-post** (zip). Slides in volgorde uploaden als carrousel, tekst uit `caption.txt` plakken. Wordt 14 dagen bewaard.
+
+Let op: alleen de afbeelding van de video + credit, geen video van een ander opnieuw uploaden zonder toestemming van de maker.
