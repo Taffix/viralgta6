@@ -10,6 +10,22 @@
 <meta name="apple-mobile-web-app-title" content="ViralGTA6">
 <title>ViralGTA6 · The most viral GTA 6 videos today</title>
 <meta name="description" content="Every day the most viral GTA 6 videos from YouTube, TikTok and Instagram, with full credit to every creator.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://viralgta6.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ViralGTA6">
+<meta property="og:url" content="https://viralgta6.com/">
+<meta property="og:title" content="ViralGTA6 · The most viral GTA 6 videos today">
+<meta property="og:description" content="The most viral GTA 6 videos from YouTube, TikTok and Instagram, updated every hour. Full credit to every creator.">
+<meta property="og:image" content="https://viralgta6.com/share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ViralGTA6 · The most viral GTA 6 videos today">
+<meta name="twitter:description" content="The most viral GTA 6 videos from YouTube, TikTok and Instagram, updated every hour.">
+<meta name="twitter:image" content="https://viralgta6.com/share.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Yellowtail&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -333,6 +349,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <symbol id="i-gear" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M10.3 3h3.4l.5 2.4 1.8 1 2.3-.8 1.7 2.9-1.8 1.6v2l1.8 1.6-1.7 2.9-2.3-.8-1.8 1-.5 2.4h-3.4l-.5-2.4-1.8-1-2.3.8-1.7-2.9 1.8-1.6v-2L3.9 8.5l1.7-2.9 2.3.8 1.8-1z"/></symbol>
   <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
   <symbol id="i-out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 15V3M7 8l5-5 5 5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
   <symbol id="i-sound" viewBox="0 0 24 24"><path fill="currentColor" d="M4 9h4l5-4v14l-5-4H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9c1.3 1.6 1.3 4.4 0 6M18.5 6.5c2.7 3 2.7 8 0 11"/></symbol>
   <symbol id="palm" viewBox="0 0 300 420">
     <path d="M150 420c6-90 2-170-14-250l12-2c18 82 22 164 16 252z"/>
@@ -666,7 +683,7 @@ function render() {
           <button data-act="play"><i class="hot"><svg><use href="#i-play"/></svg></i>Watch</button>
           ${it.platform === 'youtube' ? `<button data-act="sound"><i><svg><use href="#i-sound"/></svg></i>Sound</button>` : ''}
           <button data-act="info"><i><svg><use href="#i-user"/></svg></i>Creator</button>
-          <a href="${esc(it.url)}" target="_blank" rel="noopener" data-act="out"><i><svg><use href="#i-out"/></svg></i>Open</a>
+          <button data-share="${esc(it.uid)}"><i><svg><use href="#i-share"/></svg></i>Share</button>
         </div>
       </article>`).join('');
   }
@@ -734,6 +751,26 @@ function renderHero(it) {
 
 /* ---------- player ---------- */
 function find(uid) { return [...S.yt, ...S.manual].find(i => i.uid === uid); }
+/* share a video: phone share sheet, otherwise copy the link. The link opens that video on viralgta6.com. */
+async function shareIt(it, btn) {
+  if (!it) return;
+  const url = 'https://viralgta6.com/#v=' + encodeURIComponent(it.uid);
+  const who = handle(it.creator) || it.creator.name || '';
+  const text = (it.title || 'GTA 6 video') + (who ? ' by ' + who : '') + ' · going viral on ViralGTA6';
+  if (navigator.share) { try { await navigator.share({title: 'ViralGTA6', text, url}); } catch {} return; }
+  let ok = false;
+  try { await navigator.clipboard.writeText(url); ok = true; } catch {}
+  const label = btn.querySelector('span') || btn.lastChild;
+  const old = label.textContent;
+  label.textContent = ok ? 'Link copied' : 'Copy failed';
+  setTimeout(() => { label.textContent = old; }, 2200);
+}
+function openFromLink() {
+  const m = /^#v=(.+)$/.exec(location.hash); if (!m) return;
+  const it = find(decodeURIComponent(m[1]));
+  if (it) openPlayer(it); else toast('That video is no longer in today’s list');
+  history.replaceState(null, '', location.pathname);
+}
 function openPlayer(it) {
   const src = it.embeddable === false ? null : embedUrl(it);
   const box = $('#plBox');
@@ -763,6 +800,7 @@ function openPlayer(it) {
       <div class="pl-btns">
         ${c.url ? `<a class="tbtn hot" href="${esc(c.url)}" target="_blank" rel="noopener"><svg><use href="#i-user"/></svg>Visit creator</a>` : ''}
         <a class="tbtn ghost" href="${esc(it.url)}" target="_blank" rel="noopener"><svg><use href="#i-out"/></svg>Open on ${PF[it.platform].name}</a>
+        <button class="tbtn ghost" data-share="${esc(it.uid)}"><svg><use href="#i-share"/></svg><span>Share</span></button>
         ${it.source === 'manual' ? `<button class="tbtn ghost" data-del="${esc(it.uid)}">Remove</button>` : ''}
       </div>
       ${it.platform === 'youtube' && location.protocol === 'file:' ? `<p class="note">Video won't play? YouTube blocks playback from a file opened on your computer. Once the site is online it works; until then use "Open on YouTube".</p>` : ''}
@@ -828,6 +866,8 @@ document.addEventListener('click', e => {
     else if (it) openPlayer(it);
     return;
   }
+  const sh = t.closest('[data-share]');
+  if (sh) { shareIt(find(sh.dataset.share), sh); return; }
   const card = t.closest('.card, .v, .s');
   if (card) {
     if (t.closest('[data-act="out"]')) return;
@@ -948,7 +988,7 @@ async function loadDaily() {
     return true;
   } catch { return false; }
 }
-loadDaily().then(ok => { render(); if (!ok) loadYT(); });
+loadDaily().then(ok => { render(); if (!ok) loadYT(); openFromLink(); });
 })();
 </script>
 <script>
