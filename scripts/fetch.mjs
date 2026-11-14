@@ -137,7 +137,7 @@ async function instagram() {
   });
   return (Array.isArray(rows) ? rows : []).filter(r => r && r.shortCode && !r.error && isGTA6(r.caption, (r.hashtags || []).map(h => '#' + h).join(' ')) && (r.type === 'Video' || r.videoUrl || r.videoPlayCount != null)).map(r => ({
     uid: 'ig-' + r.shortCode, platform: 'instagram', vid: r.shortCode, kind: 'reel', url: r.url || `https://www.instagram.com/reel/${r.shortCode}/`, source: 'live',
-    title: (r.caption || '').slice(0, 220), thumb: r.displayUrl || '',
+    title: (r.caption || '').slice(0, 220), thumb: r.displayUrl || '', video: r.videoUrl || '',
     views: num(r.videoPlayCount ?? r.igPlayCount ?? r.videoViewCount), likes: num(r.likesCount), comments: num(r.commentsCount),
     published: r.timestamp || null, vertical: true,
     creator: {
