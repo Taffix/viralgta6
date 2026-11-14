@@ -380,6 +380,12 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
 .faq summary{cursor:pointer;font-weight:600;color:#fff}
 .faq details p{margin-top:8px}
 @media (max-width:760px){.about{display:none}}
+@media (max-width:760px){
+  .wrap{border-top:0!important;padding:0!important;scroll-snap-type:y mandatory;overscroll-behavior-y:contain}
+  .wrap .grid{height:100%;margin:0;padding:0}
+  .card,.card:nth-child(n){height:100%!important;min-height:0;max-height:none;margin:0!important;border:0!important;scroll-snap-align:start;scroll-snap-stop:always}
+  .seo-list{display:none}
+}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
