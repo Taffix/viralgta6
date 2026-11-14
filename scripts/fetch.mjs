@@ -153,9 +153,20 @@ let old = { items: [] };
 try { old = JSON.parse(await readFile(OUT, 'utf8')); } catch {}
 const keepOld = p => (old.items || []).filter(i => i.platform === p && fresh(i.published));
 
-// YouTube is free, so it refreshes every hour. TikTok + Instagram cost Apify credit,
-// so they only refresh on the morning run (FULL=1) and are kept the rest of the day.
-const FULL = env.FULL === '1';
+// GitHub starts this job up to 3x per hour but often skips or delays scheduled runs,
+// so the script itself decides what is due:
+// - YouTube (free): when the last refresh is 50+ minutes old
+// - TikTok + Instagram (Apify credit): once a day, from 05:00 UTC, when the last refresh is 20+ hours old
+// FULL=1 (the "Run workflow" button) always does everything.
+const ageMin = iso => iso ? (Date.now() - new Date(iso)) / 6e4 : Infinity;
+const lastApify = Math.max(...['tiktok', 'instagram'].map(p => { const r = old.sources?.[p]?.refreshed; return r ? new Date(r).getTime() : 0; }));
+const FULL = env.FULL === '1' || (new Date().getUTCHours() >= 5 && (Date.now() - lastApify) / 36e5 >= 20);
+if (!FULL && ageMin(old.sources?.youtube?.refreshed) < 50) {
+  log('YouTube refreshed', Math.round(ageMin(old.sources.youtube.refreshed)), 'min ago, nothing due');
+  process.exit(0);
+}
+if (env.GITHUB_OUTPUT) await writeFile(env.GITHUB_OUTPUT, 'full=' + (FULL ? 1 : 0) + '\n', {flag: 'a'});
+log(FULL ? 'full run (YouTube + TikTok + Instagram)' : 'YouTube run');
 const sources = { youtube, tiktok, instagram };
 const result = { updated: new Date().toISOString(), sources: {}, items: [] };
 for (const [name, fn] of Object.entries(sources)) {
@@ -177,7 +188,7 @@ for (const [name, fn] of Object.entries(sources)) {
   } catch (e) {
     const prev = keepOld(name);
     result.items.push(...prev);
-    result.sources[name] = { ok: false, kept: prev.length, error: String(e.message || e).slice(0, 200) };
+    result.sources[name] = { ok: false, kept: prev.length, error: String(e.message || e).slice(0, 200), refreshed: name === 'youtube' ? result.updated : (old.sources?.[name]?.refreshed || result.updated) };
     log(name, 'FAILED, kept', prev.length, 'from yesterday:', e.message || e);
   }
 }
