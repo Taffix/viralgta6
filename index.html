@@ -175,6 +175,8 @@ a{color:inherit}
 .slot{position:absolute;inset:0}
 .slot iframe{width:100%;height:100%;border:0;opacity:0}
 .card.playing .slot iframe{opacity:1}
+.slot video{width:100%;height:100%;object-fit:cover;opacity:0;display:block;background:#000}
+.card.playing .slot video{opacity:1}
 .rank{position:absolute;left:14px;top:8px;font-family:var(--display);font-style:italic;font-size:44px;line-height:1;color:#fff;text-shadow:2px 2px 0 var(--pink),4px 4px 0 var(--teal)}
 .card:nth-child(1) .rank{font-size:84px;text-shadow:3px 3px 0 var(--pink),6px 6px 0 var(--teal)}
 .body{position:absolute;left:0;right:0;bottom:0;padding:18px 20px}
@@ -755,7 +757,7 @@ function render() {
           <div class="creator">${avatar(it.creator)}<div><div class="n">${esc(it.creator.name || 'Unknown creator')}</div><div class="h">${esc([handle(it.creator), it.creator.followers ? num(it.creator.followers) + (it.platform === 'youtube' ? ' subscribers' : ' followers') : ''].filter(Boolean).join(' · '))}</div></div></div>
         </div>
         <div class="acts">
-          <button data-act="sound"><i class="hot"><svg><use href="#i-${it.platform === 'instagram' ? 'play' : 'sound'}"/></svg></i>${it.platform === 'instagram' ? 'Play' : 'Sound'}</button>
+          <button data-act="sound"><i class="hot"><svg><use href="#i-${it.platform === 'instagram' && !it.video ? 'play' : 'sound'}"/></svg></i>${it.platform === 'instagram' && !it.video ? 'Play' : 'Sound'}</button>
           <button data-act="info"><i><svg><use href="#i-user"/></svg></i>Creator</button>
           <button data-share="${esc(it.uid)}"><i><svg><use href="#i-share"/></svg></i>Share</button>
         </div>
@@ -939,14 +941,14 @@ $('#player').addEventListener('close', () => { $('#plBox').innerHTML = ''; obser
 /* ---------- mobile feed autoplay ---------- */
 const phone = matchMedia('(max-width:760px)');
 let io;
-function stopFeed() { $$('.card').forEach(c => { if (!$('.slot iframe', c)) return; c.classList.remove('playing', 'unmuted', 'paused', 'ig'); $('.slot', c).innerHTML = ''; }); }
+function stopFeed() { $$('.card').forEach(c => { if (!$('.slot iframe, .slot video', c)) return; c.classList.remove('playing', 'unmuted', 'paused', 'ig'); $('.slot', c).innerHTML = ''; }); }
 function observeFeed() {
   io?.disconnect();
   if (!phone.matches || $('#player').open) return;
   io = new IntersectionObserver(es => es.forEach(e => {
     const card = e.target, it = find(card.dataset.uid); if (!it) return;
     if (e.isIntersecting && e.intersectionRatio > .7) {
-      if ($('.slot iframe', card) || it.platform === 'instagram') return;
+      if ($('.slot iframe, .slot video', card) || (it.platform === 'instagram' && !it.video)) return;
       startCard(card, it);
     } else if (!e.isIntersecting || e.intersectionRatio < .3) {
       card.classList.remove('playing', 'unmuted', 'paused', 'ig'); $('.slot', card).innerHTML = '';
@@ -960,6 +962,17 @@ function startCard(card, it) {
       if (location.protocol === 'file:' && it.platform === 'youtube') return false;
       stopFeed();
       card.classList.remove('unmuted', 'paused');
+      if (it.platform === 'instagram') {
+        if (!it.video) return false;
+        const v = document.createElement('video');
+        Object.assign(v, {src: it.video, muted: true, defaultMuted: true, autoplay: true, loop: true, playsInline: true, preload: 'auto'});
+        v.setAttribute('playsinline', ''); v.setAttribute('muted', ''); v.referrerPolicy = 'no-referrer';
+        v.addEventListener('playing', () => card.classList.add('playing'));
+        v.addEventListener('error', () => { it.video = ''; v.remove(); card.classList.remove('playing'); });
+        $('.slot', card).replaceChildren(v);
+        v.play().catch(() => {});
+        return true;
+      }
       const fr = document.createElement('iframe');
       fr.src = embedUrl(it, {muted:true}); fr.allow = 'autoplay; encrypted-media'; fr.title = it.title || '';
       fr.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -968,19 +981,22 @@ function startCard(card, it) {
         fr.addEventListener('load', () => fr.contentWindow?.postMessage(JSON.stringify({event:'listening', id:it.uid, channel:'widget'}), '*'));
         fr.dataset.uid = it.uid;
       } else {
-        fr.addEventListener('load', () => setTimeout(() => fr.isConnected && card.classList.add('playing'), 900));
+        // TikTok: start (muted) as soon as its player says it is ready; show it once it really plays
+        fr.addEventListener('load', () => setTimeout(() => { if (fr.isConnected) { sendPlayer(card, it, 'mute'); sendPlayer(card, it, 'play'); card.classList.add('playing'); } }, 1200));
       }
       $('.slot', card).replaceChildren(fr);
       return true;
 }
 /* phone: a tap plays in place. 1st tap = sound on, next taps = pause / play. Never opens a popup. */
 function sendPlayer(card, it, what) {
+  const v = $('.slot video', card);
+  if (v) { if (what === 'unMute') v.muted = false; else if (what === 'mute') v.muted = true; else if (what === 'play') v.play().catch(() => {}); else if (what === 'pause') v.pause(); return; }
   const w = $('.slot iframe', card)?.contentWindow; if (!w) return;
   if (it.platform === 'youtube') w.postMessage(JSON.stringify({event:'command', func:{unMute:'unMute', play:'playVideo', pause:'pauseVideo'}[what], args:[]}), '*');
   else if (it.platform === 'tiktok') w.postMessage({'x-tiktok-player': true, type: what}, '*');
 }
 function tapCard(card, it) {
-  if (it.platform === 'instagram') {
+  if (it.platform === 'instagram' && !it.video) {
     if (!$('.slot iframe', card)) {
       stopFeed();
       const fr = document.createElement('iframe');
@@ -989,7 +1005,7 @@ function tapCard(card, it) {
     }
     return;
   }
-  const fr = $('.slot iframe', card);
+  const fr = $('.slot iframe, .slot video', card);
   if (!fr) { if (!startCard(card, it)) window.open(it.url, '_blank', 'noopener'); return; }
   if (!card.classList.contains('unmuted')) { sendPlayer(card, it, 'unMute'); sendPlayer(card, it, 'play'); card.classList.add('unmuted', 'playing'); card.classList.remove('paused'); return; }
   const paused = card.classList.toggle('paused');
@@ -997,6 +1013,14 @@ function tapCard(card, it) {
 }
 phone.addEventListener?.('change', () => { stopFeed(); render(); });
 window.addEventListener('message', e => {
+  if (/(^|\.)tiktok\.com$/.test(new URL(e.origin).hostname)) {
+    const d = e.data; if (!d || !d['x-tiktok-player']) return;
+    const fr = $$('.slot iframe').find(f => f.contentWindow === e.source); if (!fr) return;
+    const card = fr.closest('.card'), it = find(card?.dataset.uid); if (!card || !it) return;
+    if (d.type === 'onPlayerReady') { sendPlayer(card, it, card.classList.contains('unmuted') ? 'unMute' : 'mute'); sendPlayer(card, it, 'play'); }
+    else if (d.type === 'onStateChange' && d.value === 1) card.classList.add('playing');
+    return;
+  }
   if (!/youtube(-nocookie)?\.com$/.test(new URL(e.origin).hostname)) return;
   let d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch { return; }
   const fr = $$('.slot iframe').find(f => f.contentWindow === e.source); if (!fr) return;
