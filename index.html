@@ -417,6 +417,17 @@ a.cl-row{display:flex;align-items:center;gap:10px;min-width:0}
 .creator{position:relative}
 .follow{flex:none;margin-left:auto;font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:#fff;color:#14081f;text-decoration:none}
 @media (max-width:760px){.about-sec{display:none!important}}
+/* videos grow into view while scrolling (uses 'scale', so it never fights other transforms) */
+@keyframes vgGrow{from{scale:.86;opacity:.35}to{scale:1;opacity:1}}
+@supports (animation-timeline:view()){
+  .v .thumb,.s .thumb9{animation:vgGrow linear both;animation-timeline:view();animation-range:entry 0% cover 35%}
+  .card .media{animation:vgGrow linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
+}
+@supports not (animation-timeline:view()){
+  .grow{scale:.88;opacity:.4;transition:scale .5s cubic-bezier(.2,.7,.2,1),opacity .5s ease}
+  .grow.in{scale:1;opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.v .thumb,.s .thumb9,.card .media{animation:none!important}.grow{scale:1!important;opacity:1!important;transition:none!important}}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
@@ -814,6 +825,7 @@ function render() {
       </article>${promoAfter(i)}`).join('');
   }
   renderHero(list[0]);
+  growInView();
   observeFeed();
 }
 /* desktop: YouTube-style video grid + TikTok-style shorts grid */
@@ -927,6 +939,14 @@ async function loadPromo() {
     P.deals = Array.isArray(j.deals) ? j.deals : []; P.amazonTag = j.amazonTag || ''; P.contact = j.contact || '';
     S.sponsor = makeSponsor(j.sponsor);
   } catch {}
+}
+let growIO;
+function growInView() {
+  if (window.CSS && CSS.supports('animation-timeline: view()')) return;
+  growIO?.disconnect();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  growIO = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('in', e.isIntersecting)), {root: phone.matches ? $('#feed') : null, threshold: .15});
+  $$('.v .thumb, .s .thumb9, .card .media').forEach(el => { el.classList.add('grow'); growIO.observe(el); });
 }
 function find(uid) { return [...(S.sponsor ? [S.sponsor] : []), ...S.yt, ...S.manual].find(i => i.uid === uid); }
 /* share a video: phone share sheet, otherwise copy the link. The link opens that video on viralgta6.com. */
