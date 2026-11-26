@@ -3,7 +3,12 @@ name: Daily viral videos
 on:
   schedule:
     - cron: '7,27,47 * * * *'   # GitHub skips many scheduled runs, so try 3x per hour; the script only refreshes what is due
-  workflow_dispatch:       # "Run workflow" button = full update (also uses Apify credit)
+  workflow_dispatch:       # "Run workflow" button = full update (also uses Apify credit), or tick "only YouTube" (free)
+    inputs:
+      only_youtube:
+        description: "Only YouTube + secrets (free, no Apify credit)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -23,13 +28,14 @@ jobs:
           node-version: 20
       - name: Manual run = full update
         id: mode
-        run: echo "full=${{ github.event_name == 'workflow_dispatch' && '1' || '0' }}" >> "$GITHUB_OUTPUT"
+        run: echo "full=${{ github.event_name == 'workflow_dispatch' && !inputs.only_youtube && '1' || '0' }}" >> "$GITHUB_OUTPUT"
       - name: Fetch the GTA 6 videos
         id: fetch
         env:
           YT_KEY: ${{ secrets.YT_KEY }}
           APIFY_TOKEN: ${{ secrets.APIFY_TOKEN }}
           FULL: ${{ steps.mode.outputs.full }}
+          SECRETS_NOW: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
         run: node scripts/fetch.mjs
       - name: Make today's Instagram post
         if: steps.fetch.outputs.full == '1'
@@ -47,7 +53,7 @@ jobs:
         run: |
           git config user.name "viralgta6-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/videos.json
+          git add data/
           git diff --cached --quiet && exit 0
           git commit -m "GTA 6 videos $(date -u +'%Y-%m-%d %H:%M')"
           git pull --rebase -q && git push

@@ -6,6 +6,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 
 const OUT = new URL('../data/videos.json', import.meta.url);
+const OUT_SECRETS = new URL('../data/secrets.json', import.meta.url);
 const env = process.env;
 const YT_KEY = env.YT_KEY || '';
 const APIFY_TOKEN = env.APIFY_TOKEN || '';
@@ -21,6 +22,10 @@ const IG_HASHTAGS = list(env.IG_HASHTAGS, 'gta6,gtavi');
 const IG_PER_HASHTAG = +env.IG_PER_HASHTAG || 6;
 const MAX_AGE_DAYS = +env.MAX_AGE_DAYS || 10;  // older posts are not "viral now"
 const KEEP_PER_PLATFORM = 30;
+// secrets page: GTA 6 secrets, easter eggs and hidden spots (mostly Shorts), refreshed every 6 hours
+const SECRET_QUERIES = list(env.SECRET_QUERIES, 'GTA 6 secret,GTA 6 easter egg,GTA 6 hidden location');
+const SECRET_MAX_AGE_DAYS = 21;
+const isSecret = (...t) => /secret|easter\s*egg|hidden|mystery|myster|you\s*(missed|didn.?t\s*know)|details?\s*you|rare\b|location|glitch|ufo|bigfoot|ghost|cheat|unlock/i.test(t.filter(Boolean).join(' '));
 // a video only counts when its title/caption/tags are really about GTA 6
 const isGTA6 = (...texts) => /\bgta\s*-?\s*(6|vi)\b|grand\s*theft\s*auto\s*(6|vi)\b|#gta6|#gtavi|\bleonida\b/i.test(texts.filter(Boolean).join(' '));
 
@@ -38,21 +43,21 @@ async function getJSON(url, opts) {
 }
 
 /* ---------------- YouTube (free API key) ---------------- */
-async function youtube() {
+async function youtube({ queries = YT_QUERIES, days = MAX_AGE_DAYS, duration = '', also = () => true } = {}) {
   if (!YT_KEY) throw new Error('no YT_KEY secret');
   const yt = (path, params) => getJSON(`https://www.googleapis.com/youtube/v3/${path}?` + new URLSearchParams({ ...params, key: YT_KEY }));
   // search the most viewed GTA 6 videos of the last days, then fetch their full stats
-  const after = new Date(Date.now() - MAX_AGE_DAYS * 864e5).toISOString();
+  const after = new Date(Date.now() - days * 864e5).toISOString();
   const found = new Set();
-  for (const q of YT_QUERIES) {
-    const j = await yt('search', { part: 'snippet', type: 'video', q, order: 'viewCount', publishedAfter: after, maxResults: YT_PER_QUERY, relevanceLanguage: 'en', safeSearch: 'moderate' });
+  for (const q of queries) {
+    const j = await yt('search', { part: 'snippet', type: 'video', q, order: 'viewCount', publishedAfter: after, maxResults: YT_PER_QUERY, relevanceLanguage: 'en', safeSearch: 'moderate', ...(duration ? { videoDuration: duration } : {}) });
     for (const s of j.items || []) if (s.id?.videoId) found.add(s.id.videoId);
   }
   const vids = new Map();
   const ids0 = [...found];
   for (let i = 0; i < ids0.length; i += 50) {
     const j = await yt('videos', { part: 'snippet,statistics,contentDetails,status', id: ids0.slice(i, i + 50).join(','), maxResults: 50 });
-    for (const v of j.items || []) if (isGTA6(v.snippet.title, v.snippet.description?.slice(0, 500), (v.snippet.tags || []).join(' '))) vids.set(v.id, v);
+    for (const v of j.items || []) if (isGTA6(v.snippet.title, v.snippet.description?.slice(0, 500), (v.snippet.tags || []).join(' ')) && also(v.snippet.title, v.snippet.description?.slice(0, 300), (v.snippet.tags || []).join(' '))) vids.set(v.id, v);
   }
   const ids = [...new Set([...vids.values()].map(v => v.snippet.channelId))];
   const chans = {};
@@ -72,7 +77,7 @@ async function youtube() {
       views: num(st.viewCount), likes: num(st.likeCount), comments: num(st.commentCount),
       published: sn.publishedAt, embeddable: v.status ? v.status.embeddable !== false : true,
       duration: secs ? (h ? h + ':' + String(mi).padStart(2, '0') : mi) + ':' + String(s).padStart(2, '0') : '',
-      vertical: secs > 0 && secs <= 180 && /#shorts/i.test(sn.title + ' ' + sn.description),
+      vertical: secs > 0 && secs <= 180 && (duration === 'short' || /#shorts/i.test(sn.title + ' ' + sn.description)),
       creator: {
         name: cs.title || sn.channelTitle, handle: cs.customUrl || '', url: `https://www.youtube.com/channel/${sn.channelId}`,
         avatar: (cs.thumbnails?.medium || cs.thumbnails?.default || {}).url || '',
@@ -161,8 +166,22 @@ const keepOld = p => (old.items || []).filter(i => i.platform === p && fresh(i.p
 const ageMin = iso => iso ? (Date.now() - new Date(iso)) / 6e4 : Infinity;
 const lastApify = Math.max(...['tiktok', 'instagram'].map(p => { const r = old.sources?.[p]?.refreshed; return r ? new Date(r).getTime() : 0; }));
 const FULL = env.FULL === '1' || (new Date().getUTCHours() >= 5 && (Date.now() - lastApify) / 36e5 >= 20);
-if (!FULL && ageMin(old.sources?.youtube?.refreshed) < 50) {
-  log('YouTube refreshed', Math.round(ageMin(old.sources.youtube.refreshed)), 'min ago, nothing due');
+let oldSecrets = null;
+try { oldSecrets = JSON.parse(await readFile(OUT_SECRETS, 'utf8')); } catch {}
+const SECRETS_DUE = env.FULL === '1' || env.SECRETS_NOW === '1' || ageMin(oldSecrets?.updated) >= 6 * 60;
+const MAIN_DUE = FULL || ageMin(old.sources?.youtube?.refreshed) >= 50;
+if (SECRETS_DUE) {
+  try {
+    const items = (await youtube({ queries: SECRET_QUERIES, days: SECRET_MAX_AGE_DAYS, duration: 'short', also: isSecret })).filter(i => i.views);
+    items.sort((a, b) => perHour(b) - perHour(a));
+    const keep = [...new Map(items.map(i => [i.uid, i])).values()].slice(0, 40);
+    if (!keep.length) throw new Error('0 usable videos');
+    await writeFile(OUT_SECRETS, JSON.stringify({ updated: new Date().toISOString(), items: keep }, null, 1) + '\n');
+    log('secrets ok', keep.length);
+  } catch (e) { log('secrets FAILED, kept the old list:', e.message || e); }
+}
+if (!MAIN_DUE) {
+  log('YouTube refreshed', Math.round(ageMin(old.sources?.youtube?.refreshed)), 'min ago, main list not due');
   process.exit(0);
 }
 if (env.GITHUB_OUTPUT) await writeFile(env.GITHUB_OUTPUT, 'full=' + (FULL ? 1 : 0) + '\n', {flag: 'a'});
