@@ -34,7 +34,7 @@ if ($slug !== '') {
 $html = file_get_contents(__DIR__ . '/map.html');
 if ($pin) {
   $cat = $cats[$pin['cat'] ?? '']['name'] ?? 'Secret';
-  $title = $pin['title'] . ' · GTA 6 ' . $cat . ' location | ViralGTA6';
+  $title = $pin['title'] . (!empty($pin['place']) ? ' in ' . $pin['place'] : '') . ' · GTA 6 ' . $cat . ' location | ViralGTA6';
   $desc = trim(($pin['text'] ?? '') . ' Where to find it on the GTA 6 map' . (!empty($pin['creator']['name']) ? ', found by ' . $pin['creator']['name'] : '') . '.');
   $url = SITE . '/map/' . rawurlencode($pin['slug']);
   $id = yt_id($pin['youtube'] ?? '');

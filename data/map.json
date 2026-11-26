@@ -27,54 +27,63 @@
   "pins": [
     {
       "slug": "weapon-stash-house-la-perle",
-      "title": "Weapon stash house in La Perle",
+      "title": "Weapon stash house",
       "cat": "weapons",
       "x": 3706,
       "y": 3462,
       "date": "2026-11-24T22:05:50Z",
-      "text": "A house in La Perle, north Vice City, with a weapon stash inside. Hop the fence by the crates, get in through the back and search the rooms. The pin marks the area; the Short shows the exact house.",
+      "text": "A house in La Perle with a weapon stash. Hop the fence by the crates and get in round the back.",
       "youtube": "https://www.youtube.com/shorts/m8IQPLLZZZM",
       "creator": {
         "name": "JayWayyGaming",
         "url": "https://www.youtube.com/channel/UC2u04hrt9sUTwaHUWlVPdKA"
-      }
+      },
+      "place": "La Perle, Vice City"
     },
     {
       "slug": "black-eagle-warehouse-south-leonard",
-      "title": "Black Eagle warehouse in South Leonard County",
+      "title": "Black Eagle warehouse",
       "cat": "weapons",
       "x": 3295,
       "y": 3219,
       "date": "2026-11-24T22:05:50Z",
-      "text": "The Black Eagle warehouse in South Leonard County hides a weapon stash. Go round the back of the building, head downstairs and get through the cage. The pin marks the area; the Short shows the exact spot.",
+      "text": "Weapon stash inside the Black Eagle warehouse. Go round the back, downstairs and through the cage.",
       "youtube": "https://www.youtube.com/shorts/m8IQPLLZZZM",
       "creator": {
         "name": "JayWayyGaming",
         "url": "https://www.youtube.com/channel/UC2u04hrt9sUTwaHUWlVPdKA"
-      }
+      },
+      "place": "South Leonard County"
     },
     {
       "slug": "presidential-bunker-shark-tooth-island",
-      "title": "Presidential bunker on Shark Tooth Island",
+      "title": "Presidential bunker",
       "cat": "mysteries",
       "x": 4162,
       "y": 2040,
-      "text": "A hidden bunker on Shark Tooth Island, a small sandy islet between Little Hardin Island and the beach north of Waning Sands. The trail starts at the Friends of Freedom memorial in Downtown Vice City. Reported rewards: the Pea Shooter armoured car, a legendary Cold War assault rifle and a Girardi ES9 pistol.",
+      "text": "Hidden bunker on Shark Tooth Island. Start at the Friends of Freedom memorial in Downtown Vice City. Loot: Pea Shooter armoured car, Cold War rifle, Girardi ES9.",
       "sources": [
         {
           "name": "GTA Culture",
           "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
         }
       ],
-      "approx": true
+      "approx": true,
+      "youtube": "https://www.youtube.com/watch?v=lrSeYhS5aJA",
+      "creator": {
+        "name": "Arekkz Gaming",
+        "url": "https://www.youtube.com/@ArekkzGaming"
+      },
+      "videoTitle": "GTA 6 - President's SECRET BUNKER Easter Egg! (Unlimited Tanks & Secret Weapons)",
+      "place": "Shark Tooth Island"
     },
     {
       "slug": "michaels-boat-key-lento",
-      "title": "Michael's boat from GTA V",
+      "title": "Michael's boat (GTA V)",
       "cat": "easter-eggs",
       "x": 2994,
       "y": 6319,
-      "text": "Michael De Santa's boat from GTA V, moored at Jason's house in Key Lento in the Leonida Keys.",
+      "text": "Michael De Santa's boat, moored at Jason's house in Key Lento.",
       "sources": [
         {
           "name": "GTA Culture",
@@ -89,15 +98,22 @@
           "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
         }
       ],
-      "approx": false
+      "approx": false,
+      "youtube": "https://www.youtube.com/watch?v=I1cHE-udf-Y",
+      "creator": {
+        "name": "Nostix Gaming",
+        "url": "https://www.youtube.com/@NostixGaming"
+      },
+      "videoTitle": "Did I Just Find Michael's Boat? (GTA 6 Easter Egg)",
+      "place": "Key Lento"
     },
     {
       "slug": "talking-parrot-three-sheets-liquor",
-      "title": "Talking parrot at Three Sheets Liquor",
+      "title": "Talking parrot",
       "cat": "easter-eggs",
       "x": 3151,
       "y": 6385,
-      "text": "Behind Three Sheets Liquor in Key Lento is a pet lot with a talking parrot, plus a cash stash.",
+      "text": "A talking parrot and a cash stash in the pet lot behind Three Sheets Liquor, Key Lento.",
       "sources": [
         {
           "name": "GTA Culture",
@@ -113,7 +129,14 @@
         }
       ],
       "approx": true,
-      "when": "Chapter 1 (Shirley's rum errand)"
+      "when": "Chapter 1",
+      "youtube": "https://www.youtube.com/watch?v=nDPhuZSZOMI",
+      "creator": {
+        "name": "Dan Allen Gaming",
+        "url": "https://www.youtube.com/@DanAllenGaming"
+      },
+      "videoTitle": "GTA 6 - Jason Encounters a Talking Parrot (Funny Scene)",
+      "place": "Key Lento"
     },
     {
       "slug": "cool-dog-jet-ski-gambit-bay",
@@ -121,7 +144,7 @@
       "cat": "mysteries",
       "x": 3040,
       "y": 6011,
-      "text": "A dog riding a jet ski that you can rescue, out on the water of Gambit Bay.",
+      "text": "Rescue the dog riding a jet ski on Gambit Bay. It takes you to Dog Island.",
       "sources": [
         {
           "name": "GTA Culture",
@@ -141,15 +164,22 @@
         }
       ],
       "approx": true,
-      "note": "One guide says Leonida Bay instead, and it may move around."
+      "note": "One guide says Leonida Bay instead, and it may move around.",
+      "youtube": "https://www.youtube.com/watch?v=l9x3QN8z934",
+      "creator": {
+        "name": "GosuNoob",
+        "url": "https://www.youtube.com/@Gosunoob"
+      },
+      "videoTitle": "GTA 6 Dog on a Jet Ski Rescues Me and Takes Me to Dog Island - You Can Do This Too",
+      "place": "Gambit Bay"
     },
     {
       "slug": "crab-lab-pelican-valley",
-      "title": "Monster crab lab: Crabshack SMG + $10,000",
+      "title": "Monster crab lab",
       "cat": "weapons",
       "x": 2703,
       "y": 5495,
-      "text": "An isolated crab research outpost in the swamps of Pelican Valley in the Grassrivers (Mariana County), with the Crabshack VF5 SMG and a $10,000 stash bag.",
+      "text": "Crab research outpost in the Pelican Valley swamps. Loot: Crabshack VF5 SMG and a $10,000 bag.",
       "sources": [
         {
           "name": "GTA Culture",
@@ -161,22 +191,36 @@
         }
       ],
       "approx": true,
-      "note": "Two other guides place it in Gullet Marsh."
+      "note": "Two other guides place it in Gullet Marsh.",
+      "youtube": "https://www.youtube.com/watch?v=ynVIdJbGLcA",
+      "creator": {
+        "name": "Adam Scott",
+        "url": "https://www.youtube.com/@ScottieSixxx"
+      },
+      "videoTitle": "Grand Theft Auto VI Giant Crab Research Lab Location!",
+      "place": "Pelican Valley"
     },
     {
       "slug": "frampton-islands-bunker",
-      "title": "Frampton Islands bunker (code 3612)",
+      "title": "Frampton Islands bunker",
       "cat": "mysteries",
       "x": 3506,
       "y": 980,
-      "text": "A bunker on the Frampton Islands off the north-east coast of East Lummox County. Keypad code 3612 opens a 'Water Analysis and Testing' tunnel.",
+      "text": "Bunker on the Frampton Islands. Code 3612 opens the 'Water Analysis and Testing' tunnel.",
       "sources": [
         {
           "name": "GTA Culture",
           "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
         }
       ],
-      "approx": true
+      "approx": true,
+      "youtube": "https://www.youtube.com/watch?v=iK8_QUbQKGU",
+      "creator": {
+        "name": "Postmode",
+        "url": "https://www.youtube.com/@postmodeorg"
+      },
+      "videoTitle": "GTA 6 Frampton Island Bunker Code Solved — The Final Flush, Cloned Bodies & Brainwashed Dr Merle",
+      "place": "Frampton Islands"
     },
     {
       "slug": "ninja-turtles-sewer-tallaloko",
@@ -184,14 +228,21 @@
       "cat": "easter-eggs",
       "x": 3387,
       "y": 1376,
-      "text": "A pumping-station channel by Lake Tallaloko, north of Millport in East Lummox County, with green ooze, pizza boxes and four turtles.",
+      "text": "Green ooze, pizza boxes and four turtles in a pumping-station channel by Lake Tallaloko.",
       "sources": [
         {
           "name": "GTA Culture",
           "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
         }
       ],
-      "approx": true
+      "approx": true,
+      "youtube": "https://www.youtube.com/watch?v=9BYalGApxjo",
+      "creator": {
+        "name": "Dynasty",
+        "url": "https://www.youtube.com/@DYNASTY1031"
+      },
+      "videoTitle": "GTA 6 Easter Eggs – SECRET Teenage Mutant Ninja Turtles Origin Story! (TMNT Easter Egg)",
+      "place": "Lake Tallaloko"
     },
     {
       "slug": "pet-cemetery-grayson",
@@ -199,14 +250,21 @@
       "cat": "easter-eggs",
       "x": 1977,
       "y": 1572,
-      "text": "A pet cemetery in Grayson, Lummox County, with a ghost cat and a candle ritual.",
+      "text": "A pet cemetery in Grayson with a ghost cat and a candle ritual.",
       "sources": [
         {
           "name": "GTA Culture",
           "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
         }
       ],
-      "approx": true
+      "approx": true,
+      "youtube": "https://www.youtube.com/watch?v=BRKZJbVWXyQ",
+      "creator": {
+        "name": "MrBossFTW",
+        "url": "https://www.youtube.com/@MrBossFTW"
+      },
+      "videoTitle": "DO NOT Go To The Pet Cemetery At Night In GTA 6 Or Else THIS Will Happen To You!",
+      "place": "Grayson"
     },
     {
       "slug": "freddie-prepper-bunker-lake-leonida",
@@ -214,14 +272,15 @@
       "cat": "easter-eggs",
       "x": 3282,
       "y": 2217,
-      "text": "A prepper's bunker at Lake Leonida in Leonard County, tied to a hurricane story.",
+      "text": "A prepper's bunker at Lake Leonida, tied to a hurricane story.",
       "sources": [
         {
           "name": "GTA Culture",
           "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
         }
       ],
-      "approx": true
+      "approx": true,
+      "place": "Lake Leonida"
     },
     {
       "slug": "kraken-wreck-gloriana-key",
@@ -236,15 +295,22 @@
           "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
         }
       ],
-      "approx": true
+      "approx": true,
+      "youtube": "https://www.youtube.com/watch?v=CR_clcfUdoo",
+      "creator": {
+        "name": "Shirrako",
+        "url": "https://www.youtube.com/@Shirrako"
+      },
+      "videoTitle": "GTA 6 - Finding the Kraken in the Deep Ocean",
+      "place": "Gloriana Key"
     },
     {
       "slug": "dexter-apartment-washington-island",
-      "title": "Dexter's apartment and boat",
+      "title": "Dexter's apartment",
       "cat": "easter-eggs",
       "x": 4575,
       "y": 3227,
-      "text": "A Dexter tribute at Trinity Apartments on Washington Island, Vice City: a rooftop kill kit, and his boat 'Slice of Life' at the docks.",
+      "text": "Trinity Apartments on Washington Island: a rooftop kill kit, and Dexter's boat 'Slice of Life' at the docks.",
       "sources": [
         {
           "name": "GTA Culture",
@@ -260,15 +326,22 @@
         }
       ],
       "approx": true,
-      "note": "One guide says the Bay Harbor marina instead."
+      "note": "One guide says the Bay Harbor marina instead.",
+      "youtube": "https://www.youtube.com/watch?v=mlnfgO4G0n0",
+      "creator": {
+        "name": "IGN",
+        "url": "https://www.youtube.com/@IGN"
+      },
+      "videoTitle": "GTA 6 - How to Find the Dexter Easter Egg (Apartment, Boat, and Kill Room)",
+      "place": "Washington Island"
     },
     {
       "slug": "arthur-morgan-hat-port-gellhorn",
-      "title": "Arthur Morgan's cowboy hat ($35)",
+      "title": "Arthur Morgan's hat",
       "cat": "easter-eggs",
       "x": 1601,
       "y": 2800,
-      "text": "Arthur Morgan's 'Genuine Cowboy Hat' for $35 at a yard sale in southern Port Gellhorn.",
+      "text": "Arthur's 'Genuine Cowboy Hat' for $35 at a yard sale in southern Port Gellhorn.",
       "sources": [
         {
           "name": "GTA Culture",
@@ -280,7 +353,14 @@
         }
       ],
       "approx": true,
-      "when": "Chapter 2"
+      "when": "Chapter 2",
+      "youtube": "https://www.youtube.com/watch?v=Y2OD5AC-aUA",
+      "creator": {
+        "name": "DogManX",
+        "url": "https://www.youtube.com/@DogManX"
+      },
+      "videoTitle": "GTA 6 How to Get Arthur Morgan's Hat! (RDR2 Easter Egg Location)",
+      "place": "Port Gellhorn"
     },
     {
       "slug": "monument-leonidan-supremacy-manifest-canyon",
@@ -288,7 +368,7 @@
       "cat": "mysteries",
       "x": 2041,
       "y": 2163,
-      "text": "A monument with four horses at Manifest Canyon, Kelly County. Players report Morse-like beeps nearby.",
+      "text": "Four-horse monument at Manifest Canyon. Listen for Morse-like beeps.",
       "sources": [
         {
           "name": "GTASide",
@@ -303,7 +383,14 @@
           "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
         }
       ],
-      "approx": true
+      "approx": true,
+      "youtube": "https://www.youtube.com/watch?v=1l_bqB1-WYo",
+      "creator": {
+        "name": "Collector's Vault",
+        "url": "https://www.youtube.com/@CollectorsVault1858"
+      },
+      "videoTitle": "GTA 6 Monument of Leonidan Supremacy WaiNK Location",
+      "place": "Manifest Canyon"
     },
     {
       "slug": "ufo-abduction-east-port-gellhorn",
@@ -311,7 +398,7 @@
       "cat": "mysteries",
       "x": 1955,
       "y": 2664,
-      "text": "A UFO abduction on a rural road east of Port Gellhorn in Kelly County, near the Starlet Motel. Unlocks the trophy 'The Truth Is Out There'.",
+      "text": "Get abducted on the rural road east of Port Gellhorn, near the Starlet Motel. Trophy: 'The Truth Is Out There'.",
       "sources": [
         {
           "name": "GTASide",
@@ -331,15 +418,22 @@
         }
       ],
       "approx": true,
-      "when": "Around 2 AM, after Chapter 1 or 2, alone"
+      "when": "~2 AM, alone, after Ch. 1-2",
+      "youtube": "https://www.youtube.com/watch?v=ZVsqlb-BH6c",
+      "creator": {
+        "name": "GuidingLight",
+        "url": "https://www.youtube.com/@GuidingLight"
+      },
+      "videoTitle": "Gta 6 - How to Complete ALIEN UFO ABDUCTION EASTER EGG (all Puzzle Solutions)",
+      "place": "East of Port Gellhorn"
     },
     {
       "slug": "skunk-ape-cottonmouth-lake",
-      "title": "Skunk Ape (Bigfoot) + tranquilizer rifle",
+      "title": "Skunk Ape (Bigfoot)",
       "cat": "mysteries",
       "x": 2713,
       "y": 5824,
-      "text": "The Skunk Ape lives in the Grassrivers wetlands around Cottonmouth Lake, south of Hamlet. The flyer is at Skeeter's bar in Hamlet; finishing the quest gives a tranquilizer rifle.",
+      "text": "Track the Skunk Ape around Cottonmouth Lake. Flyer at Skeeter's bar in Hamlet; reward: tranquilizer rifle.",
       "sources": [
         {
           "name": "GTA Culture",
@@ -355,22 +449,23 @@
         }
       ],
       "approx": true,
-      "when": "At night",
+      "when": "Night only",
       "note": "Sightings are also reported at Gullet Marsh and Pelican Valley.",
       "youtube": "https://www.youtube.com/shorts/xASL_aDK_J8",
       "creator": {
         "name": "Schlayer",
         "url": "https://www.youtube.com/channel/UCOI2OYf4ae5UwixZdXRu5EQ"
       },
-      "date": "2026-11-22T09:09:09Z"
+      "date": "2026-11-22T09:09:09Z",
+      "place": "Cottonmouth Lake"
     },
     {
       "slug": "literal-easter-egg-tallest-tower",
-      "title": "The literal Easter egg (tallest tower)",
+      "title": "The literal Easter egg",
       "cat": "easter-eggs",
       "x": 3350,
       "y": 5136,
-      "text": "Climb the tallest radio tower, in South Vice-Dale County, take the egg from the bird nest at the top and throw it for a special cutscene.",
+      "text": "Climb the tallest radio tower, grab the egg from the nest and throw it.",
       "sources": [
         {
           "name": "ShowGamer",
@@ -386,13 +481,14 @@
         }
       ],
       "approx": true,
-      "when": "The climb takes about 6 to 7 minutes",
+      "when": "6-7 min climb",
       "youtube": "https://www.youtube.com/shorts/VY19iuwMgDs",
       "creator": {
         "name": "Jpup",
         "url": "https://www.youtube.com/channel/UC9iJXHOeqDqz1xftYCxWheQ"
       },
-      "date": "2026-11-21T22:00:12Z"
+      "date": "2026-11-21T22:00:12Z",
+      "place": "South Vice-Dale County"
     },
     {
       "slug": "demon-ritual-warehouse-capri",
@@ -400,22 +496,29 @@
       "cat": "easter-eggs",
       "x": 1591,
       "y": 3879,
-      "text": "An unmarked warehouse with a pentagram in the north of Capri, near Tortoise Lake.",
+      "text": "An unmarked warehouse with a pentagram in north Capri, near Tortoise Lake.",
       "sources": [
         {
           "name": "GTASide",
           "url": "https://gtaside.com/tips/gta6/easter-eggs/"
         }
       ],
-      "approx": true
+      "approx": true,
+      "youtube": "https://www.youtube.com/watch?v=3C2uOcyN0BI",
+      "creator": {
+        "name": "End Times Productions",
+        "url": "https://www.youtube.com/@EndTimesProductions"
+      },
+      "videoTitle": "GTA 6 Is Worse Than We Thought. There's a Satanic Ritual in It.",
+      "place": "Capri"
     },
     {
       "slug": "satan-boss-north-port-gellhorn",
-      "title": "Satan boss fight + Hellspawn shotgun",
+      "title": "Satan boss fight",
       "cat": "weapons",
       "x": 1572,
       "y": 2451,
-      "text": "North of Port Gellhorn, a house with an open garage leads to a campsite fire and a fight with Satan. Rewards: permanent extra health, the Hellspawn Comshot 12 shotgun and tattoos.",
+      "text": "An open garage north of Port Gellhorn leads to Satan. Reward: extra health, Hellspawn shotgun, tattoos.",
       "sources": [
         {
           "name": "GTASide",
@@ -428,7 +531,8 @@
         "name": "Schlayer",
         "url": "https://www.youtube.com/channel/UCOI2OYf4ae5UwixZdXRu5EQ"
       },
-      "date": "2026-11-21T21:27:40Z"
+      "date": "2026-11-21T21:27:40Z",
+      "place": "North of Port Gellhorn"
     },
     {
       "slug": "tanks-fighter-jet-mile-zero",
@@ -436,7 +540,7 @@
       "cat": "cars",
       "x": 1391,
       "y": 6633,
-      "text": "Military vehicles, including tanks and a fighter jet, at Mile Zero Air Station at the end of the Keys bridges.",
+      "text": "Tanks and a fighter jet at Mile Zero Air Station, at the end of the Keys bridges.",
       "sources": [
         {
           "name": "GTASide",
@@ -447,15 +551,22 @@
           "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
         }
       ],
-      "approx": true
+      "approx": true,
+      "youtube": "https://www.youtube.com/watch?v=iO_WVL3jVx8",
+      "creator": {
+        "name": "MrDalekJD",
+        "url": "https://www.youtube.com/@MrDalekJD"
+      },
+      "videoTitle": "GTA 6 - How to Get a TANK & FIGHTER JET! Military Base Location (6 Star Wanted Level)",
+      "place": "Mile Zero Air Station"
     },
     {
       "slug": "fast-furious-tuner-vespucci-island",
-      "title": "Fast & Furious tuner car",
+      "title": "Fast & Furious tuner",
       "cat": "cars",
       "x": 4267,
       "y": 3624,
-      "text": "A green tuner car, a nod to the Eclipse from the first Fast and the Furious, in a villa garage on Vespucci Island.",
+      "text": "A green tuner, a nod to the Eclipse from the first Fast and the Furious, in a villa garage on Vespucci Island.",
       "sources": [
         {
           "name": "GTA Culture",
@@ -471,7 +582,14 @@
         }
       ],
       "approx": true,
-      "note": "It is not always there."
+      "note": "It is not always there.",
+      "youtube": "https://www.youtube.com/watch?v=n25U6ZIHl1Y",
+      "creator": {
+        "name": "Southern Vice",
+        "url": "https://www.youtube.com/@southernvice"
+      },
+      "videoTitle": "I Found 6 Secret Fast & Furious Cars in GTA 6",
+      "place": "Vespucci Island"
     },
     {
       "slug": "mystery-house-belville",
@@ -479,7 +597,7 @@
       "cat": "easter-eggs",
       "x": 3586,
       "y": 2964,
-      "text": "A house in Belville, Leonard County, with a San Andreas photo, notes in the garage and a snake in a car trunk.",
+      "text": "A San Andreas photo, notes in the garage and a snake in a car trunk.",
       "sources": [
         {
           "name": "GTASide",
@@ -494,7 +612,8 @@
           "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
         }
       ],
-      "approx": true
+      "approx": true,
+      "place": "Belville"
     },
     {
       "slug": "meteorite-mount-kalaga",
@@ -502,7 +621,7 @@
       "cat": "collectibles",
       "x": 2629,
       "y": 1654,
-      "text": "A glowing pink meteorite on Mount Kalaga in Lummox County.",
+      "text": "A glowing pink meteorite on Mount Kalaga.",
       "sources": [
         {
           "name": "ShowGamer",
@@ -514,11 +633,18 @@
         }
       ],
       "approx": true,
-      "note": "One guide says the eastern slope of Table Rock, another the peak with a stone circle."
+      "note": "One guide says the eastern slope of Table Rock, another the peak with a stone circle.",
+      "youtube": "https://www.youtube.com/watch?v=svqOeluRX9E",
+      "creator": {
+        "name": "Koes",
+        "url": "https://www.youtube.com/@NightshiftKoes"
+      },
+      "videoTitle": "GTA 6: 17 Meteorite Locations & Where to Sell Them #GTA6 #GTAVI",
+      "place": "Mount Kalaga"
     },
     {
       "slug": "tower-bunker-mount-kalaga",
-      "title": "Mount Kalaga tower and bunker",
+      "title": "Mount Kalaga bunker",
       "cat": "mysteries",
       "x": 2452,
       "y": 1543,
@@ -529,15 +655,16 @@
           "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
         }
       ],
-      "approx": true
+      "approx": true,
+      "place": "Mount Kalaga"
     },
     {
       "slug": "crashed-glider-bobcat-bight",
-      "title": "Crashed glider + pistol",
+      "title": "Crashed glider",
       "cat": "weapons",
       "x": 1391,
       "y": 4454,
-      "text": "A crashed glider at Bobcat Bight, off the west coast of North Mariana County, with the Turnt Nipper .38 pistol.",
+      "text": "A crashed glider at Bobcat Bight with the Turnt Nipper .38 pistol.",
       "sources": [
         {
           "name": "ShowGamer",
@@ -548,7 +675,8 @@
           "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
         }
       ],
-      "approx": true
+      "approx": true,
+      "place": "Bobcat Bight"
     },
     {
       "slug": "ffsr-sniper-watson-bay",
@@ -556,22 +684,23 @@
       "cat": "weapons",
       "x": 2292,
       "y": 5286,
-      "text": "A small compound on a sandy stretch near Watson Bay. Get in through a crack in the fence.",
+      "text": "A compound on a sandy stretch near Watson Bay. Get in through a crack in the fence.",
       "sources": [
         {
           "name": "AOEAH",
           "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
         }
       ],
-      "approx": true
+      "approx": true,
+      "place": "Watson Bay"
     },
     {
       "slug": "western-novel-jacobs-tavern-millport",
-      "title": "Western novel about New Austin",
+      "title": "Red Dead novel",
       "cat": "easter-eggs",
       "x": 3650,
       "y": 1654,
-      "text": "A western novel about New Austin (Red Dead) inside Jacob's Tavern in Millport.",
+      "text": "A western novel about New Austin inside Jacob's Tavern, Millport.",
       "sources": [
         {
           "name": "GTASide",
@@ -582,7 +711,8 @@
           "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
         }
       ],
-      "approx": true
+      "approx": true,
+      "place": "Millport"
     }
   ],
   "credit": "Map © Rockstar Games",

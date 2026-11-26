@@ -89,11 +89,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .cat{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:#14081f;background:var(--c);padding:4px 10px;border-radius:999px}
 .pin-title{font-family:var(--cond);font-weight:700;font-size:28px;line-height:1.05;text-transform:uppercase}
 .pin-text{color:var(--muted);line-height:1.6}
-.pin-meta{color:var(--dim);font-size:13.5px;line-height:1.5}
-.pin-meta b{color:var(--muted)}
-.pin-meta a{color:var(--teal)}
-.vid{position:relative;width:min(100%,300px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 16px 40px rgba(0,0,0,.5)}
+#panelBody{display:flex;flex-direction:column;gap:14px}
+/* pin detail: photo first, tags, short text, small sources */
+.photo,.vid{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000 center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 16px 40px rgba(0,0,0,.5);flex:none}
+.photo.tall,.vid.tall{width:min(100%,260px);aspect-ratio:9/16;align-self:center}
+.photo .pl{position:absolute;inset:0;margin:auto;width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.92) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2314081f' d='M8 5l12 7-12 7z'/%3E%3C/svg%3E") 56% 50%/28px no-repeat;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.photo:hover .pl{transform:scale(1.06)}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--cond);font-weight:600;font-size:13px;letter-spacing:.4px;color:var(--muted);padding:4px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.16)}
+.pin-note{font-size:13.5px;line-height:1.45;color:#ffe3a6;background:rgba(255,214,90,.08);border-left:3px solid var(--yellow);padding:8px 10px;border-radius:0 8px 8px 0}
+.pin-src{font-size:12.5px;color:var(--dim)}
+.pin-src a{color:var(--dim)}
 .credit{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
 .credit a.n{font-weight:700;text-decoration:none;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .credit small{display:block;color:var(--dim);font-weight:400;font-size:12.5px}
@@ -122,7 +129,7 @@ body.editing #map{cursor:crosshair}
   .panel::before{content:"";align-self:center;width:42px;height:5px;border-radius:3px;background:rgba(255,255,255,.3);flex:none}
   body.sheet .panel{transform:none}
   .panel h1{font-size:28px}
-  .vid{width:min(100%,240px);align-self:center}
+  .photo.tall,.vid.tall{width:min(100%,220px)}
 }
 @media (prefers-reduced-motion:reduce){.panel{transition:none}}
 </style>
@@ -230,7 +237,7 @@ function showList() {
   $('#panelBody').innerHTML = `
     <h1>GTA 6 secrets map</h1>
     <p class="lead">Hidden locations, easter eggs, weapons, cars and collectibles in Leonida. Tap a pin to watch the Short of the creator who found it.</p>
-    ${pins.length ? `<ul class="list">${pins.map(p => `<li><button data-slug="${esc(p.slug)}" style="--c:${esc((M.categories[p.cat] || {}).color)}"><i></i><span><b>${esc(p.title)}</b><small>${esc((M.categories[p.cat] || {}).name || '')}${p.creator?.name ? ' · found by ' + esc(p.creator.name) : ''}</small></span></button></li>`).join('')}</ul>`
+    ${pins.length ? `<ul class="list">${pins.map(p => `<li><button data-slug="${esc(p.slug)}" style="--c:${esc((M.categories[p.cat] || {}).color)}"><i></i><span><b>${esc(p.title)}</b><small>${esc((M.categories[p.cat] || {}).name || '')}${p.place ? ' · ' + esc(p.place) : ''}</small></span></button></li>`).join('')}</ul>`
       : `<p class="empty">The first secret spots are being added. Found one? Post it as a YouTube Short with "GTA 6 secret" in the title and it may end up on this map.</p>`}
     <div class="btns"><a class="tbtn" href="/secrets">Watch all secret Shorts</a></div>`;
   drawPins();
@@ -239,19 +246,19 @@ function showList() {
 
 function openPin(p, fly) {
   active = p; drawPins();
-  const cat = M.categories[p.cat] || {}, id = ytId(p.youtube || ''), cr = p.creator || {};
+  const cat = M.categories[p.cat] || {}, id = ytId(p.youtube || ''), cr = p.creator || {}, isShort = /\/shorts\//.test(p.youtube || '');
   $('#panelBody').innerHTML = `
     <button class="back" id="back" type="button">← All secrets</button>
-    <span class="cat" style="--c:${esc(cat.color)}">${esc(cat.name || '')}</span>
+    ${id ? `<button class="photo${isShort ? ' tall' : ''}" id="photo" type="button" aria-label="Play the video" style="background-image:url('https://i.ytimg.com/vi/${esc(id)}/hqdefault.jpg')"><span class="pl"></span></button>` : ''}
+    <div class="tags"><span class="cat" style="--c:${esc(cat.color)}">${esc(cat.name || '')}</span>${p.place ? `<span class="tag">📍 ${esc(p.place)}</span>` : ''}${p.when ? `<span class="tag">🕑 ${esc(p.when)}</span>` : ''}${p.approx ? '<span class="tag" title="The guides name the place, not the exact spot">≈ Area</span>' : ''}</div>
     <h1 class="pin-title">${esc(p.title)}</h1>
     ${p.text ? `<p class="pin-text">${esc(p.text)}</p>` : ''}
-    ${p.when ? `<p class="pin-meta"><b>When:</b> ${esc(p.when)}</p>` : ''}
-    ${p.approx ? `<p class="pin-meta">📍 Approximate area. The guides name the place, not the exact spot.</p>` : ''}
-    ${p.note ? `<p class="pin-meta">⚠️ ${esc(p.note)}</p>` : ''}
-    ${(p.sources || []).length ? `<p class="pin-meta">Source: ${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join(', ')}</p>` : ''}
-    ${id ? `<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${esc(id)}?rel=0&playsinline=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="${esc(p.title)}"></iframe></div>` : ''}
-    ${cr.name ? `<div class="credit"><a class="n" href="${esc(cr.url || '#')}" target="_blank" rel="noopener">${esc(cr.name)}<small>Found this secret</small></a>${cr.url ? `<a class="follow" href="${esc(cr.url)}" target="_blank" rel="noopener">Follow</a>` : ''}</div>` : ''}
-    <div class="btns">${p.youtube ? `<a class="tbtn" href="${esc(p.youtube)}" target="_blank" rel="noopener">Open on YouTube</a>` : ''}<button class="tbtn hot" id="share" type="button">Share spot</button></div>`;
+    ${p.note ? `<p class="pin-note">${esc(p.note)}</p>` : ''}
+    ${cr.name ? `<div class="credit"><a class="n" href="${esc(cr.url || '#')}" target="_blank" rel="noopener">${esc(cr.name)}<small>${p.sources ? 'Video' : 'Found this secret'}</small></a>${cr.url ? `<a class="follow" href="${esc(cr.url)}" target="_blank" rel="noopener">Follow</a>` : ''}</div>` : ''}
+    <div class="btns">${p.youtube ? `<a class="tbtn" href="${esc(p.youtube)}" target="_blank" rel="noopener">Open on YouTube</a>` : ''}<button class="tbtn hot" id="share" type="button">Share spot</button></div>
+    ${(p.sources || []).length ? `<p class="pin-src">Sources: ${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join(' · ')}</p>` : ''}`;
+  const ph = $('#photo');
+  if (ph) ph.onclick = () => { ph.outerHTML = `<div class="vid${isShort ? ' tall' : ''}"><iframe src="https://www.youtube-nocookie.com/embed/${esc(id)}?rel=0&playsinline=1&autoplay=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="${esc(p.title)}"></iframe></div>`; };
   $('#back').onclick = showList;
   $('#share').onclick = async e => {
     const url = 'https://viralgta6.com/map/' + encodeURIComponent(p.slug);
