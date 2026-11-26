@@ -24,7 +24,36 @@
       "color": "#8a3ffc"
     }
   },
-  "pins": [],
+  "pins": [
+    {
+      "slug": "weapon-stash-house-la-perle",
+      "title": "Weapon stash house in La Perle",
+      "cat": "weapons",
+      "x": 1803,
+      "y": 1685,
+      "date": "2026-11-24T22:05:50Z",
+      "text": "A house in La Perle, north Vice City, with a weapon stash inside. Hop the fence by the crates, get in through the back and search the rooms. The pin marks the area; the Short shows the exact house.",
+      "youtube": "https://www.youtube.com/shorts/m8IQPLLZZZM",
+      "creator": {
+        "name": "JayWayyGaming",
+        "url": "https://www.youtube.com/channel/UC2u04hrt9sUTwaHUWlVPdKA"
+      }
+    },
+    {
+      "slug": "black-eagle-warehouse-south-leonard",
+      "title": "Black Eagle warehouse in South Leonard County",
+      "cat": "weapons",
+      "x": 1603,
+      "y": 1567,
+      "date": "2026-11-24T22:05:50Z",
+      "text": "The Black Eagle warehouse in South Leonard County hides a weapon stash. Go round the back of the building, head downstairs and get through the cage. The pin marks the area; the Short shows the exact spot.",
+      "youtube": "https://www.youtube.com/shorts/m8IQPLLZZZM",
+      "creator": {
+        "name": "JayWayyGaming",
+        "url": "https://www.youtube.com/channel/UC2u04hrt9sUTwaHUWlVPdKA"
+      }
+    }
+  ],
   "credit": "Map © Rockstar Games",
   "creditUrl": "https://www.rockstargames.com/VI"
 }
