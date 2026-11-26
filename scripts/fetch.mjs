@@ -28,7 +28,7 @@ const SECRET_QUERIES = list(env.SECRET_QUERIES, 'GTA 6 secret,GTA 6 easter egg,G
 const SECRET_MAX_AGE_DAYS = 21;
 // tips page: GTA 6 tips & tricks Shorts (money, weapons, cars, beginner tips), refreshed every 6 hours
 const TIP_QUERIES = list(env.TIP_QUERIES, 'GTA 6 tips,GTA 6 tips and tricks,GTA 6 money');
-const isTip = (...t) => /tips?\b|tricks?\b|how\s+to|guide|best\b|money|fast\b|easy\b|beginner|mistake|don.?t|never|should|need\s+to|unlock|get\s+(a|the|free|rare)|\$\d/i.test(t.filter(Boolean).join(' '));
+const isTip = title => /\btips?\b|\btricks?\b|how\s+to\b|\bguide\b|\bmoney\b|beginner|mistakes?\b|\bdon.?t\b|\bnever\b|\bshould\b|need\s+to|unlock|glitch|cheat|\$\s?\d|things\s.*(know|doesn.?t|didn.?t|nobody|tell)|best\s+(way|weapon|car|gun|method|ending)|fast(er|est)?\s+(money|cash|way)|(get|make)\s+.*(fast|free|early|easy|rich|stronger)|robbery|\brob\b|secret\s+(method|workout)/i.test(title || ''); // title only: the title must promise a tip
 const isSecret = (...t) => /secret|easter\s*egg|hidden|mystery|myster|you\s*(missed|didn.?t\s*know)|details?\s*you|rare\b|location|glitch|ufo|bigfoot|ghost|cheat|unlock/i.test(t.filter(Boolean).join(' '));
 // a video only counts when its title/caption/tags are really about GTA 6
 const isGTA6 = (...texts) => /\bgta\s*-?\s*(6|vi)\b|grand\s*theft\s*auto\s*(6|vi)\b|#gta6|#gtavi|\bleonida\b/i.test(texts.filter(Boolean).join(' '));
