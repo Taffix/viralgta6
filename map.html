@@ -183,9 +183,12 @@ async function load() {
 
 function build() {
   const W = M.width || 4000, H = M.height || 4000;
-  const bounds = [[0, 0], [H, W]];
-  map = L.map('map', {crs: L.CRS.Simple, minZoom: -4, maxZoom: 2, zoomSnap: .25, attributionControl: false, maxBounds: [[-H * .25, -W * .25], [H * 1.25, W * 1.25]]});
-  if (M.image) { L.imageOverlay(M.image, bounds).addTo(map); if (M.credit) $('#map').insertAdjacentHTML('beforeend', '<a class="credit-map" href="' + esc(M.creditUrl || '#') + '" target="_blank" rel="noopener">' + esc(M.credit) + '</a>'); }
+  // tiles: y runs downwards (lat = -y), 1 map unit = 1 pixel of the print map at zoom 0
+  const bounds = M.tiles ? [[-H, 0], [0, W]] : [[0, 0], [H, W]];
+  const pad = M.tiles ? [[-H * 1.25, -W * .25], [H * .25, W * 1.25]] : [[-H * .25, -W * .25], [H * 1.25, W * 1.25]];
+  map = L.map('map', {crs: L.CRS.Simple, minZoom: M.tiles ? -5 : -4, maxZoom: M.tiles ? 1 : 2, zoomSnap: .25, attributionControl: false, maxBounds: pad});
+  if (M.tiles) L.tileLayer(M.tiles + '/{z}/{x}/{y}.jpg', {tileSize: 256, minZoom: -5, maxZoom: 1, minNativeZoom: -4, maxNativeZoom: 0, bounds, noWrap: true, keepBuffer: 3}).addTo(map);
+  if (M.tiles || M.image) { if (!M.tiles) L.imageOverlay(M.image, bounds).addTo(map); if (M.credit) $('#map').insertAdjacentHTML('beforeend', '<a class="credit-map" href="' + esc(M.creditUrl || '#') + '" target="_blank" rel="noopener">' + esc(M.credit) + '</a>'); }
   else $('#map').insertAdjacentHTML('beforeend', '<div class="soon"><div><h2>Map coming soon</h2><p>The GTA 6 map of Leonida is being prepared. The first secret spots appear here as soon as it is online.</p></div></div>');
   map.fitBounds(bounds);
   if (phone.matches) map.zoomControl.remove();
@@ -210,7 +213,7 @@ function build() {
   if (editing) setupEdit();
 }
 
-const ll = p => [(M.height || 4000) - p.y, p.x];
+const ll = p => M.tiles ? [-p.y, p.x] : [(M.height || 4000) - p.y, p.x];
 function drawPins() {
   Object.values(markers).forEach(mk => mk.remove()); markers = {};
   for (const p of M.pins) {
@@ -258,7 +261,7 @@ function openPin(p, fly) {
   document.body.classList.add('sheet');
   if (location.pathname !== '/map/' + p.slug) history.replaceState(null, '', '/map/' + encodeURIComponent(p.slug) + location.search);
   // on the phone the sheet covers the lower part: put the pin in the visible area above it
-  const z = Math.max(map.getZoom(), 0); let c = L.latLng(ll(p));
+  const z = Math.max(map.getZoom(), M.tiles ? -1 : 0); let c = L.latLng(ll(p));
   if (phone.matches) c = map.unproject(map.project(c, z).add([0, Math.min(innerHeight * .62, $('#panel').scrollHeight) / 2]), z);
   map.flyTo(c, z, {duration: .6});
 }
@@ -276,7 +279,7 @@ function setupEdit() {
     $('#eOut').textContent = JSON.stringify(pin);
   };
   map.on('click', e => {
-    const x = Math.round(e.latlng.lng), y = Math.round((M.height || 4000) - e.latlng.lat);
+    const x = Math.round(e.latlng.lng), y = Math.round(M.tiles ? -e.latlng.lat : (M.height || 4000) - e.latlng.lat);
     xy = [x, y]; $('#eXY').value = x + ', ' + y;
     tmp?.remove(); tmp = L.marker(e.latlng, {icon: L.divIcon({className: '', html: '<div class="tmp-pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9]})}).addTo(map);
     document.body.classList.add('sheet'); out();
