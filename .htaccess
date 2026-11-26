@@ -10,3 +10,4 @@ DirectoryIndex index.php index.html
 # a page per video, and the sitemap
 RewriteRule ^v/([^/]+)/?$ index.php?v=$1 [L,QSA,B]
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
+RewriteRule ^secrets/?$ index.php?page=secrets [L,QSA]

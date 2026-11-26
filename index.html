@@ -388,6 +388,32 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
   .card,.card:nth-child(n){height:100%!important;min-height:0;max-height:none;margin:0!important;border:0!important;scroll-snap-align:start;scroll-snap-stop:always}
   .seo-list{display:none}
 }
+/* secrets page + creator links */
+.nav-sec,.nav-home{font-family:var(--cond);font-weight:600;font-size:17px;letter-spacing:.6px;text-transform:uppercase;padding:8px 14px;border-radius:4px;color:var(--muted);display:flex;align-items:center;gap:8px;text-decoration:none}
+.nav-sec svg,.nav-home svg{width:18px;height:18px}
+.nav-sec{color:var(--yellow)}
+.nav-home,.tb-home{display:none!important}
+body.secrets .nav-home{display:flex!important}
+body.secrets .nav-sec{color:#fff;background:rgba(255,214,90,.1);box-shadow:inset 0 -3px 0 var(--yellow)}
+body.secrets .tabs button{display:none}
+body.secrets .tabbar [data-f]{display:none}
+body.secrets .tabbar .tb-home{display:grid!important}
+body.public.secrets .tabbar{grid-template-columns:1fr 1fr}
+body.public .tabbar{grid-template-columns:repeat(5,1fr)}
+.tb-sec,.tb-home{display:grid;justify-items:center;align-content:center;gap:4px;font-family:var(--cond);font-weight:600;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--yellow);text-decoration:none}
+.tb-sec svg,.tb-home svg{width:24px;height:24px}
+body.secrets .tb-sec{color:#fff}
+body.secrets .tb-sec svg{color:var(--yellow);filter:drop-shadow(0 0 6px var(--yellow))}
+.about-sec{display:none}
+body.secrets .about-sec{display:grid}
+body.secrets .about-main{display:none}
+a.cl{color:inherit;text-decoration:none}
+a.cl:hover{text-decoration:underline}
+a.cl-row{display:flex;align-items:center;gap:10px;min-width:0}
+.s p a.cl-row{gap:8px}
+.creator{position:relative}
+.follow{flex:none;margin-left:auto;font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:#fff;color:#14081f;text-decoration:none}
+@media (max-width:760px){.about-sec{display:none!important}}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
@@ -396,7 +422,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 </style>
 </head>
 <body>
-<script>if (/^https?:$/.test(location.protocol)) document.body.classList.add("public")</script>
+<script>if (/^https?:$/.test(location.protocol)) document.body.classList.add("public"); if (/^\/secrets\/?$/.test(location.pathname)) document.body.classList.add("secrets")</script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="M10 9l5 3-5 3z" fill="#fff"/></symbol>
@@ -411,6 +437,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <symbol id="i-out" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
   <symbol id="i-share" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 15V3M7 8l5-5 5 5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
   <symbol id="i-pad" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5 7h9a5.5 5.5 0 0 1 5.3 7l-1 3.6a2.6 2.6 0 0 1-4.4 1.1L14.6 17H9.4l-1.8 1.7a2.6 2.6 0 0 1-4.4-1.1l-1-3.6A5.5 5.5 0 0 1 7.5 7zM8 10v1.5H6.5v1.5H8v1.5h1.5V13H11v-1.5H9.5V10zm8.3.2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></symbol>
   <symbol id="i-sound" viewBox="0 0 24 24"><path fill="currentColor" d="M4 9h4l5-4v14l-5-4H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9c1.3 1.6 1.3 4.4 0 6M18.5 6.5c2.7 3 2.7 8 0 11"/></symbol>
   <symbol id="palm" viewBox="0 0 300 420">
     <path d="M150 420c6-90 2-170-14-250l12-2c18 82 22 164 16 252z"/>
@@ -431,6 +458,8 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
     <button data-f="youtube" aria-pressed="false"><svg><use href="#i-yt"/></svg><span>YouTube</span></button>
     <button data-f="tiktok" aria-pressed="false"><svg><use href="#i-tt"/></svg><span>TikTok</span></button>
     <button data-f="instagram" aria-pressed="false"><svg><use href="#i-ig"/></svg><span>Instagram</span></button>
+    <a class="nav-sec" href="/secrets"><svg><use href="#i-eye"/></svg><span>Secrets</span></a>
+    <a class="nav-home" href="/"><svg><use href="#i-all"/></svg><span>Viral now</span></a>
   </nav>
   <div class="sp"></div>
   <button class="tbtn ghost" data-open="settings"><svg><use href="#i-gear"/></svg>Settings</button>
@@ -466,7 +495,17 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
     </div>
     <div class="grid" id="grid"></div>
   </section>
-  <section class="about" aria-labelledby="aboutT">
+  <section class="about about-sec" aria-labelledby="secT">
+    <h2 id="secT">GTA 6 secrets, easter eggs and hidden locations</h2>
+    <p>The best GTA 6 secrets people are finding right now, straight from YouTube Shorts: hidden locations in Leonida, easter eggs, rare cars, weird details and things most players walk right past. The list refreshes several times a day and is ranked by how fast each Short is gaining views.</p>
+    <p>Every Short belongs to its creator. Tap the name or the Follow button to visit their channel, and subscribe if they helped you find something new.</p>
+    <div class="faq">
+      <details><summary>Where do these GTA 6 secrets come from?</summary><p>From YouTube Shorts by GTA 6 creators who search the map for hidden spots and easter eggs. We only show them with the official YouTube player and always link to the creator.</p></details>
+      <details><summary>How often are new secrets added?</summary><p>Every few hours. New Shorts that are taking off move to the top.</p></details>
+      <details><summary>I found a GTA 6 secret. Can it be on this page?</summary><p>Post it as a YouTube Short with "GTA 6 secret" or "easter egg" in the title. When it starts getting views, it shows up here automatically.</p></details>
+    </div>
+  </section>
+  <section class="about about-main" aria-labelledby="aboutT">
     <h2 id="aboutT">GTA 6 videos going viral, updated every hour</h2>
     <p>ViralGTA6 collects the GTA 6 videos that are blowing up right now on YouTube, TikTok and Instagram: trailer breakdowns, gameplay, leaks, map theories, memes and reactions. Every video is ranked by how fast it is gaining views, so the list always shows what is hot today, not what was popular months ago.</p>
     <p>Every clip comes with full credit to its creator: name, handle, followers and a link to their channel. Watch right here, or open the original on YouTube, TikTok or Instagram to like, comment and follow.</p>
@@ -482,7 +521,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 <footer>
   <div class="f-row">
     <a class="brand" href="#" aria-label="viralgta6.com, back to top"><i>Viral</i><b class="chr" data-t="GTA6">GTA6</b><small>.com</small></a>
-    <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="#">Back to top ↑</a></nav>
+    <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="/secrets">Secrets</a><a href="#">Back to top ↑</a></nav>
   </div>
   <div class="f-row f-small">
     <span>© 2026 viralgta6.com · Updated every hour</span>
@@ -494,11 +533,13 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 <div class="live" id="live" hidden><i></i><span><b>1</b> watching now</span></div>
 
 <nav class="tabbar" aria-label="Platform">
+  <a class="tb-home" href="/"><svg><use href="#i-all"/></svg>Viral</a>
   <button data-f="all" aria-pressed="true"><svg><use href="#i-all"/></svg>All</button>
   <button data-f="youtube" aria-pressed="false"><svg><use href="#i-yt"/></svg>YouTube</button>
   <button class="add" data-open="add" aria-label="Add video"><i><svg width="22" height="22"><use href="#i-plus"/></svg></i></button>
   <button data-f="tiktok" aria-pressed="false"><svg><use href="#i-tt"/></svg>TikTok</button>
   <button data-f="instagram" aria-pressed="false"><svg><use href="#i-ig"/></svg>Insta</button>
+  <a class="tb-sec" href="/secrets"><svg><use href="#i-eye"/></svg>Secrets</a>
 </nav>
 
 <!-- player -->
@@ -714,7 +755,7 @@ function items() {
   let all = [...S.yt, ...recent];
   if (S.filter !== 'all') all = all.filter(i => i.platform === S.filter);
   all.sort((a, b) => perHour(b) - perHour(a));
-  const sp = S.sponsor;
+  const sp = SECRETS ? null : S.sponsor;
   if (sp && (S.filter === 'all' || S.filter === sp.platform)) all = [sp, ...all.filter(i => i.uid !== sp.uid)];
   return all;
 }
@@ -724,6 +765,8 @@ const avatar = c => c.avatar ? `<img class="av" src="${esc(c.avatar)}" alt="" lo
 const media = it => it.thumb
   ? `<img src="${esc(it.thumb)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'art',innerHTML:'<span>${PF[it.platform].name}</span>'}))">`
   : `<div class="art"><span>${PF[it.platform].name}</span></div>`;
+/* creator name/avatar link to their profile */
+const cLink = (c, inner, cls = 'cl') => c && c.url ? `<a class="${cls}" href="${esc(c.url)}" target="_blank" rel="noopener" title="Visit ${esc(c.name || 'creator')}">${inner}</a>` : inner;
 const pfTag = p => `<span class="pf ${p}"><svg><use href="${PF[p].icon}"/></svg>${PF[p].name}</span>`;
 const handle = c => c.handle ? (c.handle.startsWith('@') ? c.handle : '@' + c.handle) : '';
 
@@ -735,6 +778,7 @@ function render() {
   const list = items();
   const g = $('#grid');
   const names = {all:'GTA 6 going viral now', youtube:'GTA 6 on YouTube', tiktok:'GTA 6 on TikTok', instagram:'GTA 6 on Instagram'};
+  if (SECRETS) names.all = names.youtube = 'GTA 6 secrets & easter eggs';
   $('#feedTitle').textContent = $('#feedTitle').dataset.t = names[S.filter];
   if (S.key && S.updated) setStatus(`YouTube ${regionName(S.region)} · updated ${new Date(S.updated).toLocaleString('en-US', {weekday:'short', hour:'2-digit', minute:'2-digit'})}`);
   else if (S.key && S.error) setStatus('YouTube unreachable');
@@ -754,7 +798,7 @@ function render() {
         <div class="body">
           <div class="meta">${pfTag(it.platform)}<span>${num(it.views)} views</span>${it.published ? `<span>${esc(ago(it.published))}</span>` : ''}<span class="hype" title="Hype: views per hour">${stars(it)}</span></div>
           <h3>${esc(it.title || 'Untitled')}</h3>
-          <div class="creator">${avatar(it.creator)}<div><div class="n">${esc(it.creator.name || 'Unknown creator')}</div><div class="h">${esc([handle(it.creator), it.creator.followers ? num(it.creator.followers) + (it.platform === 'youtube' ? ' subscribers' : ' followers') : ''].filter(Boolean).join(' · '))}</div></div></div>
+          <div class="creator">${cLink(it.creator, avatar(it.creator) + `<div><div class="n">${esc(it.creator.name || 'Unknown creator')}</div><div class="h">${esc([handle(it.creator), it.creator.followers ? num(it.creator.followers) + (it.platform === 'youtube' ? ' subscribers' : ' followers') : ''].filter(Boolean).join(' · '))}</div></div>`, 'cl cl-row')}${it.creator.url ? `<a class="follow" href="${esc(it.creator.url)}" target="_blank" rel="noopener">Follow</a>` : ''}</div>
         </div>
         <div class="acts">
           <button data-act="sound"><i class="hot"><svg><use href="#i-${it.platform === 'instagram' && !it.video ? 'play' : 'sound'}"/></svg></i>${it.platform === 'instagram' && !it.video ? 'Play' : 'Sound'}</button>
@@ -776,7 +820,7 @@ function shelves(list) {
       <div class="thumb">${media(it)}<span class="rk${it.sponsored ? ' feat' : ''}">${rank.get(it.uid)}</span>${it.duration ? `<span class="dur">${esc(it.duration)}</span>` : ''}</div>
       <div class="info">${avatar(it.creator)}<div>
         <h3>${esc(it.title || 'Untitled')}</h3>
-        <p class="who"><svg class="pi ${it.platform}"><use href="${PF[it.platform].icon}"/></svg>${esc(it.creator.name || 'Unknown creator')}${it.creator.followers ? ` · ${num(it.creator.followers)}${unit(it)}` : ''}</p>
+        <p class="who"><svg class="pi ${it.platform}"><use href="${PF[it.platform].icon}"/></svg>${cLink(it.creator, esc(it.creator.name || 'Unknown creator'))}${it.creator.followers ? ` · ${num(it.creator.followers)}${unit(it)}` : ''}</p>
         <p>${num(it.views)} views${it.published ? ' · ' + esc(ago(it.published)) : ''}</p>
       </div></div>
     </article>`;
@@ -784,11 +828,11 @@ function shelves(list) {
     <article class="s" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
       <div class="thumb9">${media(it)}<span class="rk${it.sponsored ? ' feat' : ''}">${rank.get(it.uid)}</span><span class="pi-badge ${it.platform}"><svg><use href="${PF[it.platform].icon}"/></svg></span><span class="plays"><svg><use href="#i-play"/></svg>${num(it.views)}</span></div>
       <h3>${esc(it.title || 'Untitled')}</h3>
-      <p>${avatar(it.creator)}<span>${esc(handle(it.creator) || it.creator.name || '')}</span></p>
+      <p>${cLink(it.creator, avatar(it.creator) + `<span>${esc(handle(it.creator) || it.creator.name || '')}</span>`, 'cl cl-row')}</p>
     </article>`;
   const parts = [];
-  if (wide.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-yt"/></svg>Trending GTA 6 videos</h3><div class="yt-grid">${wide.map(vcard).join('')}</div></section>`);
-  if (tall.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-tt"/></svg>Viral GTA 6 shorts</h3><div class="short-grid">${tall.map(scard).join('')}</div></section>`);
+  if (wide.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-yt"/></svg>${SECRETS ? 'GTA 6 secret videos' : 'Trending GTA 6 videos'}</h3><div class="yt-grid">${wide.map(vcard).join('')}</div></section>`);
+  if (tall.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-${SECRETS ? 'eye' : 'tt'}"/></svg>${SECRETS ? 'GTA 6 secrets in Shorts' : 'Viral GTA 6 shorts'}</h3><div class="short-grid">${tall.map(scard).join('')}</div></section>`);
   if (wide.length && tall.length && pos.get(tall[0].uid) < pos.get(wide[0].uid)) parts.reverse();
   const strip = dealsStrip();
   if (strip) parts.splice(Math.min(1, parts.length), 0, strip);
@@ -1049,7 +1093,7 @@ document.addEventListener('click', e => {
   if (sh) { shareIt(find(sh.dataset.share), sh); return; }
   const card = t.closest('.card, .v, .s');
   if (card) {
-    if (t.closest('[data-act="out"]')) return;
+    if (t.closest('[data-act="out"], a.cl, a.follow')) return;
     const it = find(card.dataset.uid); if (!it) return;
     if (card.classList.contains('card') && phone.matches && !t.closest('[data-act="info"]')) { tapCard(card, it); return; }
     openPlayer(it);
@@ -1145,13 +1189,15 @@ const todayLine = () => new Date().toLocaleDateString('en-US', {weekday:'long', 
 $('#today').textContent = todayLine();
 
 /* Online: the daily list (data/videos.json, written every morning by GitHub). Opened as a file: own key + manual mode. */
+const SECRETS = /^\/secrets\/?$/.test(location.pathname);
 async function loadDaily() {
   if (!/^https?:$/.test(location.protocol)) return false;
   S.public = true;
   try {
     // own folder first (GitHub Pages / preview), otherwise the list the daily GitHub job writes
-    let r = await fetch('data/videos.json?d=' + today(), {cache:'no-cache'}).catch(() => null);
-    if (!r || !r.ok) r = await fetch('https://raw.githubusercontent.com/Taffix/viralgta6/main/data/videos.json', {cache:'no-cache'});
+    const file = SECRETS ? 'data/secrets.json' : 'data/videos.json';
+    let r = await fetch(file + '?d=' + today(), {cache:'no-cache'}).catch(() => null);
+    if (!r || !r.ok) r = await fetch('https://raw.githubusercontent.com/Taffix/viralgta6/main/' + file, {cache:'no-cache'});
     if (!r.ok) return false;
     const j = await r.json();
     S.public = true;
@@ -1159,9 +1205,15 @@ async function loadDaily() {
     S.manual = [];
     S.updated = j.updated;
     S.yt = (j.items || []).map(it => ({...it, creator: {...it.creator, country: /^[A-Z]{2}$/.test(it.creator?.country || '') ? regionName(it.creator.country) : (it.creator?.country || '')}}));
-    $('#today').textContent = new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'}) + ' · GTA 6 on YouTube, TikTok & Instagram';
+    $('#today').textContent = SECRETS ? 'Hidden spots, easter eggs & rare finds · fresh YouTube Shorts' : new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'}) + ' · GTA 6 on YouTube, TikTok & Instagram';
     return true;
   } catch { return false; }
+}
+if (SECRETS) {
+  const h = $('.hero h1'); h.querySelector('.s').textContent = 'GTA 6';
+  const c = h.querySelector('.c'); c.textContent = c.dataset.t = 'secrets';
+  h.querySelector('.sr').textContent = ': hidden locations, easter eggs and rare finds in GTA 6';
+  $('.wrap .head p').textContent = 'The GTA 6 secrets, easter eggs and hidden spots that are blowing up on YouTube Shorts right now. Tap a creator to visit their channel.';
 }
 Promise.all([loadDaily(), /^https?:$/.test(location.protocol) ? loadPromo() : null]).then(([ok]) => { render(); if (!ok) loadYT(); openFromLink(); });
 })();

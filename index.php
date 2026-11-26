@@ -4,12 +4,13 @@
 // - /v/<id> pages: own title, description and preview image per video
 // The list comes from GitHub (updated every hour) and is cached here for 10 minutes.
 const SITE = 'https://viralgta6.com';
-const SRC  = 'https://raw.githubusercontent.com/Taffix/viralgta6/main/data/videos.json';
+const RAW  = 'https://raw.githubusercontent.com/Taffix/viralgta6/main/data/';
 $cache = __DIR__ . '/../vg-videos-cache.json';
+$cacheS = __DIR__ . '/../vg-secrets-cache.json';
 
-function fetch_list($cache) {
+function fetch_list($cache, $file = 'videos.json') {
   if (is_file($cache) && time() - filemtime($cache) < 600) return json_decode(file_get_contents($cache), true);
-  $ch = curl_init(SRC);
+  $ch = curl_init(RAW . $file);
   curl_setopt_array($ch, [CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 6, CURLOPT_FOLLOWLOCATION => true]);
   $body = curl_exec($ch); $ok = curl_getinfo($ch, CURLINFO_HTTP_CODE) === 200; curl_close($ch);
   if ($ok && ($j = json_decode($body, true)) && !empty($j['items'])) { @file_put_contents($cache, $body); return $j; }
@@ -38,17 +39,22 @@ function video_ld($it, $pos = null) {
 }
 
 $html  = file_get_contents(__DIR__ . '/index.html');
-$data  = fetch_list($cache);
-$items = array_values(array_filter($data['items'] ?? [], fn($i) => !empty($i['uid'])));
-usort($items, function ($a, $b) {
-  $r = fn($i) => ($i['views'] ?? 0) / max(1, (time() - strtotime($i['published'] ?? 'now')) / 3600);
-  return $r($b) <=> $r($a);
-});
+$rank = function ($list) {
+  $list = array_values(array_filter($list, fn($i) => !empty($i['uid'])));
+  usort($list, function ($a, $b) {
+    $r = fn($i) => ($i['views'] ?? 0) / max(1, (time() - strtotime($i['published'] ?? 'now')) / 3600);
+    return $r($b) <=> $r($a);
+  });
+  return $list;
+};
+$secretsPage = ($_GET['page'] ?? '') === 'secrets';
+$items   = $rank(fetch_list($cache)['items'] ?? []);
+$secrets = $rank(fetch_list($cacheS, 'secrets.json')['items'] ?? []);
 
 $vid = $_GET['v'] ?? '';
 $one = null;
 if ($vid !== '') {
-  foreach ($items as $i) if ($i['uid'] === $vid) { $one = $i; break; }
+  foreach (array_merge($items, $secrets) as $i) if ($i['uid'] === $vid) { $one = $i; break; }
   if (!$one) { header('Location: ' . SITE . '/', true, 302); exit; }   // video no longer in the list
 }
 
@@ -57,6 +63,15 @@ if ($one) {
   $desc  = 'Watch "' . ($one['title'] ?? '') . '" by ' . who($one) . ' on ' . plat($one) . (empty($one['views']) ? '' : ' · ' . num($one['views']) . ' views') . '. One of today\'s most viral GTA 6 videos, with full credit to the creator.';
   $url = vurl($one); $img = $one['thumb'] ?? SITE . '/share.png';
   $ld = ['@context' => 'https://schema.org'] + video_ld($one);
+} elseif ($secretsPage) {
+  $title = 'GTA 6 Secrets, Easter Eggs & Hidden Locations · Shorts | ViralGTA6';
+  $desc  = 'The GTA 6 secrets everyone is talking about: hidden locations, easter eggs, rare cars and weird details, from the YouTube Shorts going viral right now. Updated several times a day, every creator credited.';
+  $url = SITE . '/secrets'; $img = SITE . '/share.png';
+  $items = $secrets;
+  $list = []; foreach (array_slice($items, 0, 30) as $n => $i) $list[] = video_ld($i, $n + 1);
+  $ld = ['@context' => 'https://schema.org', '@graph' => [
+    ['@type' => 'CollectionPage', 'name' => 'GTA 6 secrets & easter eggs', 'url' => $url, 'description' => $desc],
+    ['@type' => 'ItemList', 'name' => 'GTA 6 secrets & easter eggs', 'itemListOrder' => 'https://schema.org/ItemListOrderDescending', 'numberOfItems' => count($list), 'itemListElement' => $list]]];
 } else {
   $title = 'GTA 6 Videos Going Viral Today · YouTube, TikTok & Instagram | ViralGTA6';
   $desc  = 'The most viral GTA 6 videos right now from YouTube, TikTok and Instagram, ranked by views per hour and updated every hour. Trailers, gameplay, leaks, memes and reactions, with full credit to every creator.';
