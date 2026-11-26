@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#140a24">
+<title>GTA 6 Secrets Map · Hidden Locations & Easter Eggs | ViralGTA6</title>
+<meta name="description" content="Interactive GTA 6 map with secret locations, easter eggs, weapons, cars and collectibles in Leonida. Every pin links to the creator who found it.">
+<link rel="canonical" href="https://viralgta6.com/map">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ViralGTA6">
+<meta property="og:url" content="https://viralgta6.com/map">
+<meta property="og:title" content="GTA 6 Secrets Map · Hidden Locations & Easter Eggs | ViralGTA6">
+<meta property="og:description" content="Interactive GTA 6 map with secret locations, easter eggs, weapons, cars and collectibles in Leonida.">
+<meta property="og:image" content="https://viralgta6.com/share.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Yellowtail&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+:root{
+  --ink:#110626; --ink2:#1a0b36; --ink3:#251049; --line:#3b1d6b;
+  --pink:#ff3fa4; --orange:#ff8f4a; --yellow:#ffd65a; --teal:#2ff3e0; --purple:#8a3ffc;
+  --muted:#c9b8e8; --dim:#8f7bb5;
+  --chrome:linear-gradient(180deg,#fff 0%,#e6fdff 46%,#ff3fa4 50%,#ffb3dc 60%,#fff 100%);
+  --display:'Anton',Impact,sans-serif; --cond:'Barlow Condensed',sans-serif; --body:'Barlow',system-ui,sans-serif;
+  --top:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--ink);color:#fff;font-family:var(--body);-webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* top bar (same look as the main site) */
+.top{position:fixed;inset:0 0 auto 0;height:calc(var(--top) + env(safe-area-inset-top));padding:env(safe-area-inset-top) clamp(14px,3vw,40px) 0;z-index:1000;display:flex;align-items:center;gap:22px;background:rgba(20,10,36,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+.brand{font-size:26px;line-height:1;text-decoration:none;display:flex;align-items:baseline;gap:4px;flex:none}
+.brand i{font-family:'Yellowtail',cursive;font-style:normal;font-size:1.25em;color:#ffe3f3;text-shadow:0 0 6px rgba(255,63,164,.9),0 0 18px rgba(255,63,164,.6);transform:rotate(-6deg);display:inline-block}
+.brand b{font-family:var(--display);font-weight:400;font-style:italic;font-size:1.15em;color:#fff;text-shadow:0 0 8px rgba(47,243,224,.8);padding-right:.1em}
+.brand small{font-family:var(--cond);font-weight:700;font-size:.5em;color:var(--teal)}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav a{font-family:var(--cond);font-weight:600;font-size:16px;letter-spacing:.6px;text-transform:uppercase;padding:8px 12px;border-radius:4px;color:var(--muted);text-decoration:none;white-space:nowrap}
+.nav a[aria-current]{color:#fff;background:rgba(255,214,90,.1);box-shadow:inset 0 -3px 0 var(--yellow)}
+
+/* layout */
+.app{position:fixed;inset:calc(var(--top) + env(safe-area-inset-top)) 0 0 0;display:grid;grid-template-columns:minmax(0,1fr) 400px}
+#map{position:relative;background:#0b0420 radial-gradient(circle at 50% 50%,#1d0b3d,#0b0420 70%)}
+.leaflet-container{background:transparent;font-family:var(--body)}
+.leaflet-control-zoom a{background:var(--ink2)!important;color:#fff!important;border-color:var(--line)!important}
+.leaflet-control-attribution{display:none}
+
+/* filters */
+.chips{position:absolute;left:12px;right:12px;top:12px;z-index:500;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;pointer-events:none}
+.chip{pointer-events:auto;flex:none;display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;background:rgba(17,6,38,.88);border:1px solid rgba(255,255,255,.16);font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.5px;text-transform:uppercase;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.chip i{width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.chip small{color:var(--dim);font-size:13px}
+.chip[aria-pressed=false]{opacity:.45}
+
+/* pins */
+.pin{width:26px;height:26px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--c);border:2px solid #fff;box-shadow:0 0 12px var(--c),0 4px 10px rgba(0,0,0,.6)}
+.pin::after{content:"";position:absolute;inset:7px;border-radius:50%;background:#14081f}
+.pin.on{width:34px;height:34px;margin:-4px 0 0 -4px}
+.tmp-pin{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--pink);box-shadow:0 0 14px var(--pink)}
+
+/* empty map */
+.soon{position:absolute;inset:0;z-index:400;display:grid;place-items:center;text-align:center;padding:24px;pointer-events:none;background:
+  linear-gradient(rgba(47,243,224,.08) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(255,63,164,.08) 1px,transparent 1px) 0 0/48px 48px}
+.soon h2{font-family:var(--display);font-style:italic;font-weight:400;font-size:clamp(34px,5vw,56px);text-transform:uppercase;line-height:1;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.15em}
+.soon p{color:var(--muted);margin-top:12px;max-width:44ch}
+
+/* side panel */
+.panel{background:var(--ink2);border-left:1px solid var(--line);overflow-y:auto;padding:22px 22px 32px;display:flex;flex-direction:column;gap:16px}
+.panel h1{font-family:var(--display);font-style:italic;font-weight:400;font-size:38px;line-height:1;text-transform:uppercase;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.15em}
+.panel .lead{color:var(--muted);line-height:1.55;font-size:15px}
+.list{display:grid;gap:8px;list-style:none}
+.list button{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:11px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+.list button:hover{border-color:var(--teal)}
+.list i{width:10px;height:10px;flex:none;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.list b{font-weight:600;font-size:15px;line-height:1.25}
+.list small{display:block;color:var(--dim);font-size:12.5px;margin-top:2px}
+.empty{color:var(--dim);font-size:14px;border:1px dashed var(--line);border-radius:10px;padding:14px}
+.back{align-self:flex-start;font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.6px;text-transform:uppercase;color:var(--teal)}
+.cat{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:#14081f;background:var(--c);padding:4px 10px;border-radius:999px}
+.pin-title{font-family:var(--cond);font-weight:700;font-size:28px;line-height:1.05;text-transform:uppercase}
+.pin-text{color:var(--muted);line-height:1.6}
+.vid{position:relative;width:min(100%,300px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 16px 40px rgba(0,0,0,.5)}
+.vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.credit{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.credit a.n{font-weight:700;text-decoration:none;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.credit small{display:block;color:var(--dim);font-weight:400;font-size:12.5px}
+.follow{flex:none;font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;padding:7px 13px;border-radius:999px;background:#fff;color:#14081f;text-decoration:none}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.tbtn{font-family:var(--cond);font-weight:700;font-size:15px;letter-spacing:.6px;text-transform:uppercase;padding:10px 14px;border-radius:4px;display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1.5px solid var(--teal);color:#dffffb}
+.tbtn.hot{background:linear-gradient(90deg,var(--pink),var(--orange));color:#1a0820;border:0}
+
+/* edit mode */
+.edit{display:none;border:1px solid var(--yellow);border-radius:12px;padding:14px;gap:10px;background:rgba(255,214,90,.06)}
+body.editing .edit{display:grid}
+.edit h3{font-family:var(--cond);font-size:18px;text-transform:uppercase;color:var(--yellow)}
+.edit label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.edit input,.edit select,.edit textarea{font:inherit;color:#fff;background:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+.edit textarea{min-height:70px;resize:vertical}
+.edit pre{white-space:pre-wrap;word-break:break-all;font-size:12px;background:#000;padding:10px;border-radius:6px;color:#9ff}
+body.editing #map{cursor:crosshair}
+
+/* phone: map full screen, details as a sheet from the bottom */
+@media (max-width:760px){
+  :root{--top:56px}
+  .brand{font-size:22px}
+  .nav a{font-size:14px;padding:7px 9px}
+  .app{grid-template-columns:1fr}
+  .panel{position:fixed;left:0;right:0;bottom:0;z-index:900;max-height:62svh;border-left:0;border-top:1px solid var(--line);border-radius:18px 18px 0 0;padding:16px 16px calc(24px + env(safe-area-inset-bottom));transform:translateY(calc(100% - 132px));transition:transform .25s ease;box-shadow:0 -12px 40px rgba(0,0,0,.5)}
+  .panel::before{content:"";align-self:center;width:42px;height:5px;border-radius:3px;background:rgba(255,255,255,.3);flex:none}
+  body.sheet .panel{transform:none}
+  .panel h1{font-size:28px}
+  .vid{width:min(100%,240px);align-self:center}
+}
+@media (prefers-reduced-motion:reduce){.panel{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/" aria-label="viralgta6.com home"><i>Viral</i><b>GTA6</b><small>.com</small></a>
+  <nav class="nav" aria-label="Site">
+    <a href="/">Viral now</a>
+    <a href="/secrets">Secrets</a>
+    <a href="/map" aria-current="page">Map</a>
+  </nav>
+</header>
+
+<div class="app">
+  <div id="map" aria-label="GTA 6 map"></div>
+  <aside class="panel" id="panel" aria-live="polite">
+    <div id="panelBody">
+      <!--SEO-LIST-->
+    </div>
+    <div class="edit" id="edit">
+      <h3>Add a pin</h3>
+      <p class="pin-text" style="font-size:13px">Click the map where the secret is. Fill in the fields and send the code below to be added.</p>
+      <label>Spot on the map<input id="eXY" readonly placeholder="click the map"></label>
+      <label>Title<input id="eTitle" placeholder="Gold pistol at the lighthouse"></label>
+      <label>Category<select id="eCat"></select></label>
+      <label>One or two sentences<textarea id="eText" placeholder="Behind the lighthouse on the north beach, next to the crates."></textarea></label>
+      <label>YouTube Short of the creator who found it<input id="eYT" placeholder="https://youtube.com/shorts/..."></label>
+      <label>Creator name<input id="eName"></label>
+      <label>Creator channel link<input id="eURL" placeholder="https://www.youtube.com/@..."></label>
+      <pre id="eOut"></pre>
+      <button class="tbtn hot" id="eCopy" type="button">Copy pin code</button>
+    </div>
+  </aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+(function () {
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ytId = u => { try { const x = new URL(u); return x.hostname.includes('youtu.be') ? x.pathname.slice(1, 12) : (x.searchParams.get('v') || (x.pathname.match(/\/(shorts|embed|live)\/([\w-]{11})/) || [])[2] || ''); } catch { return ''; } };
+const slugify = s => String(s).toLowerCase().normalize('NFKD').replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-').slice(0, 60);
+const editing = new URLSearchParams(location.search).has('edit');
+if (editing) document.body.classList.add('editing');
+const phone = matchMedia('(max-width:760px)');
+
+let M = {width: 4000, height: 4000, categories: {}, pins: []}, map, markers = {}, active = null, shown = new Set();
+
+async function load() {
+  for (const u of ['/data/map.json?d=' + Date.now(), 'https://raw.githubusercontent.com/Taffix/viralgta6/main/data/map.json']) {
+    try { const r = await fetch(u, {cache: 'no-cache'}); if (r.ok) { M = await r.json(); break; } } catch {}
+  }
+  M.pins = (M.pins || []).filter(p => p && p.slug && isFinite(p.x) && isFinite(p.y));
+  shown = new Set(Object.keys(M.categories || {}));
+  build();
+}
+
+function build() {
+  const W = M.width || 4000, H = M.height || 4000;
+  const bounds = [[0, 0], [H, W]];
+  map = L.map('map', {crs: L.CRS.Simple, minZoom: -4, maxZoom: 2, zoomSnap: .25, attributionControl: false, maxBounds: [[-H * .25, -W * .25], [H * 1.25, W * 1.25]]});
+  if (M.image) L.imageOverlay(M.image, bounds).addTo(map);
+  else $('#map').insertAdjacentHTML('beforeend', '<div class="soon"><div><h2>Map coming soon</h2><p>The GTA 6 map of Leonida is being prepared. The first secret spots appear here as soon as it is online.</p></div></div>');
+  map.fitBounds(bounds);
+  if (phone.matches) map.zoomControl.remove();
+
+  // filters
+  const cats = M.categories || {};
+  $('#map').insertAdjacentHTML('beforeend', '<div class="chips" id="chips">' + Object.entries(cats).map(([k, c]) =>
+    `<button class="chip" data-cat="${esc(k)}" aria-pressed="true" style="--c:${esc(c.color)}"><i></i>${esc(c.name)} <small>${M.pins.filter(p => p.cat === k).length}</small></button>`).join('') + '</div>');
+  $('#chips').addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    const k = b.dataset.cat, on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', on); on ? shown.add(k) : shown.delete(k);
+    drawPins(); if (!active) showList();
+  });
+
+  $('#panelBody').addEventListener('click', e => { const b = e.target.closest('[data-slug]'); if (b) { const p = M.pins.find(q => q.slug === b.dataset.slug); if (p) openPin(p, true); } });
+  drawPins();
+  const m = location.pathname.match(/^\/map\/([^/]+)/) || [null, new URLSearchParams(location.search).get('pin')];
+  const start = m[1] && M.pins.find(p => p.slug === decodeURIComponent(m[1]));
+  start ? openPin(start, false) : showList();
+
+  if (editing) setupEdit();
+}
+
+const ll = p => [(M.height || 4000) - p.y, p.x];
+function drawPins() {
+  Object.values(markers).forEach(mk => mk.remove()); markers = {};
+  for (const p of M.pins) {
+    if (!shown.has(p.cat)) continue;
+    const c = (M.categories[p.cat] || {}).color || '#fff';
+    const icon = L.divIcon({className: '', html: `<div class="pin${active === p ? ' on' : ''}" style="--c:${esc(c)}"></div>`, iconSize: [26, 26], iconAnchor: [13, 26]});
+    markers[p.slug] = L.marker(ll(p), {icon, title: p.title, keyboard: true}).addTo(map).on('click', () => openPin(p, true));
+  }
+}
+
+function showList() {
+  active = null; document.body.classList.remove('sheet');
+  const pins = M.pins.filter(p => shown.has(p.cat));
+  $('#panelBody').innerHTML = `
+    <h1>GTA 6 secrets map</h1>
+    <p class="lead">Hidden locations, easter eggs, weapons, cars and collectibles in Leonida. Tap a pin to watch the Short of the creator who found it.</p>
+    ${pins.length ? `<ul class="list">${pins.map(p => `<li><button data-slug="${esc(p.slug)}" style="--c:${esc((M.categories[p.cat] || {}).color)}"><i></i><span><b>${esc(p.title)}</b><small>${esc((M.categories[p.cat] || {}).name || '')}${p.creator?.name ? ' · found by ' + esc(p.creator.name) : ''}</small></span></button></li>`).join('')}</ul>`
+      : `<p class="empty">The first secret spots are being added. Found one? Post it as a YouTube Short with "GTA 6 secret" in the title and it may end up on this map.</p>`}
+    <div class="btns"><a class="tbtn" href="/secrets">Watch all secret Shorts</a></div>`;
+  drawPins();
+  if (location.pathname !== '/map') history.replaceState(null, '', '/map' + location.search);
+}
+
+function openPin(p, fly) {
+  active = p; drawPins();
+  const cat = M.categories[p.cat] || {}, id = ytId(p.youtube || ''), cr = p.creator || {};
+  $('#panelBody').innerHTML = `
+    <button class="back" id="back" type="button">← All secrets</button>
+    <span class="cat" style="--c:${esc(cat.color)}">${esc(cat.name || '')}</span>
+    <h1 class="pin-title">${esc(p.title)}</h1>
+    ${p.text ? `<p class="pin-text">${esc(p.text)}</p>` : ''}
+    ${id ? `<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${esc(id)}?rel=0&playsinline=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="${esc(p.title)}"></iframe></div>` : ''}
+    ${cr.name ? `<div class="credit"><a class="n" href="${esc(cr.url || '#')}" target="_blank" rel="noopener">${esc(cr.name)}<small>Found this secret</small></a>${cr.url ? `<a class="follow" href="${esc(cr.url)}" target="_blank" rel="noopener">Follow</a>` : ''}</div>` : ''}
+    <div class="btns">${p.youtube ? `<a class="tbtn" href="${esc(p.youtube)}" target="_blank" rel="noopener">Open on YouTube</a>` : ''}<button class="tbtn hot" id="share" type="button">Share spot</button></div>`;
+  $('#back').onclick = showList;
+  $('#share').onclick = async e => {
+    const url = 'https://viralgta6.com/map/' + encodeURIComponent(p.slug);
+    if (navigator.share) { try { await navigator.share({title: p.title + ' · GTA 6 secrets map', url}); } catch {} return; }
+    try { await navigator.clipboard.writeText(url); e.target.textContent = 'Link copied'; } catch {}
+  };
+  document.body.classList.add('sheet');
+  if (location.pathname !== '/map/' + p.slug) history.replaceState(null, '', '/map/' + encodeURIComponent(p.slug) + location.search);
+  // on the phone the sheet covers the lower part: put the pin in the visible area above it
+  const z = Math.max(map.getZoom(), 0); let c = L.latLng(ll(p));
+  if (phone.matches) c = map.unproject(map.project(c, z).add([0, Math.min(innerHeight * .62, $('#panel').scrollHeight) / 2]), z);
+  map.flyTo(c, z, {duration: .6});
+}
+
+// phone: tap the sheet handle area to open/close the list
+$('#panel').addEventListener('click', e => { if (phone.matches && !document.body.classList.contains('sheet') && !e.target.closest('button,a,input,select,textarea')) document.body.classList.add('sheet'); });
+
+function setupEdit() {
+  const sel = $('#eCat'); sel.innerHTML = Object.entries(M.categories).map(([k, c]) => `<option value="${esc(k)}">${esc(c.name)}</option>`).join('');
+  let xy = null, tmp = null;
+  const out = () => {
+    const id = ytId($('#eYT').value);
+    const pin = {slug: slugify($('#eTitle').value || 'secret'), title: $('#eTitle').value, cat: sel.value, x: xy?.[0], y: xy?.[1], text: $('#eText').value,
+      youtube: id ? 'https://www.youtube.com/shorts/' + id : $('#eYT').value, creator: {name: $('#eName').value, url: $('#eURL').value}};
+    $('#eOut').textContent = JSON.stringify(pin);
+  };
+  map.on('click', e => {
+    const x = Math.round(e.latlng.lng), y = Math.round((M.height || 4000) - e.latlng.lat);
+    xy = [x, y]; $('#eXY').value = x + ', ' + y;
+    tmp?.remove(); tmp = L.marker(e.latlng, {icon: L.divIcon({className: '', html: '<div class="tmp-pin"></div>', iconSize: [18, 18], iconAnchor: [9, 9]})}).addTo(map);
+    document.body.classList.add('sheet'); out();
+  });
+  ['eTitle', 'eCat', 'eText', 'eYT', 'eName', 'eURL'].forEach(i => $('#' + i).addEventListener('input', out));
+  $('#eCopy').onclick = async () => { try { await navigator.clipboard.writeText($('#eOut').textContent); $('#eCopy').textContent = 'Copied'; } catch {} };
+}
+
+load();
+})();
+</script>
+</body>
+</html>
