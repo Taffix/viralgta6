@@ -89,6 +89,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .cat{align-self:flex-start;display:inline-flex;align-items:center;gap:7px;font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:#14081f;background:var(--c);padding:4px 10px;border-radius:999px}
 .pin-title{font-family:var(--cond);font-weight:700;font-size:28px;line-height:1.05;text-transform:uppercase}
 .pin-text{color:var(--muted);line-height:1.6}
+.pin-meta{color:var(--dim);font-size:13.5px;line-height:1.5}
+.pin-meta b{color:var(--muted)}
+.pin-meta a{color:var(--teal)}
 .vid{position:relative;width:min(100%,300px);aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 16px 40px rgba(0,0,0,.5)}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .credit{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
@@ -239,6 +242,10 @@ function openPin(p, fly) {
     <span class="cat" style="--c:${esc(cat.color)}">${esc(cat.name || '')}</span>
     <h1 class="pin-title">${esc(p.title)}</h1>
     ${p.text ? `<p class="pin-text">${esc(p.text)}</p>` : ''}
+    ${p.when ? `<p class="pin-meta"><b>When:</b> ${esc(p.when)}</p>` : ''}
+    ${p.approx ? `<p class="pin-meta">📍 Approximate area. The guides name the place, not the exact spot.</p>` : ''}
+    ${p.note ? `<p class="pin-meta">⚠️ ${esc(p.note)}</p>` : ''}
+    ${(p.sources || []).length ? `<p class="pin-meta">Source: ${p.sources.map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.name)}</a>`).join(', ')}</p>` : ''}
     ${id ? `<div class="vid"><iframe src="https://www.youtube-nocookie.com/embed/${esc(id)}?rel=0&playsinline=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="${esc(p.title)}"></iframe></div>` : ''}
     ${cr.name ? `<div class="credit"><a class="n" href="${esc(cr.url || '#')}" target="_blank" rel="noopener">${esc(cr.name)}<small>Found this secret</small></a>${cr.url ? `<a class="follow" href="${esc(cr.url)}" target="_blank" rel="noopener">Follow</a>` : ''}</div>` : ''}
     <div class="btns">${p.youtube ? `<a class="tbtn" href="${esc(p.youtube)}" target="_blank" rel="noopener">Open on YouTube</a>` : ''}<button class="tbtn hot" id="share" type="button">Share spot</button></div>`;

@@ -52,6 +52,537 @@
         "name": "JayWayyGaming",
         "url": "https://www.youtube.com/channel/UC2u04hrt9sUTwaHUWlVPdKA"
       }
+    },
+    {
+      "slug": "presidential-bunker-shark-tooth-island",
+      "title": "Presidential bunker on Shark Tooth Island",
+      "cat": "mysteries",
+      "x": 2025,
+      "y": 993,
+      "text": "A hidden bunker on Shark Tooth Island, a small sandy islet between Little Hardin Island and the beach north of Waning Sands. The trail starts at the Friends of Freedom memorial in Downtown Vice City. Reported rewards: the Pea Shooter armoured car, a legendary Cold War assault rifle and a Girardi ES9 pistol.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "michaels-boat-key-lento",
+      "title": "Michael's boat from GTA V",
+      "cat": "easter-eggs",
+      "x": 1457,
+      "y": 3076,
+      "text": "Michael De Santa's boat from GTA V, moored at Jason's house in Key Lento in the Leonida Keys.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        },
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        }
+      ],
+      "approx": false
+    },
+    {
+      "slug": "talking-parrot-three-sheets-liquor",
+      "title": "Talking parrot at Three Sheets Liquor",
+      "cat": "easter-eggs",
+      "x": 1533,
+      "y": 3108,
+      "text": "Behind Three Sheets Liquor in Key Lento is a pet lot with a talking parrot, plus a cash stash.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        },
+        {
+          "name": "Space4Games",
+          "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
+        },
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        }
+      ],
+      "approx": true,
+      "when": "Chapter 1 (Shirley's rum errand)"
+    },
+    {
+      "slug": "cool-dog-jet-ski-gambit-bay",
+      "title": "Cool Dog on a jet ski",
+      "cat": "mysteries",
+      "x": 1479,
+      "y": 2926,
+      "text": "A dog riding a jet ski that you can rescue, out on the water of Gambit Bay.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        },
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        },
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        }
+      ],
+      "approx": true,
+      "note": "One guide says Leonida Bay instead, and it may move around."
+    },
+    {
+      "slug": "crab-lab-pelican-valley",
+      "title": "Monster crab lab: Crabshack SMG + $10,000",
+      "cat": "weapons",
+      "x": 1315,
+      "y": 2675,
+      "text": "An isolated crab research outpost in the swamps of Pelican Valley in the Grassrivers (Mariana County), with the Crabshack VF5 SMG and a $10,000 stash bag.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        }
+      ],
+      "approx": true,
+      "note": "Two other guides place it in Gullet Marsh."
+    },
+    {
+      "slug": "frampton-islands-bunker",
+      "title": "Frampton Islands bunker (code 3612)",
+      "cat": "mysteries",
+      "x": 1706,
+      "y": 477,
+      "text": "A bunker on the Frampton Islands off the north-east coast of East Lummox County. Keypad code 3612 opens a 'Water Analysis and Testing' tunnel.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "ninja-turtles-sewer-tallaloko",
+      "title": "Ninja Turtles sewer",
+      "cat": "easter-eggs",
+      "x": 1648,
+      "y": 670,
+      "text": "A pumping-station channel by Lake Tallaloko, north of Millport in East Lummox County, with green ooze, pizza boxes and four turtles.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "pet-cemetery-grayson",
+      "title": "Pet Cemetery",
+      "cat": "easter-eggs",
+      "x": 962,
+      "y": 765,
+      "text": "A pet cemetery in Grayson, Lummox County, with a ghost cat and a candle ritual.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "freddie-prepper-bunker-lake-leonida",
+      "title": "Freddie's prepper bunker",
+      "cat": "easter-eggs",
+      "x": 1597,
+      "y": 1079,
+      "text": "A prepper's bunker at Lake Leonida in Leonard County, tied to a hurricane story.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "kraken-wreck-gloriana-key",
+      "title": "Kraken wreck",
+      "cat": "mysteries",
+      "x": 2191,
+      "y": 2369,
+      "text": "A wreck on the seabed south-east of Gloriana Key, part of the Kraken mystery.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "dexter-apartment-washington-island",
+      "title": "Dexter's apartment and boat",
+      "cat": "easter-eggs",
+      "x": 2226,
+      "y": 1571,
+      "text": "A Dexter tribute at Trinity Apartments on Washington Island, Vice City: a rooftop kill kit, and his boat 'Slice of Life' at the docks.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        },
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        }
+      ],
+      "approx": true,
+      "note": "One guide says the Bay Harbor marina instead."
+    },
+    {
+      "slug": "arthur-morgan-hat-port-gellhorn",
+      "title": "Arthur Morgan's cowboy hat ($35)",
+      "cat": "easter-eggs",
+      "x": 779,
+      "y": 1363,
+      "text": "Arthur Morgan's 'Genuine Cowboy Hat' for $35 at a yard sale in southern Port Gellhorn.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        },
+        {
+          "name": "Space4Games",
+          "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
+        }
+      ],
+      "approx": true,
+      "when": "Chapter 2"
+    },
+    {
+      "slug": "monument-leonidan-supremacy-manifest-canyon",
+      "title": "Monument of Leonidan Supremacy",
+      "cat": "mysteries",
+      "x": 993,
+      "y": 1053,
+      "text": "A monument with four horses at Manifest Canyon, Kelly County. Players report Morse-like beeps nearby.",
+      "sources": [
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        },
+        {
+          "name": "Space4Games",
+          "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "ufo-abduction-east-port-gellhorn",
+      "title": "UFO abduction",
+      "cat": "mysteries",
+      "x": 951,
+      "y": 1297,
+      "text": "A UFO abduction on a rural road east of Port Gellhorn in Kelly County, near the Starlet Motel. Unlocks the trophy 'The Truth Is Out There'.",
+      "sources": [
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        },
+        {
+          "name": "Space4Games",
+          "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        }
+      ],
+      "approx": true,
+      "when": "Around 2 AM, after Chapter 1 or 2, alone"
+    },
+    {
+      "slug": "skunk-ape-cottonmouth-lake",
+      "title": "Skunk Ape (Bigfoot) + tranquilizer rifle",
+      "cat": "mysteries",
+      "x": 1320,
+      "y": 2835,
+      "text": "The Skunk Ape lives in the Grassrivers wetlands around Cottonmouth Lake, south of Hamlet. The flyer is at Skeeter's bar in Hamlet; finishing the quest gives a tranquilizer rifle.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        },
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        }
+      ],
+      "approx": true,
+      "when": "At night",
+      "note": "Sightings are also reported at Gullet Marsh and Pelican Valley.",
+      "youtube": "https://www.youtube.com/shorts/xASL_aDK_J8",
+      "creator": {
+        "name": "Schlayer",
+        "url": "https://www.youtube.com/channel/UCOI2OYf4ae5UwixZdXRu5EQ"
+      },
+      "date": "2026-11-22T09:09:09Z"
+    },
+    {
+      "slug": "literal-easter-egg-tallest-tower",
+      "title": "The literal Easter egg (tallest tower)",
+      "cat": "easter-eggs",
+      "x": 1630,
+      "y": 2500,
+      "text": "Climb the tallest radio tower, in South Vice-Dale County, take the egg from the bird nest at the top and throw it for a special cutscene.",
+      "sources": [
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        },
+        {
+          "name": "Space4Games",
+          "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
+        }
+      ],
+      "approx": true,
+      "when": "The climb takes about 6 to 7 minutes",
+      "youtube": "https://www.youtube.com/shorts/VY19iuwMgDs",
+      "creator": {
+        "name": "Jpup",
+        "url": "https://www.youtube.com/channel/UC9iJXHOeqDqz1xftYCxWheQ"
+      },
+      "date": "2026-11-21T22:00:12Z"
+    },
+    {
+      "slug": "demon-ritual-warehouse-capri",
+      "title": "Demon ritual warehouse",
+      "cat": "easter-eggs",
+      "x": 774,
+      "y": 1888,
+      "text": "An unmarked warehouse with a pentagram in the north of Capri, near Tortoise Lake.",
+      "sources": [
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "satan-boss-north-port-gellhorn",
+      "title": "Satan boss fight + Hellspawn shotgun",
+      "cat": "weapons",
+      "x": 765,
+      "y": 1193,
+      "text": "North of Port Gellhorn, a house with an open garage leads to a campsite fire and a fight with Satan. Rewards: permanent extra health, the Hellspawn Comshot 12 shotgun and tattoos.",
+      "sources": [
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        }
+      ],
+      "approx": true,
+      "youtube": "https://www.youtube.com/shorts/zhd-YslF9X4",
+      "creator": {
+        "name": "Schlayer",
+        "url": "https://www.youtube.com/channel/UCOI2OYf4ae5UwixZdXRu5EQ"
+      },
+      "date": "2026-11-21T21:27:40Z"
+    },
+    {
+      "slug": "tanks-fighter-jet-mile-zero",
+      "title": "Tanks and a fighter jet",
+      "cat": "cars",
+      "x": 677,
+      "y": 3229,
+      "text": "Military vehicles, including tanks and a fighter jet, at Mile Zero Air Station at the end of the Keys bridges.",
+      "sources": [
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "fast-furious-tuner-vespucci-island",
+      "title": "Fast & Furious tuner car",
+      "cat": "cars",
+      "x": 2076,
+      "y": 1764,
+      "text": "A green tuner car, a nod to the Eclipse from the first Fast and the Furious, in a villa garage on Vespucci Island.",
+      "sources": [
+        {
+          "name": "GTA Culture",
+          "url": "https://gtaculture.com/guides/gta-6-easter-eggs"
+        },
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "Space4Games",
+          "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
+        }
+      ],
+      "approx": true,
+      "note": "It is not always there."
+    },
+    {
+      "slug": "mystery-house-belville",
+      "title": "Belville mystery house",
+      "cat": "easter-eggs",
+      "x": 1745,
+      "y": 1443,
+      "text": "A house in Belville, Leonard County, with a San Andreas photo, notes in the garage and a snake in a car trunk.",
+      "sources": [
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        },
+        {
+          "name": "Space4Games",
+          "url": "https://space4games.com/en/games-en/gta-6-easter-eggs-secrets-guide/"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "meteorite-mount-kalaga",
+      "title": "Meteorite crash site",
+      "cat": "collectibles",
+      "x": 1279,
+      "y": 805,
+      "text": "A glowing pink meteorite on Mount Kalaga in Lummox County.",
+      "sources": [
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        }
+      ],
+      "approx": true,
+      "note": "One guide says the eastern slope of Table Rock, another the peak with a stone circle."
+    },
+    {
+      "slug": "tower-bunker-mount-kalaga",
+      "title": "Mount Kalaga tower and bunker",
+      "cat": "mysteries",
+      "x": 1193,
+      "y": 751,
+      "text": "A tower near a summit in Mount Kalaga National Park, with a bunker and a logbook.",
+      "sources": [
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "crashed-glider-bobcat-bight",
+      "title": "Crashed glider + pistol",
+      "cat": "weapons",
+      "x": 677,
+      "y": 2168,
+      "text": "A crashed glider at Bobcat Bight, off the west coast of North Mariana County, with the Turnt Nipper .38 pistol.",
+      "sources": [
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        },
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "ffsr-sniper-watson-bay",
+      "title": "FFSR sniper rifle",
+      "cat": "weapons",
+      "x": 1115,
+      "y": 2573,
+      "text": "A small compound on a sandy stretch near Watson Bay. Get in through a crack in the fence.",
+      "sources": [
+        {
+          "name": "AOEAH",
+          "url": "https://www.aoeah.com/news/4948--top-30-gta-6-best-easter-eggs--secrets-location--loot"
+        }
+      ],
+      "approx": true
+    },
+    {
+      "slug": "western-novel-jacobs-tavern-millport",
+      "title": "Western novel about New Austin",
+      "cat": "easter-eggs",
+      "x": 1776,
+      "y": 805,
+      "text": "A western novel about New Austin (Red Dead) inside Jacob's Tavern in Millport.",
+      "sources": [
+        {
+          "name": "GTASide",
+          "url": "https://gtaside.com/tips/gta6/easter-eggs/"
+        },
+        {
+          "name": "ShowGamer",
+          "url": "https://showgamer.com/en/guides/8037-vse-sekretnye-mesta-v-gta-6-gde-nayti-nlo-tayniki-i-pashalki"
+        }
+      ],
+      "approx": true
     }
   ],
   "credit": "Map © Rockstar Games",
