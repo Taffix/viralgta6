@@ -393,22 +393,27 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
 .nav-sec svg,.nav-home svg{width:18px;height:18px}
 .nav-sec{color:var(--yellow)}
 .nav-home,.tb-home{display:none!important}
+.nav-home,.tb-home{order:-1}
 body.secrets .nav-home{display:flex!important}
-body.secrets .nav-sec:not(.nav-map){color:#fff;background:rgba(255,214,90,.1);box-shadow:inset 0 -3px 0 var(--yellow)}
+body.secrets:not(.tips) .nav-sec:not(.nav-map):not(.nav-tips),body.tips .nav-tips{color:#fff;background:rgba(255,214,90,.1);box-shadow:inset 0 -3px 0 var(--yellow)}
+.nav-tips,.tb-tips{color:var(--orange)}
 .nav-map{color:var(--teal)}
 .tb-map{color:var(--teal)}
 .map-cta{display:inline-block;margin-left:6px;color:var(--teal);font-weight:700;text-decoration:none}
 body.secrets .tabs button{display:none}
 body.secrets .tabbar [data-f]{display:none}
 body.secrets .tabbar .tb-home{display:grid!important}
-body.public.secrets .tabbar{grid-template-columns:repeat(3,1fr)}
-body.public .tabbar{grid-template-columns:repeat(6,1fr)}
+body.public.secrets .tabbar{grid-template-columns:repeat(4,1fr)}
+body.public:not(.secrets) .tabbar{grid-template-columns:repeat(7,1fr)}
+body.public:not(.secrets) .tabbar a,body.public:not(.secrets) .tabbar button{font-size:11.5px;letter-spacing:.2px}
 .tb-sec,.tb-home{display:grid;justify-items:center;align-content:center;gap:4px;font-family:var(--cond);font-weight:600;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--yellow);text-decoration:none}
 .tb-sec svg,.tb-home svg{width:24px;height:24px}
-body.secrets .tb-sec:not(.tb-map){color:#fff}
-body.secrets .tb-sec svg{color:var(--yellow);filter:drop-shadow(0 0 6px var(--yellow))}
+body.secrets:not(.tips) .tb-sec:not(.tb-map):not(.tb-tips),body.tips .tb-tips{color:#fff}
+body.secrets:not(.tips) .tb-sec:not(.tb-map):not(.tb-tips) svg,body.tips .tb-tips svg{color:var(--yellow);filter:drop-shadow(0 0 6px var(--yellow))}
 .about-sec{display:none}
-body.secrets .about-sec{display:grid}
+body.secrets:not(.tips) .about-sec{display:grid}
+.about-tips{display:none}
+body.tips .about-tips{display:grid}
 body.secrets .about-main{display:none}
 a.cl{color:inherit;text-decoration:none}
 a.cl:hover{text-decoration:underline}
@@ -416,7 +421,7 @@ a.cl-row{display:flex;align-items:center;gap:10px;min-width:0}
 .s p a.cl-row{gap:8px}
 .creator{position:relative}
 .follow{flex:none;margin-left:auto;font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:.6px;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:#fff;color:#14081f;text-decoration:none}
-@media (max-width:760px){.about-sec{display:none!important}}
+@media (max-width:760px){.about-sec,.about-tips{display:none!important}}
 /* videos grow into view while scrolling (uses 'scale', so it never fights other transforms) */
 @keyframes vgGrow{from{scale:.86;opacity:.35}to{scale:1;opacity:1}}
 @supports (animation-timeline:view()){
@@ -436,7 +441,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 </style>
 </head>
 <body>
-<script>if (/^https?:$/.test(location.protocol)) document.body.classList.add("public"); if (/^\/secrets\/?$/.test(location.pathname)) document.body.classList.add("secrets")</script>
+<script>if (/^https?:$/.test(location.protocol)) document.body.classList.add("public"); if (/^\/(secrets|tips)\/?$/.test(location.pathname)) document.body.classList.add("secrets"); if (/^\/tips\/?$/.test(location.pathname)) document.body.classList.add("tips")</script>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-yt" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4" fill="currentColor"/><path d="M10 9l5 3-5 3z" fill="#fff"/></symbol>
@@ -453,6 +458,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <symbol id="i-pad" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5 7h9a5.5 5.5 0 0 1 5.3 7l-1 3.6a2.6 2.6 0 0 1-4.4 1.1L14.6 17H9.4l-1.8 1.7a2.6 2.6 0 0 1-4.4-1.1l-1-3.6A5.5 5.5 0 0 1 7.5 7zM8 10v1.5H6.5v1.5H8v1.5h1.5V13H11v-1.5H9.5V10zm8.3.2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></symbol>
   <symbol id="i-eye" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.4" fill="currentColor"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></symbol>
   <symbol id="i-sound" viewBox="0 0 24 24"><path fill="currentColor" d="M4 9h4l5-4v14l-5-4H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9c1.3 1.6 1.3 4.4 0 6M18.5 6.5c2.7 3 2.7 8 0 11"/></symbol>
   <symbol id="palm" viewBox="0 0 300 420">
     <path d="M150 420c6-90 2-170-14-250l12-2c18 82 22 164 16 252z"/>
@@ -474,6 +480,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
     <button data-f="tiktok" aria-pressed="false"><svg><use href="#i-tt"/></svg><span>TikTok</span></button>
     <button data-f="instagram" aria-pressed="false"><svg><use href="#i-ig"/></svg><span>Instagram</span></button>
     <a class="nav-sec" href="/secrets"><svg><use href="#i-eye"/></svg><span>Secrets</span></a>
+    <a class="nav-sec nav-tips" href="/tips"><svg><use href="#i-bulb"/></svg><span>Tips</span></a>
     <a class="nav-sec nav-map" href="/map"><svg><use href="#i-pin"/></svg><span>Map</span></a>
     <a class="nav-home" href="/"><svg><use href="#i-all"/></svg><span>Viral now</span></a>
   </nav>
@@ -521,6 +528,16 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
       <details><summary>I found a GTA 6 secret. Can it be on this page?</summary><p>Post it as a YouTube Short with "GTA 6 secret" or "easter egg" in the title. When it starts getting views, it shows up here automatically.</p></details>
     </div>
   </section>
+  <section class="about about-tips" aria-labelledby="tipsT">
+    <h2 id="tipsT">GTA 6 tips and tricks that actually help</h2>
+    <p>The most useful GTA 6 tips going viral on YouTube Shorts right now: how to make money fast, where to find strong weapons early, the best cars, hidden mechanics and the mistakes new players make in Leonida. The list refreshes several times a day and is ranked by how fast each Short is gaining views.</p>
+    <p>Every tip belongs to its creator. Tap the name or the Follow button to visit their channel.</p>
+    <div class="faq">
+      <details><summary>Where do these GTA 6 tips come from?</summary><p>From YouTube Shorts by GTA 6 creators. We show them with the official YouTube player and always link to the creator.</p></details>
+      <details><summary>How often are new tips added?</summary><p>Every few hours. New Shorts that are taking off move to the top.</p></details>
+      <details><summary>Want secret locations instead?</summary><p>See the GTA 6 secrets page and the interactive secrets map.</p></details>
+    </div>
+  </section>
   <section class="about about-main" aria-labelledby="aboutT">
     <h2 id="aboutT">GTA 6 videos going viral, updated every hour</h2>
     <p>ViralGTA6 collects the GTA 6 videos that are blowing up right now on YouTube, TikTok and Instagram: trailer breakdowns, gameplay, leaks, map theories, memes and reactions. Every video is ranked by how fast it is gaining views, so the list always shows what is hot today, not what was popular months ago.</p>
@@ -537,7 +554,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 <footer>
   <div class="f-row">
     <a class="brand" href="#" aria-label="viralgta6.com, back to top"><i>Viral</i><b class="chr" data-t="GTA6">GTA6</b><small>.com</small></a>
-    <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="/secrets">Secrets</a><a href="/map">Map</a><a href="#">Back to top ↑</a></nav>
+    <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="/secrets">Secrets</a><a href="/tips">Tips</a><a href="/map">Map</a><a href="#">Back to top ↑</a></nav>
   </div>
   <div class="f-row f-small">
     <span>© 2026 viralgta6.com · Updated every hour</span>
@@ -556,6 +573,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <button data-f="tiktok" aria-pressed="false"><svg><use href="#i-tt"/></svg>TikTok</button>
   <button data-f="instagram" aria-pressed="false"><svg><use href="#i-ig"/></svg>Insta</button>
   <a class="tb-sec" href="/secrets"><svg><use href="#i-eye"/></svg>Secrets</a>
+  <a class="tb-sec tb-tips" href="/tips"><svg><use href="#i-bulb"/></svg>Tips</a>
   <a class="tb-sec tb-map" href="/map"><svg><use href="#i-pin"/></svg>Map</a>
 </nav>
 
@@ -795,7 +813,7 @@ function render() {
   const list = items();
   const g = $('#grid');
   const names = {all:'GTA 6 going viral now', youtube:'GTA 6 on YouTube', tiktok:'GTA 6 on TikTok', instagram:'GTA 6 on Instagram'};
-  if (SECRETS) names.all = names.youtube = 'GTA 6 secrets & easter eggs';
+  if (SECRETS) names.all = names.youtube = PG.title;
   $('#feedTitle').textContent = $('#feedTitle').dataset.t = names[S.filter];
   if (S.key && S.updated) setStatus(`YouTube ${regionName(S.region)} · updated ${new Date(S.updated).toLocaleString('en-US', {weekday:'short', hour:'2-digit', minute:'2-digit'})}`);
   else if (S.key && S.error) setStatus('YouTube unreachable');
@@ -849,8 +867,8 @@ function shelves(list) {
       <p>${cLink(it.creator, avatar(it.creator) + `<span>${esc(handle(it.creator) || it.creator.name || '')}</span>`, 'cl cl-row')}</p>
     </article>`;
   const parts = [];
-  if (wide.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-yt"/></svg>${SECRETS ? 'GTA 6 secret videos' : 'Trending GTA 6 videos'}</h3><div class="yt-grid">${wide.map(vcard).join('')}</div></section>`);
-  if (tall.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-${SECRETS ? 'eye' : 'tt'}"/></svg>${SECRETS ? 'GTA 6 secrets in Shorts' : 'Viral GTA 6 shorts'}</h3><div class="short-grid">${tall.map(scard).join('')}</div></section>`);
+  if (wide.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-yt"/></svg>${SECRETS ? PG.wide : 'Trending GTA 6 videos'}</h3><div class="yt-grid">${wide.map(vcard).join('')}</div></section>`);
+  if (tall.length) parts.push(`<section class="shelf"><h3 class="shelf-t"><svg><use href="#i-${SECRETS ? PG.icon : 'tt'}"/></svg>${SECRETS ? PG.tall : 'Viral GTA 6 shorts'}</h3><div class="short-grid">${tall.map(scard).join('')}</div></section>`);
   if (wide.length && tall.length && pos.get(tall[0].uid) < pos.get(wide[0].uid)) parts.reverse();
   const strip = dealsStrip();
   if (strip) parts.splice(Math.min(1, parts.length), 0, strip);
@@ -1215,13 +1233,20 @@ const todayLine = () => new Date().toLocaleDateString('en-US', {weekday:'long', 
 $('#today').textContent = todayLine();
 
 /* Online: the daily list (data/videos.json, written every morning by GitHub). Opened as a file: own key + manual mode. */
-const SECRETS = /^\/secrets\/?$/.test(location.pathname);
+const PAGE = (location.pathname.match(/^\/(secrets|tips)\/?$/) || [])[1] || '';
+const SECRETS = !!PAGE;   // collection page (secrets or tips): own list, own texts
+const PG = {
+  secrets: {title: 'GTA 6 secrets & easter eggs', s: 'GTA 6', c: 'secrets', sr: ': hidden locations, easter eggs and rare finds in GTA 6', today: 'Hidden spots, easter eggs & rare finds · fresh YouTube Shorts', wide: 'GTA 6 secret videos', tall: 'GTA 6 secrets in Shorts', icon: 'eye',
+    head: 'The GTA 6 secrets, easter eggs and hidden spots that are blowing up on YouTube Shorts right now. Tap a creator to visit their channel. <a class="map-cta" href="/map">Open the secrets map →</a>'},
+  tips: {title: 'GTA 6 tips & tricks', s: 'GTA 6', c: 'tips', sr: ': tips and tricks for money, weapons and cars in GTA 6', today: 'Money, weapons, cars & smart tricks · fresh YouTube Shorts', wide: 'GTA 6 tip videos', tall: 'GTA 6 tips in Shorts', icon: 'bulb',
+    head: 'The GTA 6 tips and tricks that are blowing up on YouTube Shorts right now: money, weapons, cars and things most players miss. Tap a creator to visit their channel. <a class="map-cta" href="/map">Find secrets on the map →</a>'},
+}[PAGE];
 async function loadDaily() {
   if (!/^https?:$/.test(location.protocol)) return false;
   S.public = true;
   try {
     // own folder first (GitHub Pages / preview), otherwise the list the daily GitHub job writes
-    const file = SECRETS ? 'data/secrets.json' : 'data/videos.json';
+    const file = SECRETS ? 'data/' + PAGE + '.json' : 'data/videos.json';
     let r = await fetch(file + '?d=' + today(), {cache:'no-cache'}).catch(() => null);
     if (!r || !r.ok) r = await fetch('https://raw.githubusercontent.com/Taffix/viralgta6/main/' + file, {cache:'no-cache'});
     if (!r.ok) return false;
@@ -1231,15 +1256,15 @@ async function loadDaily() {
     S.manual = [];
     S.updated = j.updated;
     S.yt = (j.items || []).map(it => ({...it, creator: {...it.creator, country: /^[A-Z]{2}$/.test(it.creator?.country || '') ? regionName(it.creator.country) : (it.creator?.country || '')}}));
-    $('#today').textContent = SECRETS ? 'Hidden spots, easter eggs & rare finds · fresh YouTube Shorts' : new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'}) + ' · GTA 6 on YouTube, TikTok & Instagram';
+    $('#today').textContent = SECRETS ? PG.today : new Date().toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'}) + ' · GTA 6 on YouTube, TikTok & Instagram';
     return true;
   } catch { return false; }
 }
 if (SECRETS) {
-  const h = $('.hero h1'); h.querySelector('.s').textContent = 'GTA 6';
-  const c = h.querySelector('.c'); c.textContent = c.dataset.t = 'secrets';
-  h.querySelector('.sr').textContent = ': hidden locations, easter eggs and rare finds in GTA 6';
-  $('.wrap .head p').innerHTML = 'The GTA 6 secrets, easter eggs and hidden spots that are blowing up on YouTube Shorts right now. Tap a creator to visit their channel. <a class="map-cta" href="/map">Open the secrets map →</a>';
+  const h = $('.hero h1'); h.querySelector('.s').textContent = PG.s;
+  const c = h.querySelector('.c'); c.textContent = c.dataset.t = PG.c;
+  h.querySelector('.sr').textContent = PG.sr;
+  $('.wrap .head p').innerHTML = PG.head;
 }
 Promise.all([loadDaily(), /^https?:$/.test(location.protocol) ? loadPromo() : null]).then(([ok]) => { render(); if (!ok) loadYT(); openFromLink(); });
 })();

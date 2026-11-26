@@ -7,6 +7,7 @@ const SITE = 'https://viralgta6.com';
 const RAW  = 'https://raw.githubusercontent.com/Taffix/viralgta6/main/data/';
 $cache = __DIR__ . '/../vg-videos-cache.json';
 $cacheS = __DIR__ . '/../vg-secrets-cache.json';
+$cacheT = __DIR__ . '/../vg-tips-cache.json';
 
 function fetch_list($cache, $file = 'videos.json') {
   if (is_file($cache) && time() - filemtime($cache) < 600) return json_decode(file_get_contents($cache), true);
@@ -50,11 +51,13 @@ $rank = function ($list) {
 $secretsPage = ($_GET['page'] ?? '') === 'secrets';
 $items   = $rank(fetch_list($cache)['items'] ?? []);
 $secrets = $rank(fetch_list($cacheS, 'secrets.json')['items'] ?? []);
+$tips    = $rank(fetch_list($cacheT, 'tips.json')['items'] ?? []);
+$tipsPage = ($_GET['page'] ?? '') === 'tips';
 
 $vid = $_GET['v'] ?? '';
 $one = null;
 if ($vid !== '') {
-  foreach (array_merge($items, $secrets) as $i) if ($i['uid'] === $vid) { $one = $i; break; }
+  foreach (array_merge($items, $secrets, $tips) as $i) if ($i['uid'] === $vid) { $one = $i; break; }
   if (!$one) { header('Location: ' . SITE . '/', true, 302); exit; }   // video no longer in the list
 }
 
@@ -63,6 +66,15 @@ if ($one) {
   $desc  = 'Watch "' . ($one['title'] ?? '') . '" by ' . who($one) . ' on ' . plat($one) . (empty($one['views']) ? '' : ' · ' . num($one['views']) . ' views') . '. One of today\'s most viral GTA 6 videos, with full credit to the creator.';
   $url = vurl($one); $img = $one['thumb'] ?? SITE . '/share.png';
   $ld = ['@context' => 'https://schema.org'] + video_ld($one);
+} elseif ($tipsPage) {
+  $title = 'GTA 6 Tips & Tricks · Money, Weapons, Cars · Shorts | ViralGTA6';
+  $desc  = 'The best GTA 6 tips and tricks going viral right now: make money fast, get strong weapons early, the best cars and the mistakes to avoid, from YouTube Shorts. Updated several times a day, every creator credited.';
+  $url = SITE . '/tips'; $img = SITE . '/share.png';
+  $items = $tips;
+  $list = []; foreach (array_slice($items, 0, 30) as $n => $i) $list[] = video_ld($i, $n + 1);
+  $ld = ['@context' => 'https://schema.org', '@graph' => [
+    ['@type' => 'CollectionPage', 'name' => 'GTA 6 tips & tricks', 'url' => $url, 'description' => $desc],
+    ['@type' => 'ItemList', 'name' => 'GTA 6 tips & tricks', 'itemListOrder' => 'https://schema.org/ItemListOrderDescending', 'numberOfItems' => count($list), 'itemListElement' => $list]]];
 } elseif ($secretsPage) {
   $title = 'GTA 6 Secrets, Easter Eggs & Hidden Locations · Shorts | ViralGTA6';
   $desc  = 'The GTA 6 secrets everyone is talking about: hidden locations, easter eggs, rare cars and weird details, from the YouTube Shorts going viral right now. Updated several times a day, every creator credited.';
