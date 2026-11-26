@@ -7,6 +7,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const OUT = new URL('../data/videos.json', import.meta.url);
 const OUT_SECRETS = new URL('../data/secrets.json', import.meta.url);
+const OUT_TIPS = new URL('../data/tips.json', import.meta.url);
 const env = process.env;
 const YT_KEY = env.YT_KEY || '';
 const APIFY_TOKEN = env.APIFY_TOKEN || '';
@@ -25,6 +26,9 @@ const KEEP_PER_PLATFORM = 30;
 // secrets page: GTA 6 secrets, easter eggs and hidden spots (mostly Shorts), refreshed every 6 hours
 const SECRET_QUERIES = list(env.SECRET_QUERIES, 'GTA 6 secret,GTA 6 easter egg,GTA 6 hidden location');
 const SECRET_MAX_AGE_DAYS = 21;
+// tips page: GTA 6 tips & tricks Shorts (money, weapons, cars, beginner tips), refreshed every 6 hours
+const TIP_QUERIES = list(env.TIP_QUERIES, 'GTA 6 tips,GTA 6 tips and tricks,GTA 6 money');
+const isTip = (...t) => /tips?\b|tricks?\b|how\s+to|guide|best\b|money|fast\b|easy\b|beginner|mistake|don.?t|never|should|need\s+to|unlock|get\s+(a|the|free|rare)|\$\d/i.test(t.filter(Boolean).join(' '));
 const isSecret = (...t) => /secret|easter\s*egg|hidden|mystery|myster|you\s*(missed|didn.?t\s*know)|details?\s*you|rare\b|location|glitch|ufo|bigfoot|ghost|cheat|unlock/i.test(t.filter(Boolean).join(' '));
 // a video only counts when its title/caption/tags are really about GTA 6
 const isGTA6 = (...texts) => /\bgta\s*-?\s*(6|vi)\b|grand\s*theft\s*auto\s*(6|vi)\b|#gta6|#gtavi|\bleonida\b/i.test(texts.filter(Boolean).join(' '));
@@ -166,9 +170,23 @@ const keepOld = p => (old.items || []).filter(i => i.platform === p && fresh(i.p
 const ageMin = iso => iso ? (Date.now() - new Date(iso)) / 6e4 : Infinity;
 const lastApify = Math.max(...['tiktok', 'instagram'].map(p => { const r = old.sources?.[p]?.refreshed; return r ? new Date(r).getTime() : 0; }));
 const FULL = env.FULL === '1' || (new Date().getUTCHours() >= 5 && (Date.now() - lastApify) / 36e5 >= 20);
-let oldSecrets = null;
-try { oldSecrets = JSON.parse(await readFile(OUT_SECRETS, 'utf8')); } catch {}
-const SECRETS_DUE = env.FULL === '1' || env.SECRETS_NOW === '1' || ageMin(oldSecrets?.updated) >= 6 * 60;
+const COLLECTIONS = [
+  { name: 'secrets', out: OUT_SECRETS, queries: SECRET_QUERIES, also: isSecret },
+  { name: 'tips', out: OUT_TIPS, queries: TIP_QUERIES, also: isTip },
+];
+for (const c of COLLECTIONS) {
+  let prev = null; try { prev = JSON.parse(await readFile(c.out, 'utf8')); } catch {}
+  if (!(env.FULL === '1' || env.SECRETS_NOW === '1' || ageMin(prev?.updated) >= 6 * 60)) continue;
+  try {
+    const items = (await youtube({ queries: c.queries, days: SECRET_MAX_AGE_DAYS, duration: 'short', also: c.also })).filter(i => i.views);
+    items.sort((a, b) => perHour(b) - perHour(a));
+    const keep = [...new Map(items.map(i => [i.uid, i])).values()].slice(0, 40);
+    if (!keep.length) throw new Error('0 usable videos');
+    await writeFile(c.out, JSON.stringify({ updated: new Date().toISOString(), items: keep }, null, 1) + '\n');
+    log(c.name, 'ok', keep.length);
+  } catch (e) { log(c.name, 'FAILED, kept the old list:', e.message || e); }
+}
+const SECRETS_DUE = false; // handled by COLLECTIONS above
 const MAIN_DUE = FULL || ageMin(old.sources?.youtube?.refreshed) >= 50;
 if (SECRETS_DUE) {
   try {
