@@ -198,7 +198,7 @@ function build() {
   if (M.tiles || M.image) { if (!M.tiles) L.imageOverlay(M.image, bounds).addTo(map); if (M.credit) $('#map').insertAdjacentHTML('beforeend', '<a class="credit-map" href="' + esc(M.creditUrl || '#') + '" target="_blank" rel="noopener">' + esc(M.credit) + '</a>'); }
   else $('#map').insertAdjacentHTML('beforeend', '<div class="soon"><div><h2>Map coming soon</h2><p>The GTA 6 map of Leonida is being prepared. The first secret spots appear here as soon as it is online.</p></div></div>');
   map.fitBounds(bounds);
-  if (phone.matches) map.zoomControl.remove();
+  if (phone.matches) map.zoomControl.remove(); else map.zoomControl.setPosition('bottomright');   // top-left belongs to the filters
 
   // filters
   const cats = M.categories || {};
