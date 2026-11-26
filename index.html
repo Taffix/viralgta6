@@ -394,15 +394,18 @@ dialog::backdrop{background:rgba(8,4,16,.86);backdrop-filter:blur(6px)}
 .nav-sec{color:var(--yellow)}
 .nav-home,.tb-home{display:none!important}
 body.secrets .nav-home{display:flex!important}
-body.secrets .nav-sec{color:#fff;background:rgba(255,214,90,.1);box-shadow:inset 0 -3px 0 var(--yellow)}
+body.secrets .nav-sec:not(.nav-map){color:#fff;background:rgba(255,214,90,.1);box-shadow:inset 0 -3px 0 var(--yellow)}
+.nav-map{color:var(--teal)}
+.tb-map{color:var(--teal)}
+.map-cta{display:inline-block;margin-left:6px;color:var(--teal);font-weight:700;text-decoration:none}
 body.secrets .tabs button{display:none}
 body.secrets .tabbar [data-f]{display:none}
 body.secrets .tabbar .tb-home{display:grid!important}
-body.public.secrets .tabbar{grid-template-columns:1fr 1fr}
-body.public .tabbar{grid-template-columns:repeat(5,1fr)}
+body.public.secrets .tabbar{grid-template-columns:repeat(3,1fr)}
+body.public .tabbar{grid-template-columns:repeat(6,1fr)}
 .tb-sec,.tb-home{display:grid;justify-items:center;align-content:center;gap:4px;font-family:var(--cond);font-weight:600;font-size:12.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--yellow);text-decoration:none}
 .tb-sec svg,.tb-home svg{width:24px;height:24px}
-body.secrets .tb-sec{color:#fff}
+body.secrets .tb-sec:not(.tb-map){color:#fff}
 body.secrets .tb-sec svg{color:var(--yellow);filter:drop-shadow(0 0 6px var(--yellow))}
 .about-sec{display:none}
 body.secrets .about-sec{display:grid}
@@ -438,6 +441,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <symbol id="i-share" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 15V3M7 8l5-5 5 5M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
   <symbol id="i-pad" viewBox="0 0 24 24"><path fill="currentColor" d="M7.5 7h9a5.5 5.5 0 0 1 5.3 7l-1 3.6a2.6 2.6 0 0 1-4.4 1.1L14.6 17H9.4l-1.8 1.7a2.6 2.6 0 0 1-4.4-1.1l-1-3.6A5.5 5.5 0 0 1 7.5 7zM8 10v1.5H6.5v1.5H8v1.5h1.5V13H11v-1.5H9.5V10zm8.3.2a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 2a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></symbol>
   <symbol id="i-eye" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.4" fill="currentColor"/></symbol>
   <symbol id="i-sound" viewBox="0 0 24 24"><path fill="currentColor" d="M4 9h4l5-4v14l-5-4H4z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9c1.3 1.6 1.3 4.4 0 6M18.5 6.5c2.7 3 2.7 8 0 11"/></symbol>
   <symbol id="palm" viewBox="0 0 300 420">
     <path d="M150 420c6-90 2-170-14-250l12-2c18 82 22 164 16 252z"/>
@@ -459,6 +463,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
     <button data-f="tiktok" aria-pressed="false"><svg><use href="#i-tt"/></svg><span>TikTok</span></button>
     <button data-f="instagram" aria-pressed="false"><svg><use href="#i-ig"/></svg><span>Instagram</span></button>
     <a class="nav-sec" href="/secrets"><svg><use href="#i-eye"/></svg><span>Secrets</span></a>
+    <a class="nav-sec nav-map" href="/map"><svg><use href="#i-pin"/></svg><span>Map</span></a>
     <a class="nav-home" href="/"><svg><use href="#i-all"/></svg><span>Viral now</span></a>
   </nav>
   <div class="sp"></div>
@@ -521,7 +526,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 <footer>
   <div class="f-row">
     <a class="brand" href="#" aria-label="viralgta6.com, back to top"><i>Viral</i><b class="chr" data-t="GTA6">GTA6</b><small>.com</small></a>
-    <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="/secrets">Secrets</a><a href="#">Back to top ↑</a></nav>
+    <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="/secrets">Secrets</a><a href="/map">Map</a><a href="#">Back to top ↑</a></nav>
   </div>
   <div class="f-row f-small">
     <span>© 2026 viralgta6.com · Updated every hour</span>
@@ -540,6 +545,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
   <button data-f="tiktok" aria-pressed="false"><svg><use href="#i-tt"/></svg>TikTok</button>
   <button data-f="instagram" aria-pressed="false"><svg><use href="#i-ig"/></svg>Insta</button>
   <a class="tb-sec" href="/secrets"><svg><use href="#i-eye"/></svg>Secrets</a>
+  <a class="tb-sec tb-map" href="/map"><svg><use href="#i-pin"/></svg>Map</a>
 </nav>
 
 <!-- player -->
@@ -1213,7 +1219,7 @@ if (SECRETS) {
   const h = $('.hero h1'); h.querySelector('.s').textContent = 'GTA 6';
   const c = h.querySelector('.c'); c.textContent = c.dataset.t = 'secrets';
   h.querySelector('.sr').textContent = ': hidden locations, easter eggs and rare finds in GTA 6';
-  $('.wrap .head p').textContent = 'The GTA 6 secrets, easter eggs and hidden spots that are blowing up on YouTube Shorts right now. Tap a creator to visit their channel.';
+  $('.wrap .head p').innerHTML = 'The GTA 6 secrets, easter eggs and hidden spots that are blowing up on YouTube Shorts right now. Tap a creator to visit their channel. <a class="map-cta" href="/map">Open the secrets map →</a>';
 }
 Promise.all([loadDaily(), /^https?:$/.test(location.protocol) ? loadPromo() : null]).then(([ok]) => { render(); if (!ok) loadYT(); openFromLink(); });
 })();

@@ -1,13 +1,30 @@
 {
-  "image": "",
-  "width": 4000,
-  "height": 4000,
+  "image": "/leonida-map.jpg",
+  "width": 2608,
+  "height": 3644,
   "categories": {
-    "easter-eggs": { "name": "Easter eggs", "color": "#ff3fa4" },
-    "weapons": { "name": "Weapons", "color": "#ff8f4a" },
-    "cars": { "name": "Cars", "color": "#2ff3e0" },
-    "collectibles": { "name": "Collectibles", "color": "#ffd65a" },
-    "mysteries": { "name": "Mysteries", "color": "#8a3ffc" }
+    "easter-eggs": {
+      "name": "Easter eggs",
+      "color": "#ff3fa4"
+    },
+    "weapons": {
+      "name": "Weapons",
+      "color": "#ff8f4a"
+    },
+    "cars": {
+      "name": "Cars",
+      "color": "#2ff3e0"
+    },
+    "collectibles": {
+      "name": "Collectibles",
+      "color": "#ffd65a"
+    },
+    "mysteries": {
+      "name": "Mysteries",
+      "color": "#8a3ffc"
+    }
   },
-  "pins": []
+  "pins": [],
+  "credit": "Map © Rockstar Games",
+  "creditUrl": "https://www.rockstargames.com/VI"
 }

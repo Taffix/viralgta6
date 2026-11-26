@@ -48,7 +48,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 /* layout */
 .app{position:fixed;inset:calc(var(--top) + env(safe-area-inset-top)) 0 0 0;display:grid;grid-template-columns:minmax(0,1fr) 400px}
-#map{position:relative;background:#0b0420 radial-gradient(circle at 50% 50%,#1d0b3d,#0b0420 70%)}
+#map{position:relative;background:#01aac9}
+.credit-map{position:absolute;left:10px;bottom:10px;z-index:500;font-size:12px;color:#fff;background:rgba(17,6,38,.7);padding:4px 9px;border-radius:999px;text-decoration:none}
+@media (max-width:760px){.credit-map{bottom:auto;top:58px;left:12px}}
 .leaflet-container{background:transparent;font-family:var(--body)}
 .leaflet-control-zoom a{background:var(--ink2)!important;color:#fff!important;border-color:var(--line)!important}
 .leaflet-control-attribution{display:none}
@@ -180,7 +182,7 @@ function build() {
   const W = M.width || 4000, H = M.height || 4000;
   const bounds = [[0, 0], [H, W]];
   map = L.map('map', {crs: L.CRS.Simple, minZoom: -4, maxZoom: 2, zoomSnap: .25, attributionControl: false, maxBounds: [[-H * .25, -W * .25], [H * 1.25, W * 1.25]]});
-  if (M.image) L.imageOverlay(M.image, bounds).addTo(map);
+  if (M.image) { L.imageOverlay(M.image, bounds).addTo(map); if (M.credit) $('#map').insertAdjacentHTML('beforeend', '<a class="credit-map" href="' + esc(M.creditUrl || '#') + '" target="_blank" rel="noopener">' + esc(M.credit) + '</a>'); }
   else $('#map').insertAdjacentHTML('beforeend', '<div class="soon"><div><h2>Map coming soon</h2><p>The GTA 6 map of Leonida is being prepared. The first secret spots appear here as soon as it is online.</p></div></div>');
   map.fitBounds(bounds);
   if (phone.matches) map.zoomControl.remove();
