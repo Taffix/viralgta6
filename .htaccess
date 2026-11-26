@@ -12,6 +12,7 @@ RewriteRule ^v/([^/]+)/?$ index.php?v=$1 [L,QSA,B]
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
 RewriteRule ^secrets/?$ index.php?page=secrets [L,QSA]
 RewriteRule ^tips/?$ index.php?page=tips [L,QSA]
+RewriteRule ^tips/guide/?$ guide.html [L]
 
 # interactive secrets map + a page per pin
 RewriteRule ^map/?$ map.php [L,QSA]

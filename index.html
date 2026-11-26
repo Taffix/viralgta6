@@ -535,6 +535,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
     <div class="faq">
       <details><summary>Where do these GTA 6 tips come from?</summary><p>From YouTube Shorts by GTA 6 creators. We show them with the official YouTube player and always link to the creator.</p></details>
       <details><summary>How often are new tips added?</summary><p>Every few hours. New Shorts that are taking off move to the top.</p></details>
+      <details><summary>Prefer to read?</summary><p>All GTA 6 tips are also written out by category in the <a href="/tips/guide">GTA 6 tips &amp; tricks guide</a>.</p></details>
       <details><summary>Want secret locations instead?</summary><p>See the GTA 6 secrets page and the interactive secrets map.</p></details>
     </div>
   </section>
@@ -554,7 +555,7 @@ body.public .tabbar{grid-template-columns:repeat(4,1fr)}
 <footer>
   <div class="f-row">
     <a class="brand" href="#" aria-label="viralgta6.com, back to top"><i>Viral</i><b class="chr" data-t="GTA6">GTA6</b><small>.com</small></a>
-    <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="/secrets">Secrets</a><a href="/tips">Tips</a><a href="/map">Map</a><a href="#">Back to top ↑</a></nav>
+    <nav class="f-nav" aria-label="Footer"><button data-f="all">All</button><button data-f="youtube">YouTube</button><button data-f="tiktok">TikTok</button><button data-f="instagram">Instagram</button><a href="/secrets">Secrets</a><a href="/tips">Tips</a><a href="/tips/guide">Tips guide</a><a href="/map">Map</a><a href="#">Back to top ↑</a></nav>
   </div>
   <div class="f-row f-small">
     <span>© 2026 viralgta6.com · Updated every hour</span>
@@ -826,7 +827,14 @@ function render() {
   } else if (!phone.matches) {
     g.innerHTML = shelves(list);
   } else {
-    g.innerHTML = list.map((it, i) => `
+    g.innerHTML = (PAGE === 'tips' ? `
+      <article class="card promo cta"><div class="promo-in">
+        <span class="ad">Written guide</span>
+        <h3 class="chr" data-t="62 tips by category">62 tips by category</h3>
+        <p>Money, weapons, cars, police, missions you can miss and hidden mechanics. Short and to the point.</p>
+        <a class="tbtn hot" href="/tips/guide">Read the tips</a>
+        <p style="font-size:13px;color:var(--dim)">Or swipe up for tip Shorts</p>
+      </div></article>` : '') + list.map((it, i) => `
       <article class="card${fill(i, list.length)}${it.vertical ? ' tall' : ' wide'}" data-uid="${esc(it.uid)}" tabindex="0" aria-label="${esc(it.title)}">
         ${it.thumb ? `<div class="blur" style="background-image:url('${esc(it.thumb)}')"></div>` : ''}<div class="media">${media(it)}<div class="slot"></div><div class="shade"></div></div>
         <div class="rank${it.sponsored ? ' feat' : ''}">${rkLabel(it, i, list)}</div><div class="hint">Tap for sound</div>
@@ -1239,7 +1247,7 @@ const PG = {
   secrets: {title: 'GTA 6 secrets & easter eggs', s: 'GTA 6', c: 'secrets', sr: ': hidden locations, easter eggs and rare finds in GTA 6', today: 'Hidden spots, easter eggs & rare finds · fresh YouTube Shorts', wide: 'GTA 6 secret videos', tall: 'GTA 6 secrets in Shorts', icon: 'eye',
     head: 'The GTA 6 secrets, easter eggs and hidden spots that are blowing up on YouTube Shorts right now. Tap a creator to visit their channel. <a class="map-cta" href="/map">Open the secrets map →</a>'},
   tips: {title: 'GTA 6 tips & tricks', s: 'GTA 6', c: 'tips', sr: ': tips and tricks for money, weapons and cars in GTA 6', today: 'Money, weapons, cars & smart tricks · fresh YouTube Shorts', wide: 'GTA 6 tip videos', tall: 'GTA 6 tips in Shorts', icon: 'bulb',
-    head: 'The GTA 6 tips and tricks that are blowing up on YouTube Shorts right now: money, weapons, cars and things most players miss. Tap a creator to visit their channel. <a class="map-cta" href="/map">Find secrets on the map →</a>'},
+    head: 'The GTA 6 tips and tricks that are blowing up on YouTube Shorts right now: money, weapons, cars and things most players miss. Tap a creator to visit their channel. <a class="map-cta" href="/tips/guide">Read all tips by category →</a>'},
 }[PAGE];
 async function loadDaily() {
   if (!/^https?:$/.test(location.protocol)) return false;

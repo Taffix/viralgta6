@@ -1,0 +1,115 @@
+{
+  "updated": "2026-11-26",
+  "sources": {
+    "OL": { "name": "Outputlag", "url": "https://outputlag.com/guides/gta-6-beginner-tips/" },
+    "RB": { "name": "Red Bull", "url": "https://www.redbull.com/int-en/gta-6-beginners-guide" },
+    "VC": { "name": "VICE", "url": "https://www.vice.com/en/article/gta-6-how-to-make-money-fast/" },
+    "U7": { "name": "U7BUY", "url": "https://www.u7buy.com/blog/gta-6-beginners-guide/" }
+  },
+  "categories": [
+    {
+      "id": "money", "name": "Money", "icon": "💰",
+      "intro": "Cash is tight early on. Protect what you have and pick the right side hustles.",
+      "tips": [
+        { "t": "Stash your cash", "d": "Cash in your pocket is gone when you die or get busted. Drop it in the floorboard stash in Jason's bedroom; it takes deposits any time.", "s": ["OL", "RB", "U7"] },
+        { "t": "Check the mailbox", "d": "Pay from missions and from Brian and Donnie often lands in the mailbox outside Jason's house. Look every time you leave home.", "s": ["OL"] },
+        { "t": "Open a BuckMe account", "d": "The Buck Me mission unlocks your BuckMe bank account for ATMs. Shops only take up to $999 in pocket cash; bigger buys come out of BuckMe.", "s": ["OL", "U7"], "n": "Guides differ on when: about 1-2 hours in, or halfway through Chapter 1." },
+        { "t": "Treasure diving with Kenton", "d": "Visit Kenton in Key Lento to unlock diving. Wrecks show as purple chest icons on the map.", "s": ["VC", "OL"], "n": "One guide says Kenton pays on the spot (about $1,400 for the first wreck), another says he only pays after selling the loot." },
+        { "t": "Crack the safe at Three Sheets Liquor", "d": "At the exotic animals front in Key Lento, go round Three Sheets Liquor, climb through the hole in the wall and crack the back-room safe. No code needed.", "s": ["VC"] },
+        { "t": "Don't miss Shirley's Rum", "d": "This errand is missable. Talk to the parrot, and grab about $1,300 from the white wall vent by the yellow generator.", "s": ["OL"] },
+        { "t": "Watch the hourglass", "d": "Errands with an hourglass on their map icon expire. Main missions wait for you.", "s": ["OL"] },
+        { "t": "Sell stolen cars", "d": "Any Pay 'n' Spray buys stolen cars in Chapter 1, with a daily limit. From Chapter 2, Moses buys them with no daily limit.", "s": ["VC", "U7"] },
+        { "t": "Use the snap gun", "d": "A snap gun opens many back doors without setting off the alarm.", "s": ["RB"] },
+        { "t": "Mind your stash bags", "d": "Each character carries two bags. Vans and trucks hold up to eight in the trunk, motorcycles none. Die with full bags and you lose them.", "s": ["RB"] },
+        { "t": "Spend before Chapter 2", "d": "Moving into Chapter 2 wipes your pocket cash, the floor stash and your main BuckMe balance. Spend it on gear first.", "s": ["OL", "U7"] }
+      ]
+    },
+    {
+      "id": "weapons", "name": "Weapons & combat", "icon": "🔫",
+      "intro": "Keep the guns you paid for and fight smart, not loud.",
+      "tips": [
+        { "t": "Buy the guns you want to keep", "d": "Only guns bought at Ammu-Nation come back after you die. Guns dropped by enemies are lost. Your owned guns are kept in the trunk of the Ganado.", "s": ["OL", "RB"] },
+        { "t": "Holster in crowds", "d": "Put your gun away (L1 / LB) before walking into a crowd. People who see a drawn gun call the police.", "s": ["OL"] },
+        { "t": "Get a suppressor early", "d": "Buy one at the Ammu-Nation in Key Lento right after the tutorial. A silenced gun doesn't alert nearby enemies or police.", "s": ["RB"] },
+        { "t": "Don't skip the long gun", "d": "In Gear Up, buy the long gun at Chuck's Tackle & Shot in Key Lento. Skipping it can stall the Feng Shui call.", "s": ["OL"] },
+        { "t": "Two plus two", "d": "You carry two sidearms and two long guns. The rest waits in the trunk.", "s": ["OL"] },
+        { "t": "Aim for head or heart", "d": "Head and heart hits kill, limb hits injure. A red hit marker means a kill, yellow means injured.", "s": ["RB"] },
+        { "t": "Use Focus Mode in fights", "d": "Click both sticks with a gun out to slow time for a moment. Practising at the shooting range improves Focus.", "s": ["RB", "U7"] },
+        { "t": "Go first person with a sight", "d": "With a red dot sight, click the right stick to aim in first person. Iron sights can't.", "s": ["RB"] },
+        { "t": "Shoot the tyres", "d": "Shoot out one or two tyres and pursuers spin out.", "s": ["RB"] }
+      ]
+    },
+    {
+      "id": "cars", "name": "Cars & driving", "icon": "🚗",
+      "intro": "Scan before you steal, and only keep what you can register.",
+      "tips": [
+        { "t": "Scan with WAiNK", "d": "The WAiNK app shows a car's tracker, sell value, locks, alarm and registration cost before you take it.", "s": ["RB", "OL", "U7"] },
+        { "t": "Skip cars with trackers", "d": "An advanced tracker pings the police if you drive far. Moses won't buy a car with a tracker.", "s": ["RB", "OL"] },
+        { "t": "Keyless cars need a cloner", "d": "Most cars can be hotwired. High-end keyless cars need a key cloner.", "s": ["RB", "U7"] },
+        { "t": "Register cars to keep them", "d": "Register a car at Pay 'n' Spray; the worse the car, the cheaper the fee. Registered cars can be called with the Scooter Bros app.", "s": ["RB"] },
+        { "t": "Stolen cars don't stay", "d": "A stolen car disappears when you die, get busted or leave it, even parked outside Jason's house. Jason's Ganado is the only car you keep until Chapter 2.", "s": ["OL"] },
+        { "t": "Pick the Ganado colour carefully", "d": "The respray in Just a Scratch is the only free one.", "s": ["OL"] },
+        { "t": "Don't wreck what you sell", "d": "Damage lowers the resale value.", "s": ["U7"] },
+        { "t": "Buy a garage later", "d": "Once Jason and Lucia leave Key Lento you can buy garages (just under a dozen) and store cars there for free.", "s": ["RB", "OL"] },
+        { "t": "Leave your neighbours' cars", "d": "Cars in Jason's own neighbourhood can't be stolen.", "s": ["OL"] }
+      ]
+    },
+    {
+      "id": "police", "name": "Police & wanted level", "icon": "🚨",
+      "intro": "The police work from what they know about you. Give them less to go on.",
+      "tips": [
+        { "t": "Know what they know", "d": "Icons under the wanted stars show whether officers know your outfit, face or car.", "s": ["OL"] },
+        { "t": "Change your look", "d": "Keep a spare outfit in the trunk (up to five) and wear a hat and bandana during a crime. Take them off afterwards.", "s": ["OL", "RB"] },
+        { "t": "No witness, no cops", "d": "Police only come when someone reports the crime.", "s": ["OL"] },
+        { "t": "Cut the alarm, wipe the tape", "d": "In a store robbery the alarm panel and the security footage are in the back room. Cut the alarm and destroy the footage.", "s": ["OL", "RB"] },
+        { "t": "Break line of sight", "d": "Lose them, leave the search area and stay away for a while. Police may keep watching an area where you were identified.", "s": ["OL", "U7"] },
+        { "t": "Don't shoot cops", "d": "Killing officers raises your heat and pushes your profile toward Violent. Hiding works better.", "s": ["OL"] },
+        { "t": "Make the chopper leave", "d": "A police helicopter retreats after taking enough hits; the pilot says so over the radio.", "s": ["RB"] },
+        { "t": "Work at night", "d": "A quiet street at night makes a job easier.", "s": ["RB"] }
+      ]
+    },
+    {
+      "id": "story", "name": "Missions & story", "icon": "🎬",
+      "intro": "Some things can only be done once. Don't rush past them.",
+      "tips": [
+        { "t": "Play the Prologue in one go", "d": "You can't save during the Prologue.", "s": ["OL"] },
+        { "t": "Finish errands before Tourist Trap", "d": "Tourist Trap starts back-to-back story missions to the end of Chapter 1 with no free roam.", "s": ["OL"] },
+        { "t": "Don't miss Lucia's balcony", "d": "Once Lucia lives at the house, check the kitchen in the morning and accept the optional task. It can't be done later.", "s": ["OL"] },
+        { "t": "Breakfast Run unlocks switching", "d": "After Breakfast Run you can switch freely between Jason and Lucia.", "s": ["OL"] },
+        { "t": "Your first big choice", "d": "In Hey Arnold! you decide to kill or spare Arnold. It weighs on your criminal profile.", "s": ["OL"] },
+        { "t": "Bigger jobs come later", "d": "Chapter 3 gives dye pack jammers for banks and loan stores; bank vaults open late in Chapter 4.", "s": ["RB", "U7"] },
+        { "t": "Rob as a duo", "d": "Invite your partner with Triangle / Y on the job's map icon.", "s": ["RB"] }
+      ]
+    },
+    {
+      "id": "controls", "name": "Controls & hidden mechanics", "icon": "🎮",
+      "intro": "Small settings and tricks most players never find.",
+      "tips": [
+        { "t": "Save manually", "d": "Pause > Game > Save Game. There are 15 slots, autosave only runs after missions, and missions can't be replayed.", "s": ["OL"] },
+        { "t": "Focus Mode spots loot", "d": "Click L3 + R3: enemies light up red, interactables yellow, cash green. Doors show white (enterable) or red (alarmed), and notes with safe codes show through walls.", "s": ["RB", "OL"] },
+        { "t": "Better camera settings", "d": "Motion Blur to 0, Look and Aim Sensitivity from 7 to 9 or 10, and Movement Speed to Run.", "s": ["OL"] },
+        { "t": "Read the map colours", "d": "Dark blue buildings can be entered, light blue is scenery. Check back doors on the minimap for hidden rooms.", "s": ["RB", "U7"] },
+        { "t": "Phone = clock", "d": "Press up on the D-pad to see the time. Shops close at night; sleep at Jason's house to skip ahead.", "s": ["RB"] },
+        { "t": "No fast travel", "d": "Call Paradise Taxi, take buses and trains, or switch characters, which is the cheapest way to travel.", "s": ["OL", "RB"] },
+        { "t": "Skip a RydeMe ride", "d": "Pay about $100 extra to skip the trip.", "s": ["RB", "OL"] },
+        { "t": "Switch characters fast", "d": "Hold right on the D-pad and press R1 / RB.", "s": ["OL"] },
+        { "t": "Pass a bag", "d": "Give a stash bag to your partner: right on the D-pad, then Circle / B.", "s": ["RB"] }
+      ]
+    },
+    {
+      "id": "stats", "name": "Jason & Lucia stats", "icon": "💪",
+      "intro": "Train a little every day and keep your criminal profile in check.",
+      "tips": [
+        { "t": "Three stats", "d": "Strength (weights) raises max health, Cardio (running, biking, kayak, swimming) raises stamina, Focus (fishing, pool, hoops, shooting range) lasts longer in combat.", "s": ["RB", "U7", "OL"] },
+        { "t": "Daily caps", "d": "Strength and Cardio have a daily limit, Focus doesn't.", "s": ["OL"] },
+        { "t": "Gym technique", "d": "Press both triggers quickly and release slowly. Stop when the fitness ring closes.", "s": ["RB"] },
+        { "t": "Drink the shake", "d": "A protein shake from the fridge halves recovery time.", "s": ["OL", "RB"] },
+        { "t": "Keep training", "d": "Health and stamina gains fade if you stop. Focus stays.", "s": ["RB"] },
+        { "t": "Buffs from daily life", "d": "Eating, sleeping and showering give short buffs: pink heart (health), blue bolt (stamina), purple eye (Focus). Feeding Dolores the snake gives a small Focus buff.", "s": ["RB"] },
+        { "t": "Fix the house", "d": "Four free house repairs (steps, roof, railing, wall) improve Jason and Lucia's relationship.", "s": ["OL"] },
+        { "t": "Watch your profile", "d": "Five tiers: Professional, Hardened, Violent, Psycho and Irredeemable. At Psycho you can't surrender, and Irredeemable is permanent.", "s": ["RB", "OL"] },
+        { "t": "Stay Professional for Focus", "d": "At Professional, takedowns and non-lethal play fill Focus. At Violent and Psycho, headshots do.", "s": ["OL", "RB"] }
+      ]
+    }
+  ]
+}
