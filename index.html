@@ -447,6 +447,24 @@ a.cl-row{display:flex;align-items:center;gap:10px;min-width:0}
   .card.wide .media img{object-fit:cover}
   .card.wide .slot iframe{position:absolute;top:0;height:100%;width:133.34%;left:-16.67%}
 }
+/* hero #1: own look per platform */
+.frame .screen{position:absolute;inset:0;overflow:hidden}
+.frame .screen video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:#000}
+.frame .pf-badge{position:absolute;right:14px;top:12px;z-index:3;display:inline-flex;align-items:center;gap:6px;font-family:var(--cond);font-weight:700;font-size:14px;letter-spacing:.6px;text-transform:uppercase;padding:5px 11px;border-radius:999px;color:#fff;background:rgba(10,4,20,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.frame .pf-badge svg{width:16px;height:16px}
+.frame.pf-youtube .pf-badge{background:#ff2b2b}
+.frame.pf-tiktok .pf-badge{background:#111;box-shadow:-2px -2px 0 #25f4ee,2px 2px 0 #fe2c55}
+.frame.pf-instagram .pf-badge{background:linear-gradient(45deg,#f9a03f,#e1306c 55%,#833ab4)}
+/* vertical #1 = a phone */
+.frame.v{aspect-ratio:9/16;width:auto;height:min(74vh,660px);max-width:100%;justify-self:center;align-self:center;overflow:visible;border:0;border-radius:34px;padding:9px;background:#0b0614;transform:rotate(-2deg)}
+.frame.v .screen{inset:9px;border-radius:26px}
+.frame.v .screen::before{content:"";position:absolute;left:50%;top:9px;width:84px;height:22px;margin-left:-42px;border-radius:12px;background:#0b0614;z-index:3}
+.frame.v .num{top:38px;left:16px;font-size:64px}
+.frame.v .pf-badge{top:auto;bottom:22px;right:50%;transform:translateX(50%)}
+.frame.v.pf-youtube{box-shadow:0 0 0 2px #ff2b2b,0 0 46px rgba(255,43,43,.55),14px 14px 0 rgba(255,43,43,.35)}
+.frame.v.pf-tiktok{box-shadow:0 0 0 2px #fff,-12px -12px 0 #25f4ee,12px 12px 0 #fe2c55}
+.frame.v.pf-instagram{background:linear-gradient(45deg,#f9a03f,#e1306c 45%,#833ab4 75%,#405de6);box-shadow:0 0 50px rgba(225,48,108,.5)}
+.frame.v.pf-instagram .screen::before{background:linear-gradient(90deg,#e1306c,#833ab4)}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
@@ -922,7 +940,11 @@ function renderHero(it) {
     f.innerHTML = `<div class="frame-empty"><div><p>Today's number 1 will play right here.</p><button class="tbtn hot" data-open="settings">Connect YouTube</button></div></div>`;
     return;
   }
-  f.innerHTML = `${media(it)}<div class="shade" style="opacity:.5"></div><span class="num">#1</span><button class="play" aria-label="Play #1"><svg><use href="#i-play"/></svg></button>`;
+  const vert = !!it.vertical, pf = it.platform;
+  f.className = 'frame ' + (vert ? 'v ' : 'h ') + 'pf-' + pf;
+  const badge = {youtube: vert ? 'Shorts' : 'YouTube', tiktok: 'TikTok', instagram: 'Reels'}[pf] || '';
+  const pic = vert && pf === 'youtube' && it.vid ? `<img src="https://i.ytimg.com/vi/${esc(it.vid)}/oar2.jpg" alt="" onerror="this.onerror=null;this.src='${esc(it.thumb || '')}'">` : media(it);
+  f.innerHTML = `<div class="screen">${pic}<div class="shade" style="opacity:.5"></div><span class="num">#1</span><button class="play" aria-label="Play #1"><svg><use href="#i-play"/></svg></button></div><span class="pf-badge"><svg><use href="${PF[pf].icon}"/></svg>${badge}</span>`;
   f.dataset.uid = it.uid;
   p.hidden = false;
   p.innerHTML = `<div class="meta">${pfTag(it.platform)}<span>${num(it.views)} views</span>${it.published ? `<span>${esc(ago(it.published))}</span>` : ''}</div>
@@ -1151,7 +1173,9 @@ document.addEventListener('click', e => {
   if (f) { S.filter = f.dataset.f; $$('[data-f]').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === S.filter)); render(); if (phone.matches) $('#feed').scrollTo({top:0}); else if (scrollY > innerHeight * .6) $('#feed').scrollIntoView(); return; }
   if (t.closest('#heroFrame .play')) {
     const it = find($('#heroFrame').dataset.uid);
-    if (it && it.platform === 'youtube' && location.protocol !== 'file:') $('#heroFrame').insertAdjacentHTML('beforeend', `<iframe src="${esc(embedUrl(it))}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="${esc(it.title)}"></iframe>`);
+    const scr = $('#heroFrame .screen') || $('#heroFrame');
+    if (it && location.protocol !== 'file:' && (it.platform === 'youtube' || (it.platform === 'tiktok' && it.vid))) scr.insertAdjacentHTML('beforeend', `<iframe src="${esc(embedUrl(it))}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="${esc(it.title)}"></iframe>`);
+    else if (it && it.platform === 'instagram' && it.video) scr.insertAdjacentHTML('beforeend', `<video src="${esc(it.video)}" controls autoplay playsinline referrerpolicy="no-referrer"></video>`);
     else if (it) openPlayer(it);
     return;
   }
