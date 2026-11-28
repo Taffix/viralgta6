@@ -79,6 +79,15 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .panel h1{font-family:var(--display);font-style:italic;font-weight:400;font-size:38px;line-height:1;text-transform:uppercase;background:var(--chrome);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.15em}
 .panel .lead{color:var(--muted);line-height:1.55;font-size:15px}
 .list{display:grid;gap:8px;list-style:none}
+.fresh h2,.panel h2.sub{display:flex;align-items:center;gap:8px;font-family:var(--cond);font-weight:700;font-size:18px;letter-spacing:.5px;text-transform:uppercase}
+.fresh h2 small,.panel h2.sub small{font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:0;text-transform:none;color:var(--dim)}
+.fresh .dot{width:9px;height:9px;border-radius:50%;background:#ff3b5c;box-shadow:0 0 8px #ff3b5c}
+.fresh-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin-top:10px;padding-bottom:4px;scroll-snap-type:x mandatory}
+.fv{flex:none;width:118px;text-align:left;display:grid;gap:5px;scroll-snap-align:start}
+.fv .th{display:block;width:118px;aspect-ratio:9/16;border-radius:10px;background:#000 center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.fv:hover .th{box-shadow:0 0 0 2px var(--teal)}
+.fv b{font-size:12.5px;font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fv small{font-size:11.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .list button{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:11px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
 .list button:hover{border-color:var(--teal)}
 .list i{width:10px;height:10px;flex:none;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
@@ -177,7 +186,18 @@ const editing = new URLSearchParams(location.search).has('edit');
 if (editing) document.body.classList.add('editing');
 const phone = matchMedia('(max-width:760px)');
 
-let M = {width: 4000, height: 4000, categories: {}, pins: []}, map, markers = {}, active = null, shown = new Set();
+let M = {width: 4000, height: 4000, categories: {}, pins: []}, map, markers = {}, active = null, shown = new Set(), FRESH = [];
+const ago = iso => { const h = (Date.now() - new Date(iso)) / 36e5; return h < 1 ? 'just now' : h < 24 ? Math.floor(h) + 'h ago' : Math.floor(h / 24) + 'd ago'; };
+const num = n => n >= 1e6 ? (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M' : n >= 1e3 ? Math.round(n / 1e3) + 'K' : String(n || 0);
+async function loadFresh() {
+  try {
+    const r = await fetch('https://raw.githubusercontent.com/Taffix/viralgta6/main/data/secrets.json', {cache: 'no-cache'});
+    if (!r.ok) return;
+    const j = await r.json();
+    FRESH = (j.items || []).filter(i => i.vid && i.published).sort((a, b) => new Date(b.published) - new Date(a.published)).slice(0, 8);
+    if (!active) showList();
+  } catch {}
+}
 
 async function load() {
   for (const u of ['/data/map.json?d=' + Date.now(), 'https://raw.githubusercontent.com/Taffix/viralgta6/main/data/map.json']) {
@@ -186,6 +206,7 @@ async function load() {
   M.pins = (M.pins || []).filter(p => p && p.slug && isFinite(p.x) && isFinite(p.y));
   shown = new Set(Object.keys(M.categories || {}));
   build();
+  loadFresh();
 }
 
 function build() {
@@ -211,7 +232,7 @@ function build() {
     drawPins(); if (!active) showList();
   });
 
-  $('#panelBody').addEventListener('click', e => { const b = e.target.closest('[data-slug]'); if (b) { const p = M.pins.find(q => q.slug === b.dataset.slug); if (p) openPin(p, true); } });
+  $('#panelBody').addEventListener('click', e => { const fv = e.target.closest('[data-fresh]'); if (fv) { openFresh(FRESH[+fv.dataset.fresh]); return; } const b = e.target.closest('[data-slug]'); if (b) { const p = M.pins.find(q => q.slug === b.dataset.slug); if (p) openPin(p, true); } });
   drawPins();
   const m = location.pathname.match(/^\/map\/([^/]+)/) || [null, new URLSearchParams(location.search).get('pin')];
   const start = m[1] && M.pins.find(p => p.slug === decodeURIComponent(m[1]));
@@ -237,6 +258,11 @@ function showList() {
   $('#panelBody').innerHTML = `
     <h1>GTA 6 secrets map</h1>
     <p class="lead">Hidden locations, easter eggs, weapons, cars and collectibles in Leonida. Tap a pin to watch the Short of the creator who found it.</p>
+    ${FRESH.length ? `<section class="fresh" aria-labelledby="freshH">
+      <h2 id="freshH"><span class="dot"></span>New secret Shorts <small>updated every 6 hours</small></h2>
+      <div class="fresh-row">${FRESH.map((v, i) => `<button class="fv" data-fresh="${i}" type="button"><span class="th" style="background-image:url('https://i.ytimg.com/vi/${esc(v.vid)}/hqdefault.jpg')"></span><b>${esc(v.title)}</b><small>${esc(v.creator?.name || '')} · ${ago(v.published)}</small></button>`).join('')}</div>
+    </section>
+    <h2 class="sub">All spots on the map <small>${pins.length}</small></h2>` : ''}
     ${pins.length ? `<ul class="list">${pins.map(p => `<li><button data-slug="${esc(p.slug)}" style="--c:${esc((M.categories[p.cat] || {}).color)}"><i></i><span><b>${esc(p.title)}</b><small>${esc((M.categories[p.cat] || {}).name || '')}${p.place ? ' · ' + esc(p.place) : ''}</small></span></button></li>`).join('')}</ul>`
       : `<p class="empty">The first secret spots are being added. Found one? Post it as a YouTube Short with "GTA 6 secret" in the title and it may end up on this map.</p>`}
     <div class="btns"><a class="tbtn" href="/secrets">Watch all secret Shorts</a></div>`;
@@ -244,6 +270,20 @@ function showList() {
   if (location.pathname !== '/map') history.replaceState(null, '', '/map' + location.search);
 }
 
+function openFresh(v) {
+  active = null; drawPins();
+  const cr = v.creator || {};
+  $('#panelBody').innerHTML = `
+    <button class="back" id="back" type="button">← Map &amp; spots</button>
+    <div class="tags"><span class="cat" style="--c:#ff3fa4">New secret Short</span><span class="tag">🕑 ${ago(v.published)}</span><span class="tag">▶ ${num(v.views)} views</span></div>
+    <div class="vid tall"><iframe src="https://www.youtube-nocookie.com/embed/${esc(v.vid)}?rel=0&playsinline=1&autoplay=1" allow="autoplay; encrypted-media; fullscreen" allowfullscreen title="${esc(v.title)}"></iframe></div>
+    <h1 class="pin-title">${esc(v.title)}</h1>
+    ${cr.name ? `<div class="credit"><a class="n" href="${esc(cr.url || '#')}" target="_blank" rel="noopener">${esc(cr.name)}<small>Creator</small></a>${cr.url ? `<a class="follow" href="${esc(cr.url)}" target="_blank" rel="noopener">Follow</a>` : ''}</div>` : ''}
+    <p class="pin-meta">Know where this is on the map? <a href="/map?edit">Pin it</a> and send us the code.</p>
+    <div class="btns"><a class="tbtn" href="https://www.youtube.com/shorts/${esc(v.vid)}" target="_blank" rel="noopener">Open on YouTube</a><a class="tbtn" href="/secrets">All secret Shorts</a></div>`;
+  $('#back').onclick = showList;
+  document.body.classList.add('sheet');
+}
 function openPin(p, fly) {
   active = p; drawPins();
   const cat = M.categories[p.cat] || {}, id = ytId(p.youtube || ''), cr = p.creator || {}, isShort = /\/shorts\//.test(p.youtube || '');
