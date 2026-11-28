@@ -82,12 +82,23 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .fresh h2,.panel h2.sub{display:flex;align-items:center;gap:8px;font-family:var(--cond);font-weight:700;font-size:18px;letter-spacing:.5px;text-transform:uppercase}
 .fresh h2 small,.panel h2.sub small{font-family:var(--body);font-weight:500;font-size:12px;letter-spacing:0;text-transform:none;color:var(--dim)}
 .fresh .dot{width:9px;height:9px;border-radius:50%;background:#ff3b5c;box-shadow:0 0 8px #ff3b5c}
-.fresh-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin-top:10px;padding-bottom:4px;scroll-snap-type:x mandatory}
-.fv{flex:none;width:118px;text-align:left;display:grid;gap:5px;scroll-snap-align:start}
-.fv .th{display:block;width:118px;aspect-ratio:9/16;border-radius:10px;background:#000 center/cover no-repeat;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
-.fv:hover .th{box-shadow:0 0 0 2px var(--teal)}
-.fv b{font-size:12.5px;font-weight:600;line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.fv small{font-size:11.5px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fresh-wrap{position:relative;margin:12px -22px 0}
+.fresh-row{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;padding:2px 22px 6px;scroll-snap-type:x mandatory;scroll-padding:0 22px;-webkit-mask:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 46px),transparent);mask:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 46px),transparent)}
+.fresh-row::-webkit-scrollbar{display:none}
+.fv{position:relative;flex:none;width:136px;aspect-ratio:9/16;border-radius:12px;overflow:hidden;scroll-snap-align:start;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 8px 22px rgba(0,0,0,.45);transition:box-shadow .2s}
+.fv:hover,.fv:focus-visible{box-shadow:0 0 0 1.5px rgba(47,243,224,.8),0 8px 22px rgba(0,0,0,.45)}
+.fv img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fv::after{content:"";position:absolute;inset:40% 0 0;background:linear-gradient(transparent,rgba(10,4,20,.92));pointer-events:none}
+.fv .chip-s{position:absolute;left:7px;top:7px;z-index:1;font-family:var(--cond);font-weight:700;font-size:11.5px;letter-spacing:.3px;padding:3px 7px;border-radius:999px;background:rgba(10,4,20,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.fv .cap{position:absolute;left:8px;right:8px;bottom:8px;z-index:1;display:grid;gap:3px;text-align:left}
+.fv .cap b{font-size:12.5px;font-weight:700;line-height:1.2;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.fv .cap small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fr-arrow{position:absolute;top:calc(50% - 20px);width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:22px;line-height:1;background:rgba(17,6,38,.9);border:1px solid rgba(255,255,255,.2);z-index:2}
+.fr-arrow.prev{left:6px}.fr-arrow.next{right:6px}
+.fr-arrow:hover{border-color:var(--teal)}
+.at-start .fr-arrow.prev,.at-end .fr-arrow.next{opacity:0;pointer-events:none}
+.fr-arrow{transition:opacity .2s}
+@media (max-width:760px),(hover:none){.fr-arrow{display:none}.fresh-wrap{margin:12px -16px 0}.fresh-row{padding:2px 16px 6px;scroll-padding:0 16px}.fv{width:124px}}
 .list button{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:11px 12px;border-radius:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
 .list button:hover{border-color:var(--teal)}
 .list i{width:10px;height:10px;flex:none;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
@@ -232,7 +243,7 @@ function build() {
     drawPins(); if (!active) showList();
   });
 
-  $('#panelBody').addEventListener('click', e => { const fv = e.target.closest('[data-fresh]'); if (fv) { openFresh(FRESH[+fv.dataset.fresh]); return; } const b = e.target.closest('[data-slug]'); if (b) { const p = M.pins.find(q => q.slug === b.dataset.slug); if (p) openPin(p, true); } });
+  $('#panelBody').addEventListener('click', e => { const ar = e.target.closest('[data-scroll]'); if (ar) { $('#freshRow').scrollBy({left: +ar.dataset.scroll * 280, behavior: 'smooth'}); return; } const fv = e.target.closest('[data-fresh]'); if (fv) { openFresh(FRESH[+fv.dataset.fresh]); return; } const b = e.target.closest('[data-slug]'); if (b) { const p = M.pins.find(q => q.slug === b.dataset.slug); if (p) openPin(p, true); } });
   drawPins();
   const m = location.pathname.match(/^\/map\/([^/]+)/) || [null, new URLSearchParams(location.search).get('pin')];
   const start = m[1] && M.pins.find(p => p.slug === decodeURIComponent(m[1]));
@@ -260,12 +271,19 @@ function showList() {
     <p class="lead">Hidden locations, easter eggs, weapons, cars and collectibles in Leonida. Tap a pin to watch the Short of the creator who found it.</p>
     ${FRESH.length ? `<section class="fresh" aria-labelledby="freshH">
       <h2 id="freshH"><span class="dot"></span>New secret Shorts <small>updated every 6 hours</small></h2>
-      <div class="fresh-row">${FRESH.map((v, i) => `<button class="fv" data-fresh="${i}" type="button"><span class="th" style="background-image:url('https://i.ytimg.com/vi/${esc(v.vid)}/hqdefault.jpg')"></span><b>${esc(v.title)}</b><small>${esc(v.creator?.name || '')} · ${ago(v.published)}</small></button>`).join('')}</div>
+      <div class="fresh-wrap"><div class="fresh-row" id="freshRow">${FRESH.map((v, i) => `<button class="fv" data-fresh="${i}" type="button" aria-label="${esc(v.title)}">
+        <img src="https://i.ytimg.com/vi/${esc(v.vid)}/oar2.jpg" alt="" loading="lazy" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${esc(v.vid)}/hqdefault.jpg'">
+        <span class="chip-s">${num(v.views)} · ${ago(v.published)}</span>
+        <span class="cap"><b>${esc(v.title.replace(/#\S+/g, '').trim())}</b><small>${esc(v.creator?.name || '')}</small></span>
+      </button>`).join('')}</div>
+      <button class="fr-arrow prev" type="button" aria-label="Previous" data-scroll="-1">‹</button><button class="fr-arrow next" type="button" aria-label="Next" data-scroll="1">›</button></div>
     </section>
     <h2 class="sub">All spots on the map <small>${pins.length}</small></h2>` : ''}
     ${pins.length ? `<ul class="list">${pins.map(p => `<li><button data-slug="${esc(p.slug)}" style="--c:${esc((M.categories[p.cat] || {}).color)}"><i></i><span><b>${esc(p.title)}</b><small>${esc((M.categories[p.cat] || {}).name || '')}${p.place ? ' · ' + esc(p.place) : ''}</small></span></button></li>`).join('')}</ul>`
       : `<p class="empty">The first secret spots are being added. Found one? Post it as a YouTube Short with "GTA 6 secret" in the title and it may end up on this map.</p>`}
     <div class="btns"><a class="tbtn" href="/secrets">Watch all secret Shorts</a></div>`;
+  const fr = $('#freshRow');
+  if (fr) { const upd = () => { fr.parentNode.classList.toggle('at-start', fr.scrollLeft < 8); fr.parentNode.classList.toggle('at-end', fr.scrollLeft + fr.clientWidth > fr.scrollWidth - 8); }; fr.addEventListener('scroll', upd, {passive: true}); upd(); }
   drawPins();
   if (location.pathname !== '/map') history.replaceState(null, '', '/map' + location.search);
 }
