@@ -433,6 +433,20 @@ a.cl-row{display:flex;align-items:center;gap:10px;min-width:0}
   .grow.in{scale:1;opacity:1}
 }
 @media (prefers-reduced-motion:reduce){.v .thumb,.s .thumb9,.card .media{animation:none!important}.grow{scale:1!important;opacity:1!important;transition:none!important}}
+/* phone: bigger videos (later rules win over the earlier frame sizes) */
+@media (max-width:760px){
+  /* Shorts: nearly full height and width, buttons float over the right edge like TikTok */
+  .card.tall .media{top:10px;left:50%;transform:translateX(-50%);height:calc(100% - 178px);max-width:calc(100% - 20px);border-radius:16px}
+  .card.tall .rank{top:22px;left:24px;z-index:2}
+  .card.tall .hint{top:22px;right:22px}
+  .card.tall .acts{bottom:190px;right:16px}
+  .card.tall .acts button,.card.tall .acts a{text-shadow:0 1px 4px rgba(0,0,0,.8)}
+  .card.tall .body{padding-right:16px}
+  /* wide videos: 4:3 block instead of 16:9 (a third taller); the player is cropped a little at the sides */
+  .card.wide .media{top:max(56px,calc((100% - 196px - 75vw) / 2));aspect-ratio:4/3;overflow:hidden;border-radius:0}
+  .card.wide .media img{object-fit:cover}
+  .card.wide .slot iframe{position:absolute;top:0;height:100%;width:133.34%;left:-16.67%}
+}
 @media (min-width:761px){.tabbar{display:none}.blur{display:none}}
 @media (max-width:760px){.card,.card:nth-child(n){border:0;box-shadow:none}.brand{font-size:22px}.tabbar button[aria-pressed=true] svg{color:var(--teal);filter:drop-shadow(0 0 6px var(--teal))}}
 body.public [data-open],body.public footer .f-own{display:none!important}
